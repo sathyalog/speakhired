@@ -1,0 +1,46 @@
+# Secrets: your API keys and Modal keys live here. Never commit this file.
+.env
+.env.*
+!.env.example
+.env.backup*
+
+# Runtime data created by the app on your computer (database, progress, mode, audit log).
+# Anchored to the project root so the bundled content in apps/api/speakhired/data/ is kept.
+/data/
+*.sqlite
+*.sqlite-journal
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Web app
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Model weights and large downloads (LEV, Whisper, Kokoro, Ollama models are fetched on setup)
+models/
+*.gguf
+*.safetensors
+*.bin
+
+# Local tool and editor settings
+.vscode/
+.idea/
+.claude/settings.local.json
+.DS_Store
+Thumbs.db
+
+# Logs and backups
+*.log
+*.bak
+*.backup
+*.backup*

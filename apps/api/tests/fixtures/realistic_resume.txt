@@ -1,0 +1,30 @@
+Ramesh Babu Kondaveeti
+Senior Software Engineer
+ramesh.k@gmail.com | 9876543210 | linkedin.com/in/rameshbk | Bengaluru, India
+
+Professional Summary
+Senior Software Engineer with 8 years of experience in Java, Spring Boot, Microservices, AWS and Machine Learning pipelines.
+
+Technical Skills
+Languages: Java, Python, SQL. Frameworks: Spring Boot, Hibernate, React. Cloud: Amazon Web Services, Microsoft Azure, Google Cloud Platform.
+Tools: Jenkins, Docker Compose, Kubernetes, Power BI, Apache Kafka, Apache Spark, Machine Learning, Deep Learning, Natural Language Processing.
+
+Work Experience
+Wipro Technologies, Bengaluru — Senior Software Engineer (Jan 2020 - Present)
+• Led the Customer Data Platform migration to Amazon Web Services, reducing cost by 30%
+• Mentored Junior Developers and Interns on Clean Architecture and Domain Driven Design
+• Managed the Payments Gateway team across Hyderabad and Pune offices
+• Worked with Product Managers and Data Scientists to ship the Recommendation Engine
+• Trained Machine Learning models using TensorFlow and Scikit Learn for Fraud Detection
+HCL Technologies, Chennai — Software Engineer (Jul 2016 - Dec 2019)
+• Built REST APIs with Spring Boot for the Insurance Claims Portal serving 2 million users
+• Collaborated with Business Analysts and Quality Assurance teams during Agile Sprint Planning
+
+Education
+B.Tech in Computer Science, Jawaharlal Nehru Technological University, Hyderabad, 2012 - 2016
+
+Certifications
+AWS Certified Solutions Architect, Microsoft Certified Azure Fundamentals, Oracle Certified Professional Java SE
+Achievements: Winner, Smart India Hackathon 2019. Employee of the Year, Wipro Technologies 2022.
+
+References: Available on request

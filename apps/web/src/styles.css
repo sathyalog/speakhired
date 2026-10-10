@@ -1,0 +1,120 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: false;
+}
+
+@plugin "daisyui/theme" {
+  name: "speakhired";
+  default: true;
+  color-scheme: light;
+  --color-base-100: #ffffff;
+  --color-base-200: #f5f8ff;
+  --color-base-300: #e3ebfb;
+  --color-base-content: #0f172a;
+  --color-primary: #2563eb;
+  --color-primary-content: #ffffff;
+  --color-secondary: #1e40af;
+  --color-secondary-content: #ffffff;
+  --color-accent: #0ea5e9;
+  --color-accent-content: #ffffff;
+  --color-neutral: #1e293b;
+  --color-neutral-content: #f8fafc;
+  --color-info: #0ea5e9;
+  --color-info-content: #ffffff;
+  --color-success: #16a34a;
+  --color-success-content: #ffffff;
+  --color-warning: #f59e0b;
+  --color-warning-content: #1f1300;
+  --color-error: #dc2626;
+  --color-error-content: #ffffff;
+  --radius-selector: 1rem;
+  --radius-field: 0.75rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@plugin "daisyui/theme" {
+  name: "speakhired-dark";
+  prefersdark: true;
+  color-scheme: dark;
+  --color-base-100: #0b1220;
+  --color-base-200: #101a2e;
+  --color-base-300: #1b2a47;
+  --color-base-content: #e6edf9;
+  --color-primary: #4f8bff;
+  --color-primary-content: #06122b;
+  --color-secondary: #93b4ff;
+  --color-secondary-content: #06122b;
+  --color-accent: #38bdf8;
+  --color-accent-content: #04202e;
+  --color-neutral: #1b2a47;
+  --color-neutral-content: #e6edf9;
+  --color-info: #38bdf8;
+  --color-info-content: #04202e;
+  --color-success: #4ade80;
+  --color-success-content: #052e13;
+  --color-warning: #fbbf24;
+  --color-warning-content: #1f1300;
+  --color-error: #f87171;
+  --color-error-content: #2b0505;
+  --radius-selector: 1rem;
+  --radius-field: 0.75rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@theme {
+  --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Fraunces Variable", ui-serif, Georgia, serif;
+}
+
+@layer base {
+  html { font-family: var(--font-sans); }
+  body { background: var(--color-base-200); }
+  h1, h2, h3, .font-display { font-family: var(--font-serif); letter-spacing: -0.01em; }
+}
+
+/* the only custom bits: waveform bars and the recording pulse */
+.wave span { display: block; width: 4px; border-radius: 2px; background: var(--color-primary); transition: height .2s; }
+@keyframes mic-pulse { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-error) 45%, transparent); } 50% { box-shadow: 0 0 0 14px transparent; } }
+.mic-rec { animation: mic-pulse 1.4s infinite; }
+mark.lang { background: color-mix(in oklab, var(--color-error) 14%, transparent); color: inherit; border-radius: 4px; padding: 0 3px; text-decoration: underline dotted var(--color-error); text-underline-offset: 3px; }
+mark.fix { background: color-mix(in oklab, var(--color-warning) 35%, transparent); color: inherit; border-radius: 4px; padding: 0 3px; }
+
+/* Clean Copy: underline layer behind the editor */
+.cc-mark { background: transparent; color: transparent; border-radius: 2px; cursor: pointer; text-decoration-line: underline; text-decoration-style: wavy; text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+.cc-spelling { text-decoration-color: var(--color-error); }
+.cc-grammar { text-decoration-color: var(--color-warning); }
+.cc-punctuation { text-decoration-color: var(--color-warning); }
+.cc-style { text-decoration-color: var(--color-info); }
+.cc-ai { text-decoration-color: #8b5cf6; text-decoration-style: dotted; }
+.cc-active { background: color-mix(in oklab, var(--color-primary) 14%, transparent); }
+
+/* floating notice tiles count down */
+@keyframes toast-countdown { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+.toast-timer { animation-name: toast-countdown; animation-timing-function: linear; animation-fill-mode: forwards; opacity: .7; }
+
+/* rendered Markdown (interview report summary) */
+.md { line-height: 1.7; font-size: 0.95rem; }
+.md > :first-child { margin-top: 0; }
+.md h1, .md h2, .md h3, .md h4 { font-family: var(--font-serif); font-weight: 600; margin: 1.2rem 0 .4rem; line-height: 1.3; }
+.md h1 { font-size: 1.35rem; } .md h2 { font-size: 1.2rem; } .md h3 { font-size: 1.05rem; } .md h4 { font-size: 1rem; }
+.md p { margin: .5rem 0; }
+.md ul { list-style: disc; padding-left: 1.3rem; margin: .5rem 0; }
+.md ol { list-style: decimal; padding-left: 1.4rem; margin: .5rem 0; }
+.md li { margin: .25rem 0; } .md li > ul, .md li > ol { margin: .2rem 0; }
+.md strong { font-weight: 600; }
+.md hr { border: 0; border-top: 1px solid var(--color-base-300); margin: 1rem 0; }
+.md blockquote { border-left: 3px solid var(--color-primary); padding-left: .8rem; color: color-mix(in oklab, var(--color-base-content) 75%, transparent); margin: .6rem 0; }
+.md code { background: var(--color-base-200); border-radius: 4px; padding: .05rem .3rem; font-size: .85em; }
+.md table { width: 100%; border-collapse: collapse; margin: .7rem 0; font-size: .88rem; display: block; overflow-x: auto; }
+.md th, .md td { border: 1px solid var(--color-base-300); padding: .4rem .6rem; text-align: left; vertical-align: top; }
+.md th { background: var(--color-base-200); font-weight: 600; }

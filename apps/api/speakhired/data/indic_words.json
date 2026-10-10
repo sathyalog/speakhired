@@ -1,0 +1,480 @@
+{
+ "_note": "Romanised words from Indian languages that are NOT English words. Add words with care: no word that is also English (main, to, me, hum, bus, log, par...). Each value lists English alternatives.",
+ "hi": {
+  "matlab": [
+   "I mean",
+   "that is"
+  ],
+  "toh": [
+   "so"
+  ],
+  "lekin": [
+   "but"
+  ],
+  "kyunki": [
+   "because"
+  ],
+  "isliye": [
+   "so",
+   "therefore"
+  ],
+  "aur": [
+   "and"
+  ],
+  "bahut": [
+   "very",
+   "a lot"
+  ],
+  "bilkul": [
+   "exactly",
+   "absolutely"
+  ],
+  "abhi": [
+   "right now"
+  ],
+  "phir": [
+   "then"
+  ],
+  "kuch": [
+   "some",
+   "something"
+  ],
+  "sabhi": [
+   "all"
+  ],
+  "thoda": [
+   "a little"
+  ],
+  "zyada": [
+   "more",
+   "too much"
+  ],
+  "jyada": [
+   "more",
+   "too much"
+  ],
+  "sirf": [
+   "only",
+   "just"
+  ],
+  "pehle": [
+   "first",
+   "before"
+  ],
+  "baad": [
+   "after",
+   "later"
+  ],
+  "kaam": [
+   "work"
+  ],
+  "kaise": [
+   "how"
+  ],
+  "kahan": [
+   "where"
+  ],
+  "kab": [
+   "when"
+  ],
+  "kyun": [
+   "why"
+  ],
+  "kya": [
+   "what"
+  ],
+  "nahi": [
+   "no",
+   "not"
+  ],
+  "nahin": [
+   "no",
+   "not"
+  ],
+  "haan": [
+   "yes"
+  ],
+  "theek": [
+   "okay",
+   "fine"
+  ],
+  "thik": [
+   "okay",
+   "fine"
+  ],
+  "accha": [
+   "good",
+   "okay"
+  ],
+  "acha": [
+   "good",
+   "okay"
+  ],
+  "achha": [
+   "good",
+   "okay"
+  ],
+  "mujhe": [
+   "I",
+   "to me"
+  ],
+  "mera": [
+   "my"
+  ],
+  "meri": [
+   "my"
+  ],
+  "mere": [
+   "my"
+  ],
+  "tumhara": [
+   "your"
+  ],
+  "aapka": [
+   "your"
+  ],
+  "aapki": [
+   "your"
+  ],
+  "aap": [
+   "you"
+  ],
+  "yeh": [
+   "this"
+  ],
+  "woh": [
+   "that"
+  ],
+  "hai": [
+   "is"
+  ],
+  "hain": [
+   "are"
+  ],
+  "tha": [
+   "was"
+  ],
+  "thi": [
+   "was"
+  ],
+  "hoga": [
+   "will be"
+  ],
+  "hogi": [
+   "will be"
+  ],
+  "karna": [
+   "to do"
+  ],
+  "karenge": [
+   "we will do"
+  ],
+  "karta": [
+   "do"
+  ],
+  "karti": [
+   "do"
+  ],
+  "kiya": [
+   "did"
+  ],
+  "raha": [
+   "is being"
+  ],
+  "rahi": [
+   "is being"
+  ],
+  "rahe": [
+   "are being"
+  ],
+  "samajh": [
+   "understand"
+  ],
+  "samjha": [
+   "understood"
+  ],
+  "dekho": [
+   "look"
+  ],
+  "suno": [
+   "listen"
+  ],
+  "batao": [
+   "tell me"
+  ],
+  "bolo": [
+   "say"
+  ],
+  "chalo": [
+   "let's go"
+  ],
+  "jaise": [
+   "like",
+   "for example"
+  ],
+  "wala": [
+   "the one"
+  ],
+  "yaar": [],
+  "bhai": [],
+  "mein": [
+   "in"
+  ],
+  "saath": [
+   "with"
+  ],
+  "paas": [
+   "near",
+   "with"
+  ],
+  "kuchh": [
+   "some"
+  ],
+  "dhanyavaad": [
+   "thank you"
+  ],
+  "shukriya": [
+   "thank you"
+  ],
+  "namaste": [
+   "hello"
+  ]
+ },
+ "te": {
+  "nenu": [
+   "I"
+  ],
+  "meeru": [
+   "you"
+  ],
+  "naaku": [
+   "to me",
+   "I"
+  ],
+  "meeku": [
+   "to you"
+  ],
+  "manam": [
+   "we"
+  ],
+  "ledu": [
+   "no",
+   "not"
+  ],
+  "undi": [
+   "is",
+   "there is"
+  ],
+  "unnayi": [
+   "are"
+  ],
+  "chala": [
+   "very",
+   "a lot"
+  ],
+  "enti": [
+   "what"
+  ],
+  "emiti": [
+   "what"
+  ],
+  "ekkada": [
+   "where"
+  ],
+  "eppudu": [
+   "when"
+  ],
+  "avunu": [
+   "yes"
+  ],
+  "kadu": [
+   "not"
+  ],
+  "kaadu": [
+   "not"
+  ],
+  "cheyyali": [
+   "should do"
+  ],
+  "cheppandi": [
+   "please tell"
+  ],
+  "chesanu": [
+   "I did"
+  ],
+  "chestunnanu": [
+   "I am doing"
+  ],
+  "antey": [
+   "that is",
+   "I mean"
+  ],
+  "kani": [
+   "but"
+  ],
+  "ayite": [
+   "so",
+   "then"
+  ],
+  "anni": [
+   "all"
+  ],
+  "konchem": [
+   "a little"
+  ],
+  "baagundi": [
+   "good"
+  ],
+  "telusu": [
+   "I know"
+  ],
+  "teliyadu": [
+   "I do not know"
+  ],
+  "vachindi": [
+   "it came"
+  ],
+  "vasthundi": [
+   "it comes"
+  ],
+  "okka": [
+   "one"
+  ],
+  "rendu": [
+   "two"
+  ]
+ },
+ "ta": {
+  "neenga": [
+   "you"
+  ],
+  "illa": [
+   "no",
+   "not"
+  ],
+  "illai": [
+   "no",
+   "not"
+  ],
+  "enna": [
+   "what"
+  ],
+  "eppadi": [
+   "how"
+  ],
+  "enga": [
+   "where"
+  ],
+  "romba": [
+   "very",
+   "a lot"
+  ],
+  "vanakkam": [
+   "hello"
+  ],
+  "nandri": [
+   "thank you"
+  ],
+  "panren": [
+   "I do"
+  ],
+  "pannunga": [
+   "please do"
+  ],
+  "irukku": [
+   "is",
+   "there is"
+  ],
+  "iruku": [
+   "is",
+   "there is"
+  ],
+  "theriyum": [
+   "I know"
+  ],
+  "theriyala": [
+   "I do not know"
+  ],
+  "venum": [
+   "I need",
+   "should"
+  ],
+  "vendam": [
+   "not needed"
+  ],
+  "aanal": [
+   "but"
+  ],
+  "appo": [
+   "then"
+  ],
+  "apdi": [
+   "like that"
+  ],
+  "ippo": [
+   "now"
+  ],
+  "podhum": [
+   "enough"
+  ],
+  "sollunga": [
+   "please tell"
+  ],
+  "sollu": [
+   "tell"
+  ],
+  "paaru": [
+   "look"
+  ]
+ },
+ "kn": {
+  "naanu": [
+   "I"
+  ],
+  "neevu": [
+   "you"
+  ],
+  "hegide": [
+   "how is it"
+  ],
+  "yaake": [
+   "why"
+  ],
+  "yenu": [
+   "what"
+  ],
+  "eega": [
+   "now"
+  ],
+  "tumba": [
+   "very",
+   "a lot"
+  ],
+  "chennagide": [
+   "it is good"
+  ],
+  "gottilla": [
+   "I do not know"
+  ],
+  "beku": [
+   "need",
+   "should"
+  ],
+  "bedi": [
+   "not needed"
+  ],
+  "maadtini": [
+   "I will do"
+  ],
+  "alli": [
+   "there"
+  ],
+  "illi": [
+   "here"
+  ],
+  "aaytu": [
+   "done",
+   "okay"
+  ]
+ }
+}

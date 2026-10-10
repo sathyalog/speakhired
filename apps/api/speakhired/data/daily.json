@@ -1,0 +1,2220 @@
+{
+ "_note": "Daily English for IT. Levels: foundation (everyday workplace words), professional (working in a team and with clients), expert (senior, architecture and leadership language). 'text' is what the learner says; 'aliases' are other accepted forms when they use the item in a sentence.",
+ "items": [
+  {
+   "id": "eod",
+   "kind": "abbreviation",
+   "text": "EOD",
+   "meaning": "End of day: by the end of today's working day.",
+   "example": "I will send the report by EOD.",
+   "prompt": "Your manager asks when the bug fix will be ready. Answer using EOD.",
+   "aliases": [
+    "end of day"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "eta",
+   "kind": "abbreviation",
+   "text": "ETA",
+   "meaning": "Estimated time of arrival or completion: when something should be done.",
+   "example": "The ETA for the release is Friday afternoon.",
+   "prompt": "A client asks when the feature will be live. Give an ETA.",
+   "aliases": [
+    "estimated time"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "lgtm",
+   "kind": "abbreviation",
+   "text": "LGTM",
+   "meaning": "Looks good to me: approval after a code review.",
+   "example": "Left two comments, but once they're fixed, LGTM.",
+   "prompt": "A teammate asks you to review their pull request. Reply with your verdict using LGTM.",
+   "aliases": [
+    "looks good to me"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "pr",
+   "kind": "abbreviation",
+   "text": "PR",
+   "meaning": "Pull request: a proposed code change waiting for review.",
+   "example": "I've opened a PR for the caching change.",
+   "prompt": "Ask a colleague to review your change, using PR.",
+   "aliases": [
+    "pull request"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "kt",
+   "kind": "abbreviation",
+   "text": "KT",
+   "meaning": "Knowledge transfer: a session where one person passes on what they know.",
+   "example": "Let's book a KT session before Priya goes on leave.",
+   "prompt": "Explain why you want a knowledge transfer session before a colleague leaves. Use KT.",
+   "aliases": [
+    "knowledge transfer"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "uat",
+   "kind": "abbreviation",
+   "text": "UAT",
+   "meaning": "User acceptance testing: the client checks the work before sign-off.",
+   "example": "The client signs off after UAT next week.",
+   "prompt": "Tell your manager the client's testing is next week. Use UAT.",
+   "aliases": [
+    "user acceptance testing"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "sla",
+   "kind": "abbreviation",
+   "text": "SLA",
+   "meaning": "Service level agreement: the promised response or uptime targets.",
+   "example": "Our SLA promises a reply within four hours.",
+   "prompt": "A customer asks how fast you respond. Answer using SLA.",
+   "aliases": [
+    "service level agreement"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "rca",
+   "kind": "abbreviation",
+   "text": "RCA",
+   "meaning": "Root cause analysis: finding why something failed, not just fixing it.",
+   "example": "We wrote an RCA after the outage.",
+   "prompt": "Explain that you will write an RCA after the incident. Use RCA.",
+   "aliases": [
+    "root cause analysis"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "tldr",
+   "kind": "abbreviation",
+   "text": "TL;DR",
+   "meaning": "Too long, didn't read: a short summary at the top.",
+   "example": "TL;DR: the migration is done and the tests pass.",
+   "prompt": "Start a short update with a TL;DR about your project.",
+   "aliases": [
+    "tl dr",
+    "too long"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "ooo",
+   "kind": "abbreviation",
+   "text": "OOO",
+   "meaning": "Out of office: you are not working that day.",
+   "example": "I'll be OOO on Monday.",
+   "prompt": "Reply to a meeting invite saying you are out of office on Monday. Use OOO.",
+   "aliases": [
+    "out of office"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "bau",
+   "kind": "abbreviation",
+   "text": "BAU",
+   "meaning": "Business as usual: the regular work, not a special project.",
+   "example": "Support tickets are BAU for the team.",
+   "prompt": "Say that answering support tickets is normal daily work. Use BAU.",
+   "aliases": [
+    "business as usual"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "poc",
+   "kind": "abbreviation",
+   "text": "PoC",
+   "meaning": "Proof of concept: a small test that shows an idea can work.",
+   "example": "We built a PoC before committing to the plan.",
+   "prompt": "Explain that you built a small test first. Use PoC.",
+   "aliases": [
+    "proof of concept"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "mvp",
+   "kind": "abbreviation",
+   "text": "MVP",
+   "meaning": "Minimum viable product: the smallest version that is still useful.",
+   "example": "Let's ship the MVP first and add features later.",
+   "prompt": "Suggest launching the smallest useful version first. Use MVP.",
+   "aliases": [
+    "minimum viable product"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "api",
+   "kind": "abbreviation",
+   "text": "API",
+   "meaning": "Application programming interface: how two programs talk to each other.",
+   "example": "The payments API returns the status in JSON.",
+   "prompt": "Explain to a non-technical manager what an API is. Use API.",
+   "aliases": [
+    "application programming interface"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "ci-cd",
+   "kind": "term",
+   "text": "CI/CD",
+   "meaning": "Continuous integration and delivery: every change is built, tested and released automatically.",
+   "example": "Every merge runs through our CI/CD pipeline.",
+   "prompt": "Explain in one sentence what CI/CD means to a new team member.",
+   "aliases": [
+    "cicd",
+    "continuous integration",
+    "continuous delivery"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "tech-debt",
+   "kind": "term",
+   "text": "tech debt",
+   "meaning": "Shortcuts in the code that make future work slower.",
+   "example": "We'll schedule time to pay down tech debt.",
+   "prompt": "Tell your manager why the team should fix some old code. Use tech debt.",
+   "aliases": [
+    "technical debt"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "edge-case",
+   "kind": "term",
+   "text": "edge case",
+   "meaning": "A rare input or situation that the normal logic doesn't cover well.",
+   "example": "Did you test the empty-cart edge case?",
+   "prompt": "Ask a colleague whether they tested an unusual situation. Use edge case.",
+   "aliases": [
+    "edge cases"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "acceptance-criteria",
+   "kind": "term",
+   "text": "acceptance criteria",
+   "meaning": "The conditions a feature must meet to be accepted as done.",
+   "example": "The acceptance criteria are in the ticket.",
+   "prompt": "Ask the product owner what the acceptance criteria are. Use acceptance criteria.",
+   "aliases": [
+    "acceptance criterion"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "hotfix",
+   "kind": "term",
+   "text": "hotfix",
+   "meaning": "An urgent fix released straight to production.",
+   "example": "We pushed a hotfix for the login bug.",
+   "prompt": "Say you will release an urgent fix tonight. Use hotfix.",
+   "aliases": [
+    "hot fix"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "rollback",
+   "kind": "term",
+   "text": "rollback",
+   "meaning": "Returning to the previous working version after a bad release.",
+   "example": "We rolled back the release within ten minutes.",
+   "prompt": "Explain that you reverted the release. Use rollback.",
+   "aliases": [
+    "roll back",
+    "rolled back"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "workaround",
+   "kind": "term",
+   "text": "workaround",
+   "meaning": "A temporary way around a problem until the real fix is ready.",
+   "example": "The workaround keeps checkout running until Friday.",
+   "prompt": "Explain a temporary fix to a stakeholder. Use workaround.",
+   "aliases": [
+    "work around"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "dependency",
+   "kind": "term",
+   "text": "dependency",
+   "meaning": "Something your work needs before it can finish, such as another team or service.",
+   "example": "We're blocked by a dependency on the payments team.",
+   "prompt": "Say your task depends on another team's work. Use dependency.",
+   "aliases": [
+    "dependencies"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "backlog-refinement",
+   "kind": "term",
+   "text": "backlog refinement",
+   "meaning": "A meeting to prepare upcoming tasks so the team can estimate them.",
+   "example": "Backlog refinement is on Thursday.",
+   "prompt": "Invite a colleague to the refinement meeting. Use backlog refinement.",
+   "aliases": [
+    "refinement",
+    "grooming"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "retro",
+   "kind": "term",
+   "text": "retro",
+   "meaning": "A short team meeting to review what went well and what to improve.",
+   "example": "Let's talk about it in the retro.",
+   "prompt": "Suggest raising a problem in the sprint retro. Use retro.",
+   "aliases": [
+    "retrospective"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "stand-up",
+   "kind": "term",
+   "text": "stand-up",
+   "meaning": "A short daily team update on progress and blockers.",
+   "example": "I'll mention it in stand-up tomorrow.",
+   "prompt": "Say you'll raise the issue at the daily stand-up. Use stand-up.",
+   "aliases": [
+    "standup",
+    "stand up"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "scope-creep",
+   "kind": "term",
+   "text": "scope creep",
+   "meaning": "Extra work added to a project without changing the plan or the time.",
+   "example": "Those extra features are scope creep.",
+   "prompt": "Politely say a new request is beyond the agreed work. Use scope creep.",
+   "aliases": [
+    "scope creep"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "low-hanging-fruit",
+   "kind": "term",
+   "text": "low-hanging fruit",
+   "meaning": "Quick, easy improvements that give a good result for little effort.",
+   "example": "Caching the lookup is low-hanging fruit.",
+   "prompt": "Suggest an easy speed improvement to the team. Use low-hanging fruit.",
+   "aliases": [
+    "low hanging fruit",
+    "quick win"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "deep-dive",
+   "kind": "term",
+   "text": "deep dive",
+   "meaning": "A detailed look at one topic.",
+   "example": "Let's do a deep dive on the outage.",
+   "prompt": "Propose a detailed review of a problem. Use deep dive.",
+   "aliases": [
+    "deep-dive"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "circle-back",
+   "kind": "phrase",
+   "text": "I'll circle back",
+   "meaning": "I'll return to this later, when I have the answer.",
+   "example": "I'll circle back with the numbers tomorrow.",
+   "prompt": "Someone asks a question you can't answer now. Reply using 'circle back'.",
+   "aliases": [
+    "circle back"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "blocked-on",
+   "kind": "phrase",
+   "text": "I'm blocked on",
+   "meaning": "I can't continue until someone or something is ready.",
+   "example": "I'm blocked on the test environment.",
+   "prompt": "Tell your manager you can't continue without the test environment. Use 'blocked on'.",
+   "aliases": [
+    "blocked on",
+    "blocker"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "clarify",
+   "kind": "phrase",
+   "text": "Could you clarify",
+   "meaning": "A polite way to ask for more detail.",
+   "example": "Could you clarify what 'done' means here?",
+   "prompt": "You didn't understand the requirement. Ask for clarification politely.",
+   "aliases": [
+    "clarify",
+    "can you clarify"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "double-check",
+   "kind": "phrase",
+   "text": "Let me double-check",
+   "meaning": "I'll confirm this before I say it is correct.",
+   "example": "Let me double-check the figures before I send them.",
+   "prompt": "Tell a client you will confirm the numbers before sending them. Use 'double-check'.",
+   "aliases": [
+    "double check"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "heads-up",
+   "kind": "phrase",
+   "text": "Heads-up",
+   "meaning": "A short warning about something coming.",
+   "example": "Heads-up, the deployment moves to six pm.",
+   "prompt": "Warn your team that the release time changed. Start with 'Heads-up'.",
+   "aliases": [
+    "heads up"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "park-it",
+   "kind": "phrase",
+   "text": "Let's park it",
+   "meaning": "Let's leave this topic for now and come back later.",
+   "example": "Let's park it and discuss it after the release.",
+   "prompt": "Suggest postponing a discussion that is off-topic. Use 'park it'.",
+   "aliases": [
+    "park it",
+    "parking lot"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "on-track",
+   "kind": "phrase",
+   "text": "We're on track",
+   "meaning": "The work is progressing as planned.",
+   "example": "We're on track for the Friday release.",
+   "prompt": "Give your manager a quick progress update. Use 'on track'.",
+   "aliases": [
+    "on track"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "follow-up",
+   "kind": "phrase",
+   "text": "I'll follow up",
+   "meaning": "I'll contact you again about this.",
+   "example": "I'll follow up with the client on Monday.",
+   "prompt": "Tell a colleague you will remind the client on Monday. Use 'follow up'.",
+   "aliases": [
+    "follow-up",
+    "follow up"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "sign-off",
+   "kind": "phrase",
+   "text": "Sign-off",
+   "meaning": "Formal approval that the work is accepted.",
+   "example": "We need sign-off from the product owner.",
+   "prompt": "Ask the product owner to approve the work. Use 'sign-off'.",
+   "aliases": [
+    "signed off",
+    "sign off"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "flag-this",
+   "kind": "phrase",
+   "text": "Flag this",
+   "meaning": "Point out a risk or problem so people notice it.",
+   "example": "I'll flag this risk in the status report.",
+   "prompt": "Tell your lead you will raise a risk in the report. Use 'flag'.",
+   "aliases": [
+    "flag",
+    "flagging"
+   ],
+   "level": "professional"
+  },
+  {
+   "id": "sounds-good",
+   "kind": "phrase",
+   "text": "Sounds good",
+   "meaning": "A friendly way to agree to a plan.",
+   "example": "Sounds good, let's go with option two.",
+   "prompt": "Agree politely to a suggested plan. Use 'sounds good'.",
+   "aliases": [
+    "that sounds good"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "wfh",
+   "kind": "abbreviation",
+   "text": "WFH",
+   "meaning": "Work from home.",
+   "example": "I'm WFH on Friday, but I'm online all day.",
+   "prompt": "Tell your team you are working from home on Friday. Use WFH.",
+   "aliases": [
+    "work from home"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "fyi",
+   "kind": "abbreviation",
+   "text": "FYI",
+   "meaning": "For your information: sharing something, no action needed.",
+   "example": "FYI, the meeting room has moved to level two.",
+   "prompt": "Send a colleague a note about a room change, using FYI.",
+   "aliases": [
+    "for your information"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "asap",
+   "kind": "abbreviation",
+   "text": "ASAP",
+   "meaning": "As soon as possible.",
+   "example": "Can you check the logs ASAP?",
+   "prompt": "Ask a colleague to look at a bug quickly. Use ASAP.",
+   "aliases": [
+    "as soon as possible"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "tbd",
+   "kind": "abbreviation",
+   "text": "TBD",
+   "meaning": "To be decided or confirmed later.",
+   "example": "The venue is TBD.",
+   "prompt": "Tell your manager the venue is not decided yet. Use TBD.",
+   "aliases": [
+    "to be decided",
+    "to be confirmed"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "on-it",
+   "kind": "phrase",
+   "text": "I'm on it",
+   "meaning": "I'll take care of it now.",
+   "example": "Thanks for flagging that, I'm on it.",
+   "prompt": "Reply to a colleague who asked you to fix a bug. Use 'I'm on it'.",
+   "aliases": [
+    "i'm on it",
+    "on it"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "lets-sync",
+   "kind": "phrase",
+   "text": "Let's sync up",
+   "meaning": "Let's talk briefly to share updates.",
+   "example": "Let's sync up after lunch about the release.",
+   "prompt": "Suggest a short call with a teammate later today. Use 'sync up'.",
+   "aliases": [
+    "sync up",
+    "sync"
+   ],
+   "level": "foundation"
+  },
+  {
+   "id": "blast-radius",
+   "kind": "term",
+   "text": "blast radius",
+   "meaning": "The impact a change or failure could have if it goes wrong.",
+   "example": "We limited the blast radius by rolling out to one region first.",
+   "prompt": "Explain to your director why the rollout starts with one region. Use 'blast radius'.",
+   "aliases": [
+    "blast radius"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "backpressure",
+   "kind": "term",
+   "text": "backpressure",
+   "meaning": "A way for a slow part of a system to slow the parts that feed it.",
+   "example": "Without backpressure, the queue grew until the service fell over.",
+   "prompt": "Explain why the queue needs backpressure. Use 'backpressure'.",
+   "aliases": [
+    "back pressure"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "idempotent",
+   "kind": "term",
+   "text": "idempotent",
+   "meaning": "Doing an operation twice has the same effect as doing it once.",
+   "example": "We made the payment endpoint idempotent so retries are safe.",
+   "prompt": "A reviewer asks why retries are safe. Use 'idempotent'.",
+   "aliases": [
+    "idempotency"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "eventual-consistency",
+   "kind": "term",
+   "text": "eventual consistency",
+   "meaning": "Copies of data catch up with each other after a short delay.",
+   "example": "The read model uses eventual consistency, so counts can lag by seconds.",
+   "prompt": "Explain to a product manager why a count can lag. Use 'eventual consistency'.",
+   "aliases": [
+    "eventually consistent"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "trade-off",
+   "kind": "term",
+   "text": "trade-off",
+   "meaning": "Gaining one good thing by accepting a cost somewhere else.",
+   "example": "The trade-off is faster delivery against more maintenance later.",
+   "prompt": "Present two options and the trade-off between them. Use 'trade-off'.",
+   "aliases": [
+    "tradeoff",
+    "trade off"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "source-of-truth",
+   "kind": "phrase",
+   "text": "single source of truth",
+   "meaning": "The one authoritative place where a piece of data is kept.",
+   "example": "Finance is the single source of truth for invoices.",
+   "prompt": "Say which system should own customer records. Use 'single source of truth'.",
+   "aliases": [
+    "source of truth"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "error-budget",
+   "kind": "term",
+   "text": "error budget",
+   "meaning": "How much unreliability a service may have before work shifts to reliability.",
+   "example": "We ran out of error budget, so we paused feature releases.",
+   "prompt": "Explain why you are pausing releases this sprint. Use 'error budget'.",
+   "aliases": [
+    "error budgets"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "slo",
+   "kind": "abbreviation",
+   "text": "SLO",
+   "meaning": "Service level objective: the internal reliability target.",
+   "example": "Our SLO is 99.9 percent availability each month.",
+   "prompt": "Explain the reliability target to a new product owner. Use SLO.",
+   "aliases": [
+    "service level objective"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "toil",
+   "kind": "term",
+   "text": "toil",
+   "meaning": "Repetitive manual operational work that could be automated.",
+   "example": "Renewing certificates by hand was toil, so we automated it.",
+   "prompt": "Argue for automating a weekly manual task. Use 'toil'.",
+   "aliases": [
+    "toil"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "blameless-postmortem",
+   "kind": "phrase",
+   "text": "blameless postmortem",
+   "meaning": "A review of an incident that looks at causes and fixes, not at people.",
+   "example": "We held a blameless postmortem and shared the actions.",
+   "prompt": "Describe how you will review the outage without blaming anyone. Use 'blameless postmortem'.",
+   "aliases": [
+    "postmortem",
+    "post-mortem"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "canary-release",
+   "kind": "phrase",
+   "text": "canary release",
+   "meaning": "Releasing to a small share of users first, to catch problems early.",
+   "example": "The canary release went to five percent of traffic first.",
+   "prompt": "Propose releasing a risky change gradually. Use 'canary release'.",
+   "aliases": [
+    "canary",
+    "canary deployment"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "feature-flag",
+   "kind": "phrase",
+   "text": "feature flag",
+   "meaning": "A switch that turns a feature on or off without a new release.",
+   "example": "We hid the new checkout behind a feature flag.",
+   "prompt": "Explain how you would release unfinished code safely. Use 'feature flag'.",
+   "aliases": [
+    "feature toggle"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "circuit-breaker",
+   "kind": "term",
+   "text": "circuit breaker",
+   "meaning": "A pattern that stops calls to a failing service for a while.",
+   "example": "A circuit breaker stops retries piling up on the failing service.",
+   "prompt": "Explain how the app avoids hammering a failing dependency. Use 'circuit breaker'.",
+   "aliases": [
+    "circuit breakers"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "observability",
+   "kind": "term",
+   "text": "observability",
+   "meaning": "Understanding a system's health from its logs, metrics and traces.",
+   "example": "Better observability halved our investigation time.",
+   "prompt": "Ask for budget to improve monitoring. Use 'observability'.",
+   "aliases": [
+    "observable"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "technical-roadmap",
+   "kind": "phrase",
+   "text": "technical roadmap",
+   "meaning": "A plan of the technical work for the coming quarters.",
+   "example": "Platform stability is the first item on the technical roadmap.",
+   "prompt": "Tell the leadership team what goes on the roadmap next. Use 'technical roadmap'.",
+   "aliases": [
+    "roadmap"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "descope",
+   "kind": "term",
+   "text": "descope",
+   "meaning": "Remove work from a plan to meet a date.",
+   "example": "We had to descope the reporting module to hit the deadline.",
+   "prompt": "Propose removing a feature to meet the date. Use 'descope'.",
+   "aliases": [
+    "de-scope",
+    "descoping"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "de-risk",
+   "kind": "term",
+   "text": "de-risk",
+   "meaning": "Reduce the chance that a plan fails.",
+   "example": "We prototyped the integration to de-risk it.",
+   "prompt": "Explain why you prototype before committing. Use 'de-risk'.",
+   "aliases": [
+    "derisk",
+    "de risk"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "bus-factor",
+   "kind": "phrase",
+   "text": "bus factor",
+   "meaning": "How many people could leave before a project is in trouble.",
+   "example": "Only one engineer knows the billing code, so our bus factor is one.",
+   "prompt": "Point out a knowledge risk in the team. Use 'bus factor'.",
+   "aliases": [],
+   "level": "expert"
+  },
+  {
+   "id": "push-back",
+   "kind": "phrase",
+   "text": "push back",
+   "meaning": "Respectfully disagree with, or refuse, a request, giving reasons.",
+   "example": "I'd like to push back on the deadline, because testing needs two weeks.",
+   "prompt": "Politely disagree with an unrealistic deadline. Use 'push back'.",
+   "aliases": [
+    "pushback",
+    "push back on"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "nit",
+   "kind": "term",
+   "text": "nit",
+   "meaning": "A small, optional comment in a code review.",
+   "example": "Nit: rename this variable for clarity.",
+   "prompt": "Leave a small optional suggestion on a pull request. Use 'nit'.",
+   "aliases": [
+    "nitpick",
+    "nit pick"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "north-star",
+   "kind": "phrase",
+   "text": "north star",
+   "meaning": "The one goal every decision is measured against.",
+   "example": "Customer retention is our north star this year.",
+   "prompt": "Explain the goal the team should measure everything against. Use 'north star'.",
+   "aliases": [
+    "north star metric"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "bikeshedding",
+   "kind": "term",
+   "text": "bikeshedding",
+   "meaning": "Spending a lot of time on small, easy decisions while the big one waits.",
+   "example": "We spent an hour on the logo colour, which is bikeshedding.",
+   "prompt": "Tell the meeting you need to focus on the bigger decision. Use 'bikeshedding'.",
+   "aliases": [
+    "bike shedding"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "paved-road",
+   "kind": "phrase",
+   "text": "paved road",
+   "meaning": "The standard, supported way of doing something that teams are encouraged to use.",
+   "example": "Teams use the paved road for deployments unless they have a reason not to.",
+   "prompt": "Explain why teams should use the standard deployment path. Use 'paved road'.",
+   "aliases": [
+    "golden path"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "guardrails",
+   "kind": "term",
+   "text": "guardrails",
+   "meaning": "Checks and limits that keep a process safe without blocking people.",
+   "example": "We set guardrails on spending so teams can experiment safely.",
+   "prompt": "Describe the checks you would put around AI tools in production. Use 'guardrails'.",
+   "aliases": [
+    "guardrail"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "deprecate",
+   "kind": "term",
+   "text": "deprecate",
+   "meaning": "Mark a feature as going away, with a date and a replacement.",
+   "example": "We will deprecate the v1 API next year, with six months' notice.",
+   "prompt": "Tell customers an old API is being retired. Use 'deprecate'.",
+   "aliases": [
+    "deprecation",
+    "deprecated"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "mitigate",
+   "kind": "term",
+   "text": "mitigate",
+   "meaning": "Reduce the impact of a problem before it is fully fixed.",
+   "example": "We mitigate the outage by failing over to the backup region, then fix the cause later.",
+   "prompt": "Explain the temporary action you took during an outage. Use 'mitigate'.",
+   "aliases": [
+    "mitigation"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "stakeholder-alignment",
+   "kind": "phrase",
+   "text": "stakeholder alignment",
+   "meaning": "Agreement among the people affected about direction and priorities.",
+   "example": "Stakeholder alignment took three workshops before we started.",
+   "prompt": "Explain how you will get product, legal and sales agreeing. Use 'stakeholder alignment'.",
+   "aliases": [
+    "aligned with stakeholders",
+    "alignment"
+   ],
+   "level": "expert"
+  },
+  {
+   "id": "btw",
+   "level": "foundation",
+   "kind": "abbreviation",
+   "text": "BTW",
+   "meaning": "By the way: adding a side note.",
+   "example": "BTW, the client prefers email over calls.",
+   "prompt": "Say what 'BTW' means to a colleague in one sentence. Use 'BTW'.",
+   "aliases": [
+    "by the way"
+   ]
+  },
+  {
+   "id": "cc",
+   "level": "foundation",
+   "kind": "abbreviation",
+   "text": "CC",
+   "meaning": "Copy: include someone on an email so they can see it.",
+   "example": "I've CC'd Ravi so he knows about the change.",
+   "prompt": "Say what 'CC' means to a colleague in one sentence. Use 'CC'.",
+   "aliases": [
+    "copy"
+   ]
+  },
+  {
+   "id": "thanks-in-advance",
+   "level": "foundation",
+   "kind": "phrase",
+   "text": "thanks in advance",
+   "meaning": "Thank you before the other person has done the task.",
+   "example": "Thanks in advance for reviewing the document.",
+   "prompt": "Say what 'thanks in advance' means to a colleague in one sentence. Use 'thanks in advance'.",
+   "aliases": [
+    "thank you in advance"
+   ]
+  },
+  {
+   "id": "happy-to-help",
+   "level": "foundation",
+   "kind": "phrase",
+   "text": "happy to help",
+   "meaning": "A polite way to say you will assist.",
+   "example": "Happy to help with the migration on Tuesday.",
+   "prompt": "Say what 'happy to help' means to a colleague in one sentence. Use 'happy to help'.",
+   "aliases": [
+    "glad to help"
+   ]
+  },
+  {
+   "id": "no-worries",
+   "level": "foundation",
+   "kind": "phrase",
+   "text": "no worries",
+   "meaning": "It's fine, you don't need to apologise.",
+   "example": "No worries, we can move the call to tomorrow.",
+   "prompt": "Say what 'no worries' means to a colleague in one sentence. Use 'no worries'.",
+   "aliases": [
+    "no problem"
+   ]
+  },
+  {
+   "id": "sorry-for-delay",
+   "level": "foundation",
+   "kind": "phrase",
+   "text": "sorry for the delay",
+   "meaning": "An apology for replying or delivering late.",
+   "example": "Sorry for the delay, I was in a workshop all morning.",
+   "prompt": "Say what 'sorry for the delay' means to a colleague in one sentence. Use 'sorry for the delay'.",
+   "aliases": [
+    "sorry for the late reply"
+   ]
+  },
+  {
+   "id": "let-me-know",
+   "level": "foundation",
+   "kind": "phrase",
+   "text": "let me know",
+   "meaning": "Please tell me when you have an answer.",
+   "example": "Let me know if the timing works for you.",
+   "prompt": "Say what 'let me know' means to a colleague in one sentence. Use 'let me know'.",
+   "aliases": [
+    "tell me"
+   ]
+  },
+  {
+   "id": "get-back",
+   "level": "foundation",
+   "kind": "phrase",
+   "text": "I'll get back to you",
+   "meaning": "I'll reply later, once I have the information.",
+   "example": "I'll get back to you once the logs are checked.",
+   "prompt": "Say what 'I'll get back to you' means to a colleague in one sentence. Use 'I'll get back to you'.",
+   "aliases": [
+    "get back to you"
+   ]
+  },
+  {
+   "id": "could-you-send",
+   "level": "foundation",
+   "kind": "phrase",
+   "text": "could you send me",
+   "meaning": "A polite request for a document or detail.",
+   "example": "Could you send me the latest version of the spec?",
+   "prompt": "Say what 'could you send me' means to a colleague in one sentence. Use 'could you send me'.",
+   "aliases": [
+    "can you send me"
+   ]
+  },
+  {
+   "id": "checking-in",
+   "level": "foundation",
+   "kind": "phrase",
+   "text": "just checking in",
+   "meaning": "A gentle follow-up on something you asked earlier.",
+   "example": "Just checking in about the invoice from last week.",
+   "prompt": "Say what 'just checking in' means to a colleague in one sentence. Use 'just checking in'.",
+   "aliases": [
+    "check in on"
+   ]
+  },
+  {
+   "id": "running-late",
+   "level": "foundation",
+   "kind": "phrase",
+   "text": "running late",
+   "meaning": "You will arrive or reply later than planned.",
+   "example": "I'm running late, so please start without me.",
+   "prompt": "Say what 'running late' means to a colleague in one sentence. Use 'running late'.",
+   "aliases": [
+    "running behind"
+   ]
+  },
+  {
+   "id": "free-at",
+   "level": "foundation",
+   "kind": "phrase",
+   "text": "I'm free at",
+   "meaning": "Telling someone when you are available.",
+   "example": "I'm free at three o'clock, if that suits you.",
+   "prompt": "Say what 'I'm free at' means to a colleague in one sentence. Use 'I'm free at'.",
+   "aliases": [
+    "available at"
+   ]
+  },
+  {
+   "id": "good-time",
+   "level": "foundation",
+   "kind": "phrase",
+   "text": "is this a good time",
+   "meaning": "A polite way to check someone can talk now.",
+   "example": "Is this a good time to talk about the report?",
+   "prompt": "Say what 'is this a good time' means to a colleague in one sentence. Use 'is this a good time'.",
+   "aliases": [
+    "convenient time"
+   ]
+  },
+  {
+   "id": "reschedule",
+   "level": "foundation",
+   "kind": "term",
+   "text": "reschedule",
+   "meaning": "Move a meeting or task to a different time.",
+   "example": "Can we reschedule the review to Thursday?",
+   "prompt": "Say what 'reschedule' means to a colleague in one sentence. Use 'reschedule'.",
+   "aliases": [
+    "re-schedule",
+    "rescheduled"
+   ]
+  },
+  {
+   "id": "wip",
+   "level": "foundation",
+   "kind": "abbreviation",
+   "text": "WIP",
+   "meaning": "Work in progress: something not finished yet.",
+   "example": "The design is still WIP, so please don't share it.",
+   "prompt": "Say what 'WIP' means to a colleague in one sentence. Use 'WIP'.",
+   "aliases": [
+    "work in progress"
+   ]
+  },
+  {
+   "id": "qa",
+   "level": "foundation",
+   "kind": "abbreviation",
+   "text": "Q&A",
+   "meaning": "Questions and answers, or quality assurance testing.",
+   "example": "We'll finish with a short Q&A session.",
+   "prompt": "Say what 'Q&A' means to a colleague in one sentence. Use 'Q&A'.",
+   "aliases": [
+    "q and a",
+    "qa"
+   ]
+  },
+  {
+   "id": "agenda",
+   "level": "foundation",
+   "kind": "term",
+   "text": "agenda",
+   "meaning": "The list of topics for a meeting.",
+   "example": "Please add your point to the agenda before Monday.",
+   "prompt": "Say what 'agenda' means to a colleague in one sentence. Use 'agenda'.",
+   "aliases": [
+    "agendas"
+   ]
+  },
+  {
+   "id": "action-items",
+   "level": "foundation",
+   "kind": "phrase",
+   "text": "action items",
+   "meaning": "Tasks agreed in a meeting, with an owner.",
+   "example": "Let's review the action items at the end of the call.",
+   "prompt": "Say what 'action items' means to a colleague in one sentence. Use 'action items'.",
+   "aliases": [
+    "actions"
+   ]
+  },
+  {
+   "id": "minutes",
+   "level": "foundation",
+   "kind": "term",
+   "text": "minutes",
+   "meaning": "The written record of what was said in a meeting.",
+   "example": "I'll share the minutes after the call.",
+   "prompt": "Say what 'minutes' means to a colleague in one sentence. Use 'minutes'.",
+   "aliases": [
+    "meeting notes"
+   ]
+  },
+  {
+   "id": "deadline",
+   "level": "foundation",
+   "kind": "term",
+   "text": "deadline",
+   "meaning": "The date or time by which something must be done.",
+   "example": "The deadline for the report is Friday noon.",
+   "prompt": "Say what 'deadline' means to a colleague in one sentence. Use 'deadline'.",
+   "aliases": [
+    "due date"
+   ]
+  },
+  {
+   "id": "deliverable",
+   "level": "foundation",
+   "kind": "term",
+   "text": "deliverable",
+   "meaning": "A piece of work that is handed over at the end of a task.",
+   "example": "The main deliverable is the test report.",
+   "prompt": "Say what 'deliverable' means to a colleague in one sentence. Use 'deliverable'.",
+   "aliases": [
+    "deliverables"
+   ]
+  },
+  {
+   "id": "milestone",
+   "level": "foundation",
+   "kind": "term",
+   "text": "milestone",
+   "meaning": "An important point in a project, often a checkpoint.",
+   "example": "We reached the first milestone on time.",
+   "prompt": "Say what 'milestone' means to a colleague in one sentence. Use 'milestone'.",
+   "aliases": [
+    "milestones"
+   ]
+  },
+  {
+   "id": "priority",
+   "level": "foundation",
+   "kind": "term",
+   "text": "priority",
+   "meaning": "What must be done before other things.",
+   "example": "Login bugs are the top priority this week.",
+   "prompt": "Say what 'priority' means to a colleague in one sentence. Use 'priority'.",
+   "aliases": [
+    "priorities"
+   ]
+  },
+  {
+   "id": "reminder",
+   "level": "foundation",
+   "kind": "term",
+   "text": "reminder",
+   "meaning": "A message to help someone remember something.",
+   "example": "I've set a reminder for the client call.",
+   "prompt": "Say what 'reminder' means to a colleague in one sentence. Use 'reminder'.",
+   "aliases": [
+    "reminders"
+   ]
+  },
+  {
+   "id": "status-update",
+   "level": "foundation",
+   "kind": "phrase",
+   "text": "status update",
+   "meaning": "A short report on progress.",
+   "example": "Here's a quick status update on the migration.",
+   "prompt": "Say what 'status update' means to a colleague in one sentence. Use 'status update'.",
+   "aliases": [
+    "status report",
+    "update"
+   ]
+  },
+  {
+   "id": "ticket",
+   "level": "foundation",
+   "kind": "term",
+   "text": "ticket",
+   "meaning": "A tracked request or task in a work system.",
+   "example": "I've raised a ticket for the broken export.",
+   "prompt": "Say what 'ticket' means to a colleague in one sentence. Use 'ticket'.",
+   "aliases": [
+    "tickets",
+    "jira ticket"
+   ]
+  },
+  {
+   "id": "bug",
+   "level": "foundation",
+   "kind": "term",
+   "text": "bug",
+   "meaning": "A mistake in software that makes it behave wrongly.",
+   "example": "We found a bug in the discount logic.",
+   "prompt": "Say what 'bug' means to a colleague in one sentence. Use 'bug'.",
+   "aliases": [
+    "bugs"
+   ]
+  },
+  {
+   "id": "release",
+   "level": "foundation",
+   "kind": "term",
+   "text": "release",
+   "meaning": "A version of software made available to users.",
+   "example": "The next release goes out on Tuesday.",
+   "prompt": "Say what 'release' means to a colleague in one sentence. Use 'release'.",
+   "aliases": [
+    "releases",
+    "released"
+   ]
+  },
+  {
+   "id": "deploy",
+   "level": "foundation",
+   "kind": "term",
+   "text": "deploy",
+   "meaning": "Put new software live on a server.",
+   "example": "We deploy to staging every morning.",
+   "prompt": "Say what 'deploy' means to a colleague in one sentence. Use 'deploy'.",
+   "aliases": [
+    "deployed",
+    "deployment"
+   ]
+  },
+  {
+   "id": "staging",
+   "level": "foundation",
+   "kind": "term",
+   "text": "staging",
+   "meaning": "A test environment that is close to live.",
+   "example": "Please test the feature on staging first.",
+   "prompt": "Say what 'staging' means to a colleague in one sentence. Use 'staging'.",
+   "aliases": [
+    "staging environment"
+   ]
+  },
+  {
+   "id": "production",
+   "level": "foundation",
+   "kind": "term",
+   "text": "production",
+   "meaning": "The live system that real users use.",
+   "example": "The bug reached production last night.",
+   "prompt": "Say what 'production' means to a colleague in one sentence. Use 'production'.",
+   "aliases": [
+    "prod"
+   ]
+  },
+  {
+   "id": "backup",
+   "level": "foundation",
+   "kind": "term",
+   "text": "backup",
+   "meaning": "A copy of data kept in case the original is lost.",
+   "example": "Make a backup before you change the database.",
+   "prompt": "Say what 'backup' means to a colleague in one sentence. Use 'backup'.",
+   "aliases": [
+    "backups"
+   ]
+  },
+  {
+   "id": "login",
+   "level": "foundation",
+   "kind": "term",
+   "text": "login",
+   "meaning": "The step where a user proves who they are to use a system.",
+   "example": "The login page is loading slowly.",
+   "prompt": "Say what 'login' means to a colleague in one sentence. Use 'login'.",
+   "aliases": [
+    "log in",
+    "sign in"
+   ]
+  },
+  {
+   "id": "meeting",
+   "level": "foundation",
+   "kind": "term",
+   "text": "meeting",
+   "meaning": "An event where people gather to discuss something.",
+   "example": "We have a meeting at ten about the release.",
+   "prompt": "Say what 'meeting' means to a colleague in one sentence. Use 'meeting'.",
+   "aliases": [
+    "meetings"
+   ]
+  },
+  {
+   "id": "one-on-one",
+   "level": "foundation",
+   "kind": "phrase",
+   "text": "one-on-one",
+   "meaning": "A private meeting between two people, often a manager and a team member.",
+   "example": "I have a one-on-one with my manager on Friday.",
+   "prompt": "Say what 'one-on-one' means to a colleague in one sentence. Use 'one-on-one'.",
+   "aliases": [
+    "1:1",
+    "one to one"
+   ]
+  },
+  {
+   "id": "on-leave",
+   "level": "foundation",
+   "kind": "phrase",
+   "text": "on leave",
+   "meaning": "Away from work for holiday or other reasons.",
+   "example": "Priya is on leave until the twentieth.",
+   "prompt": "Say what 'on leave' means to a colleague in one sentence. Use 'on leave'.",
+   "aliases": [
+    "annual leave",
+    "holiday"
+   ]
+  },
+  {
+   "id": "handover",
+   "level": "foundation",
+   "kind": "term",
+   "text": "handover",
+   "meaning": "Passing your work and knowledge to someone else.",
+   "example": "I'll prepare a handover before I go on leave.",
+   "prompt": "Say what 'handover' means to a colleague in one sentence. Use 'handover'.",
+   "aliases": [
+    "hand over"
+   ]
+  },
+  {
+   "id": "check-in",
+   "level": "foundation",
+   "kind": "term",
+   "text": "check-in",
+   "meaning": "A short conversation to see how things are going.",
+   "example": "Let's have a quick check-in at the end of the week.",
+   "prompt": "Say what 'check-in' means to a colleague in one sentence. Use 'check-in'.",
+   "aliases": [
+    "checkin",
+    "check in"
+   ]
+  },
+  {
+   "id": "log-in",
+   "level": "foundation",
+   "kind": "phrase",
+   "text": "log in",
+   "meaning": "To access a system with your username and password.",
+   "example": "I can't log in to the staging server.",
+   "prompt": "Say what 'log in' means to a colleague in one sentence. Use 'log in'.",
+   "aliases": [
+    "log on"
+   ]
+  },
+  {
+   "id": "issue",
+   "level": "foundation",
+   "kind": "term",
+   "text": "issue",
+   "meaning": "A problem that needs attention.",
+   "example": "There's an issue with the payment page.",
+   "prompt": "Say what 'issue' means to a colleague in one sentence. Use 'issue'.",
+   "aliases": [
+    "issues"
+   ]
+  },
+  {
+   "id": "urgent",
+   "level": "foundation",
+   "kind": "term",
+   "text": "urgent",
+   "meaning": "Needing attention now, before anything else.",
+   "example": "This is urgent, so please look at it today.",
+   "prompt": "Say what 'urgent' means to a colleague in one sentence. Use 'urgent'.",
+   "aliases": [
+    "urgently"
+   ]
+  },
+  {
+   "id": "sow",
+   "level": "professional",
+   "kind": "abbreviation",
+   "text": "SOW",
+   "meaning": "Statement of work: the agreed scope, deliverables and timeline for a project.",
+   "example": "The SOW has been signed, so the work can start.",
+   "prompt": "Say what 'SOW' means to a colleague in one sentence. Use 'SOW'.",
+   "aliases": [
+    "statement of work"
+   ]
+  },
+  {
+   "id": "rfp",
+   "level": "professional",
+   "kind": "abbreviation",
+   "text": "RFP",
+   "meaning": "Request for proposal: a client's formal call for bids.",
+   "example": "We're responding to the RFP by Monday.",
+   "prompt": "Say what 'RFP' means to a colleague in one sentence. Use 'RFP'.",
+   "aliases": [
+    "request for proposal"
+   ]
+  },
+  {
+   "id": "sme",
+   "level": "professional",
+   "kind": "abbreviation",
+   "text": "SME",
+   "meaning": "Subject matter expert: someone with deep knowledge in one area.",
+   "example": "I'll bring in our SME for payments.",
+   "prompt": "Say what 'SME' means to a colleague in one sentence. Use 'SME'.",
+   "aliases": [
+    "subject matter expert"
+   ]
+  },
+  {
+   "id": "nda",
+   "level": "professional",
+   "kind": "abbreviation",
+   "text": "NDA",
+   "meaning": "Non-disclosure agreement: a promise to keep information confidential.",
+   "example": "Please sign the NDA before we share the designs.",
+   "prompt": "Say what 'NDA' means to a colleague in one sentence. Use 'NDA'.",
+   "aliases": [
+    "non-disclosure agreement"
+   ]
+  },
+  {
+   "id": "kpi",
+   "level": "professional",
+   "kind": "abbreviation",
+   "text": "KPI",
+   "meaning": "Key performance indicator: a measure of how well something is going.",
+   "example": "Our main KPI is the checkout conversion rate.",
+   "prompt": "Say what 'KPI' means to a colleague in one sentence. Use 'KPI'.",
+   "aliases": [
+    "key performance indicator"
+   ]
+  },
+  {
+   "id": "okr",
+   "level": "professional",
+   "kind": "abbreviation",
+   "text": "OKR",
+   "meaning": "Objectives and key results: a goal with measurable outcomes.",
+   "example": "Our OKR this quarter is to halve the bug count.",
+   "prompt": "Say what 'OKR' means to a colleague in one sentence. Use 'OKR'.",
+   "aliases": [
+    "objectives and key results"
+   ]
+  },
+  {
+   "id": "roi",
+   "level": "professional",
+   "kind": "abbreviation",
+   "text": "ROI",
+   "meaning": "Return on investment: the gain compared with the cost.",
+   "example": "The ROI on automation is clear within a year.",
+   "prompt": "Say what 'ROI' means to a colleague in one sentence. Use 'ROI'.",
+   "aliases": [
+    "return on investment"
+   ]
+  },
+  {
+   "id": "cr",
+   "level": "professional",
+   "kind": "abbreviation",
+   "text": "CR",
+   "meaning": "Change request: a formal request to change the agreed scope.",
+   "example": "That feature needs a CR and extra budget.",
+   "prompt": "Say what 'CR' means to a colleague in one sentence. Use 'CR'.",
+   "aliases": [
+    "change request"
+   ]
+  },
+  {
+   "id": "ready-for-review",
+   "level": "professional",
+   "kind": "phrase",
+   "text": "ready for review",
+   "meaning": "Finished enough for someone else to check it.",
+   "example": "The pull request is ready for review.",
+   "prompt": "Say what 'ready for review' means to a colleague in one sentence. Use 'ready for review'.",
+   "aliases": [
+    "ready to review"
+   ]
+  },
+  {
+   "id": "out-of-scope",
+   "level": "professional",
+   "kind": "phrase",
+   "text": "out of scope",
+   "meaning": "Not included in the agreed work.",
+   "example": "Mobile support is out of scope for this phase.",
+   "prompt": "Say what 'out of scope' means to a colleague in one sentence. Use 'out of scope'.",
+   "aliases": [
+    "outside scope"
+   ]
+  },
+  {
+   "id": "nice-to-have",
+   "level": "professional",
+   "kind": "phrase",
+   "text": "nice to have",
+   "meaning": "Useful, but not required for the work to succeed.",
+   "example": "Dark mode is nice to have, not essential.",
+   "prompt": "Say what 'nice to have' means to a colleague in one sentence. Use 'nice to have'.",
+   "aliases": [
+    "optional"
+   ]
+  },
+  {
+   "id": "must-have",
+   "level": "professional",
+   "kind": "phrase",
+   "text": "must have",
+   "meaning": "Required for the work to be accepted.",
+   "example": "Export to PDF is a must have for the client.",
+   "prompt": "Say what 'must have' means to a colleague in one sentence. Use 'must have'.",
+   "aliases": [
+    "mandatory"
+   ]
+  },
+  {
+   "id": "ballpark",
+   "level": "professional",
+   "kind": "term",
+   "text": "ballpark",
+   "meaning": "A rough estimate, not a precise figure.",
+   "example": "Give me a ballpark for the cost by Friday.",
+   "prompt": "Say what 'ballpark' means to a colleague in one sentence. Use 'ballpark'.",
+   "aliases": [
+    "ballpark figure",
+    "rough estimate"
+   ]
+  },
+  {
+   "id": "escalate",
+   "level": "professional",
+   "kind": "term",
+   "text": "escalate",
+   "meaning": "Pass a problem to someone with more authority or expertise.",
+   "example": "I'll escalate the outage to the platform lead.",
+   "prompt": "Say what 'escalate' means to a colleague in one sentence. Use 'escalate'.",
+   "aliases": [
+    "escalation",
+    "escalated"
+   ]
+  },
+  {
+   "id": "raise-a-risk",
+   "level": "professional",
+   "kind": "phrase",
+   "text": "raise a risk",
+   "meaning": "Tell people about a possible problem before it happens.",
+   "example": "I want to raise a risk about the vendor's timeline.",
+   "prompt": "Say what 'raise a risk' means to a colleague in one sentence. Use 'raise a risk'.",
+   "aliases": [
+    "flag a risk"
+   ]
+  },
+  {
+   "id": "runbook",
+   "level": "professional",
+   "kind": "term",
+   "text": "runbook",
+   "meaning": "Step-by-step instructions for handling a known operational task.",
+   "example": "Check the runbook before restarting the queue.",
+   "prompt": "Say what 'runbook' means to a colleague in one sentence. Use 'runbook'.",
+   "aliases": [
+    "run book",
+    "runbooks"
+   ]
+  },
+  {
+   "id": "on-call",
+   "level": "professional",
+   "kind": "term",
+   "text": "on-call",
+   "meaning": "Being the person responsible for responding to production problems at a set time.",
+   "example": "I'm on-call this weekend, so call me if the alerts fire.",
+   "prompt": "Say what 'on-call' means to a colleague in one sentence. Use 'on-call'.",
+   "aliases": [
+    "on call"
+   ]
+  },
+  {
+   "id": "regression",
+   "level": "professional",
+   "kind": "term",
+   "text": "regression",
+   "meaning": "A bug where something that worked before is now broken.",
+   "example": "The release caused a regression in the search page.",
+   "prompt": "Say what 'regression' means to a colleague in one sentence. Use 'regression'.",
+   "aliases": [
+    "regressions"
+   ]
+  },
+  {
+   "id": "smoke-test",
+   "level": "professional",
+   "kind": "term",
+   "text": "smoke test",
+   "meaning": "A quick check that the main features work after a deployment.",
+   "example": "We ran a smoke test after the deployment.",
+   "prompt": "Say what 'smoke test' means to a colleague in one sentence. Use 'smoke test'.",
+   "aliases": [
+    "smoke tests"
+   ]
+  },
+  {
+   "id": "code-freeze",
+   "level": "professional",
+   "kind": "term",
+   "text": "code freeze",
+   "meaning": "A period when no new code changes are allowed before a release.",
+   "example": "We start the code freeze on Wednesday.",
+   "prompt": "Say what 'code freeze' means to a colleague in one sentence. Use 'code freeze'.",
+   "aliases": [
+    "freeze"
+   ]
+  },
+  {
+   "id": "go-live",
+   "level": "professional",
+   "kind": "term",
+   "text": "go-live",
+   "meaning": "The moment a system starts being used by real users.",
+   "example": "The go-live is set for the first of the month.",
+   "prompt": "Say what 'go-live' means to a colleague in one sentence. Use 'go-live'.",
+   "aliases": [
+    "golive",
+    "go live"
+   ]
+  },
+  {
+   "id": "cutover",
+   "level": "professional",
+   "kind": "term",
+   "text": "cutover",
+   "meaning": "The switch from the old system to the new one.",
+   "example": "The cutover happens over the weekend.",
+   "prompt": "Say what 'cutover' means to a colleague in one sentence. Use 'cutover'.",
+   "aliases": [
+    "cut over"
+   ]
+  },
+  {
+   "id": "data-migration",
+   "level": "professional",
+   "kind": "phrase",
+   "text": "data migration",
+   "meaning": "Moving data from one system to another.",
+   "example": "The data migration took three weekends.",
+   "prompt": "Say what 'data migration' means to a colleague in one sentence. Use 'data migration'.",
+   "aliases": [
+    "migration"
+   ]
+  },
+  {
+   "id": "legacy-system",
+   "level": "professional",
+   "kind": "phrase",
+   "text": "legacy system",
+   "meaning": "An old system that is still in use and is hard to change.",
+   "example": "We still depend on a legacy system for invoices.",
+   "prompt": "Say what 'legacy system' means to a colleague in one sentence. Use 'legacy system'.",
+   "aliases": [
+    "legacy"
+   ]
+  },
+  {
+   "id": "integration",
+   "level": "professional",
+   "kind": "term",
+   "text": "integration",
+   "meaning": "Connecting two systems so they work together.",
+   "example": "The integration with the bank is almost done.",
+   "prompt": "Say what 'integration' means to a colleague in one sentence. Use 'integration'.",
+   "aliases": [
+    "integrations",
+    "integrate"
+   ]
+  },
+  {
+   "id": "third-party",
+   "level": "professional",
+   "kind": "term",
+   "text": "third-party",
+   "meaning": "Something provided by an outside company or library.",
+   "example": "The login uses a third-party service.",
+   "prompt": "Say what 'third-party' means to a colleague in one sentence. Use 'third-party'.",
+   "aliases": [
+    "3rd party",
+    "external vendor"
+   ]
+  },
+  {
+   "id": "vendor",
+   "level": "professional",
+   "kind": "term",
+   "text": "vendor",
+   "meaning": "An outside company that supplies a product or service.",
+   "example": "The vendor confirmed the new date.",
+   "prompt": "Say what 'vendor' means to a colleague in one sentence. Use 'vendor'.",
+   "aliases": [
+    "vendors",
+    "supplier"
+   ]
+  },
+  {
+   "id": "onboarding",
+   "level": "professional",
+   "kind": "term",
+   "text": "onboarding",
+   "meaning": "Helping a new person learn the team and the work.",
+   "example": "Onboarding a new engineer takes about two weeks.",
+   "prompt": "Say what 'onboarding' means to a colleague in one sentence. Use 'onboarding'.",
+   "aliases": [
+    "onboard"
+   ]
+  },
+  {
+   "id": "stakeholder",
+   "level": "professional",
+   "kind": "term",
+   "text": "stakeholder",
+   "meaning": "Someone affected by or interested in the outcome of the work.",
+   "example": "We should update the stakeholders on Friday.",
+   "prompt": "Say what 'stakeholder' means to a colleague in one sentence. Use 'stakeholder'.",
+   "aliases": [
+    "stakeholders"
+   ]
+  },
+  {
+   "id": "sprint",
+   "level": "professional",
+   "kind": "term",
+   "text": "sprint",
+   "meaning": "A fixed period, often two weeks, in which a team delivers agreed work.",
+   "example": "Our sprint ends on Friday.",
+   "prompt": "Say what 'sprint' means to a colleague in one sentence. Use 'sprint'.",
+   "aliases": [
+    "sprints"
+   ]
+  },
+  {
+   "id": "velocity",
+   "level": "professional",
+   "kind": "term",
+   "text": "velocity",
+   "meaning": "How much work a team completes in a sprint.",
+   "example": "Our velocity has been steady for three sprints.",
+   "prompt": "Say what 'velocity' means to a colleague in one sentence. Use 'velocity'.",
+   "aliases": [
+    "team velocity"
+   ]
+  },
+  {
+   "id": "story-points",
+   "level": "professional",
+   "kind": "term",
+   "text": "story points",
+   "meaning": "A relative estimate of the effort a task needs.",
+   "example": "This story is worth five story points.",
+   "prompt": "Say what 'story points' means to a colleague in one sentence. Use 'story points'.",
+   "aliases": [
+    "story point"
+   ]
+  },
+  {
+   "id": "unit-test",
+   "level": "professional",
+   "kind": "term",
+   "text": "unit test",
+   "meaning": "A test of one small piece of code on its own.",
+   "example": "I added a unit test for the discount rule.",
+   "prompt": "Say what 'unit test' means to a colleague in one sentence. Use 'unit test'.",
+   "aliases": [
+    "unit tests"
+   ]
+  },
+  {
+   "id": "backlog",
+   "level": "professional",
+   "kind": "term",
+   "text": "backlog",
+   "meaning": "The list of work waiting to be done.",
+   "example": "The bug is at the top of the backlog.",
+   "prompt": "Say what 'backlog' means to a colleague in one sentence. Use 'backlog'.",
+   "aliases": [
+    "product backlog"
+   ]
+  },
+  {
+   "id": "throughput",
+   "level": "expert",
+   "kind": "term",
+   "text": "throughput",
+   "meaning": "How much work a system or team completes in a period.",
+   "example": "Throughput doubled after we added the second worker.",
+   "prompt": "Say what 'throughput' means to a colleague in one sentence. Use 'throughput'.",
+   "aliases": [
+    "throughputs"
+   ]
+  },
+  {
+   "id": "latency",
+   "level": "expert",
+   "kind": "term",
+   "text": "latency",
+   "meaning": "The time a request takes to get a response.",
+   "example": "Latency increased after the database upgrade.",
+   "prompt": "Say what 'latency' means to a colleague in one sentence. Use 'latency'.",
+   "aliases": [
+    "latencies"
+   ]
+  },
+  {
+   "id": "p99-latency",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "p99 latency",
+   "meaning": "The response time that 99 percent of requests are faster than.",
+   "example": "Our p99 latency is under 300 milliseconds.",
+   "prompt": "Say what 'p99 latency' means to a colleague in one sentence. Use 'p99 latency'.",
+   "aliases": [
+    "99th percentile latency"
+   ]
+  },
+  {
+   "id": "cardinality",
+   "level": "expert",
+   "kind": "term",
+   "text": "cardinality",
+   "meaning": "The number of distinct values in a dataset or metric label.",
+   "example": "High cardinality labels can overload the metrics store.",
+   "prompt": "Say what 'cardinality' means to a colleague in one sentence. Use 'cardinality'.",
+   "aliases": [
+    "cardinalities"
+   ]
+  },
+  {
+   "id": "sharding",
+   "level": "expert",
+   "kind": "term",
+   "text": "sharding",
+   "meaning": "Splitting data across several databases by a key.",
+   "example": "We moved to sharding when one database became too big.",
+   "prompt": "Say what 'sharding' means to a colleague in one sentence. Use 'sharding'.",
+   "aliases": [
+    "shard",
+    "sharded"
+   ]
+  },
+  {
+   "id": "replication-lag",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "replication lag",
+   "meaning": "How far a copy of the data is behind the main database.",
+   "example": "Replication lag reached ten seconds during the peak.",
+   "prompt": "Say what 'replication lag' means to a colleague in one sentence. Use 'replication lag'.",
+   "aliases": [
+    "replica lag"
+   ]
+  },
+  {
+   "id": "at-least-once",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "at-least-once delivery",
+   "meaning": "A message may arrive more than once, so consumers must handle duplicates.",
+   "example": "We chose at-least-once delivery and made the consumer idempotent.",
+   "prompt": "Say what 'at-least-once delivery' means to a colleague in one sentence. Use 'at-least-once delivery'.",
+   "aliases": [
+    "at least once"
+   ]
+  },
+  {
+   "id": "dead-letter-queue",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "dead-letter queue",
+   "meaning": "Where messages go after repeated processing failures.",
+   "example": "Failed orders go to a dead-letter queue for review.",
+   "prompt": "Say what 'dead-letter queue' means to a colleague in one sentence. Use 'dead-letter queue'.",
+   "aliases": [
+    "dead letter queue",
+    "DLQ"
+   ]
+  },
+  {
+   "id": "schema-evolution",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "schema evolution",
+   "meaning": "Changing a data format over time without breaking the consumers.",
+   "example": "Schema evolution lets us add fields safely.",
+   "prompt": "Say what 'schema evolution' means to a colleague in one sentence. Use 'schema evolution'.",
+   "aliases": [
+    "schema changes"
+   ]
+  },
+  {
+   "id": "backward-compatible",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "backward compatible",
+   "meaning": "Old clients keep working after a change.",
+   "example": "The new API is backward compatible with version one.",
+   "prompt": "Say what 'backward compatible' means to a colleague in one sentence. Use 'backward compatible'.",
+   "aliases": [
+    "backwards compatible"
+   ]
+  },
+  {
+   "id": "fan-out",
+   "level": "expert",
+   "kind": "term",
+   "text": "fan-out",
+   "meaning": "Sending one request or event to many services at once.",
+   "example": "The order event causes a fan-out to billing and shipping.",
+   "prompt": "Say what 'fan-out' means to a colleague in one sentence. Use 'fan-out'.",
+   "aliases": [
+    "fanout"
+   ]
+  },
+  {
+   "id": "hot-path",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "hot path",
+   "meaning": "The code that runs most often and therefore must be fast.",
+   "example": "We optimised the hot path in the checkout flow.",
+   "prompt": "Say what 'hot path' means to a colleague in one sentence. Use 'hot path'.",
+   "aliases": [
+    "critical path"
+   ]
+  },
+  {
+   "id": "cache-invalidation",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "cache invalidation",
+   "meaning": "Removing stale entries from a cache when the data changes.",
+   "example": "Cache invalidation is the hard part of this design.",
+   "prompt": "Say what 'cache invalidation' means to a colleague in one sentence. Use 'cache invalidation'.",
+   "aliases": [
+    "invalidate the cache"
+   ]
+  },
+  {
+   "id": "thundering-herd",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "thundering herd",
+   "meaning": "Many clients retrying at once and overloading a service.",
+   "example": "Jitter stops a thundering herd after an outage.",
+   "prompt": "Say what 'thundering herd' means to a colleague in one sentence. Use 'thundering herd'.",
+   "aliases": [
+    "retry storm"
+   ]
+  },
+  {
+   "id": "graceful-degradation",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "graceful degradation",
+   "meaning": "Keeping the system working, with fewer features, when a part fails.",
+   "example": "We show cached prices for graceful degradation.",
+   "prompt": "Say what 'graceful degradation' means to a colleague in one sentence. Use 'graceful degradation'.",
+   "aliases": [
+    "degrade gracefully"
+   ]
+  },
+  {
+   "id": "single-point-of-failure",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "single point of failure",
+   "meaning": "One component whose failure stops the whole system.",
+   "example": "The single database was a single point of failure.",
+   "prompt": "Say what 'single point of failure' means to a colleague in one sentence. Use 'single point of failure'.",
+   "aliases": [
+    "single point failure"
+   ]
+  },
+  {
+   "id": "high-availability",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "high availability",
+   "meaning": "Designing a system to stay up through failures.",
+   "example": "We run in two zones for high availability.",
+   "prompt": "Say what 'high availability' means to a colleague in one sentence. Use 'high availability'.",
+   "aliases": [
+    "highly available"
+   ]
+  },
+  {
+   "id": "disaster-recovery",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "disaster recovery",
+   "meaning": "How we restore service after a major failure.",
+   "example": "Our disaster recovery plan was tested last month.",
+   "prompt": "Say what 'disaster recovery' means to a colleague in one sentence. Use 'disaster recovery'.",
+   "aliases": [
+    "DR"
+   ]
+  },
+  {
+   "id": "rto",
+   "level": "expert",
+   "kind": "abbreviation",
+   "text": "RTO",
+   "meaning": "Recovery time objective: how quickly service must return after a failure.",
+   "example": "Our RTO is four hours for the payments service.",
+   "prompt": "Say what 'RTO' means to a colleague in one sentence. Use 'RTO'.",
+   "aliases": [
+    "recovery time objective"
+   ]
+  },
+  {
+   "id": "rpo",
+   "level": "expert",
+   "kind": "abbreviation",
+   "text": "RPO",
+   "meaning": "Recovery point objective: how much data we can afford to lose.",
+   "example": "Our RPO is fifteen minutes of transactions.",
+   "prompt": "Say what 'RPO' means to a colleague in one sentence. Use 'RPO'.",
+   "aliases": [
+    "recovery point objective"
+   ]
+  },
+  {
+   "id": "service-mesh",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "service mesh",
+   "meaning": "Infrastructure that manages traffic and security between services.",
+   "example": "A service mesh gave us retries and mutual TLS without code changes.",
+   "prompt": "Say what 'service mesh' means to a colleague in one sentence. Use 'service mesh'.",
+   "aliases": [
+    "mesh"
+   ]
+  },
+  {
+   "id": "sidecar",
+   "level": "expert",
+   "kind": "term",
+   "text": "sidecar",
+   "meaning": "A helper process that runs beside a service and handles a shared concern.",
+   "example": "The logging sidecar ships the logs for every pod.",
+   "prompt": "Say what 'sidecar' means to a colleague in one sentence. Use 'sidecar'.",
+   "aliases": [
+    "sidecars"
+   ]
+  },
+  {
+   "id": "infrastructure-as-code",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "infrastructure as code",
+   "meaning": "Defining servers and networks in versioned files.",
+   "example": "Infrastructure as code made the environments reproducible.",
+   "prompt": "Say what 'infrastructure as code' means to a colleague in one sentence. Use 'infrastructure as code'.",
+   "aliases": [
+    "IaC"
+   ]
+  },
+  {
+   "id": "configuration-drift",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "configuration drift",
+   "meaning": "Live systems slowly differing from what the code says they should be.",
+   "example": "Configuration drift caused the outage, so we reapplied the templates.",
+   "prompt": "Say what 'configuration drift' means to a colleague in one sentence. Use 'configuration drift'.",
+   "aliases": [
+    "drift"
+   ]
+  },
+  {
+   "id": "golden-signals",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "golden signals",
+   "meaning": "Latency, traffic, errors and saturation: the four key health measures.",
+   "example": "We alert on the golden signals, not on every metric.",
+   "prompt": "Say what 'golden signals' means to a colleague in one sentence. Use 'golden signals'.",
+   "aliases": [
+    "four golden signals"
+   ]
+  },
+  {
+   "id": "saturation",
+   "level": "expert",
+   "kind": "term",
+   "text": "saturation",
+   "meaning": "How close a resource is to its limit.",
+   "example": "CPU saturation was the reason the queue grew.",
+   "prompt": "Say what 'saturation' means to a colleague in one sentence. Use 'saturation'.",
+   "aliases": [
+    "saturated"
+   ]
+  },
+  {
+   "id": "rate-limiting",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "rate limiting",
+   "meaning": "Capping how many requests a client may make in a period.",
+   "example": "Rate limiting protects the API from abuse.",
+   "prompt": "Say what 'rate limiting' means to a colleague in one sentence. Use 'rate limiting'.",
+   "aliases": [
+    "throttling",
+    "rate limit"
+   ]
+  },
+  {
+   "id": "zero-trust",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "zero trust",
+   "meaning": "Never trusting a request by default, and verifying every time.",
+   "example": "We moved to zero trust for internal services.",
+   "prompt": "Say what 'zero trust' means to a colleague in one sentence. Use 'zero trust'.",
+   "aliases": [
+    "zero trust security"
+   ]
+  },
+  {
+   "id": "least-privilege",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "least privilege",
+   "meaning": "Giving each user or service only the access it needs.",
+   "example": "Least privilege means the job role can't read the bank keys.",
+   "prompt": "Say what 'least privilege' means to a colleague in one sentence. Use 'least privilege'.",
+   "aliases": [
+    "minimum access"
+   ]
+  },
+  {
+   "id": "threat-model",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "threat model",
+   "meaning": "A structured review of how a system could be attacked.",
+   "example": "We updated the threat model before launch.",
+   "prompt": "Say what 'threat model' means to a colleague in one sentence. Use 'threat model'.",
+   "aliases": [
+    "threat modelling"
+   ]
+  },
+  {
+   "id": "technical-due-diligence",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "technical due diligence",
+   "meaning": "Checking a company's technology before an investment or acquisition.",
+   "example": "The investors asked for technical due diligence.",
+   "prompt": "Say what 'technical due diligence' means to a colleague in one sentence. Use 'technical due diligence'.",
+   "aliases": [
+    "due diligence"
+   ]
+  },
+  {
+   "id": "build-vs-buy",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "build versus buy",
+   "meaning": "Choosing whether to create a capability or buy it from a supplier.",
+   "example": "The build versus buy decision came down to maintenance cost.",
+   "prompt": "Say what 'build versus buy' means to a colleague in one sentence. Use 'build versus buy'.",
+   "aliases": [
+    "build or buy"
+   ]
+  },
+  {
+   "id": "vendor-lock-in",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "vendor lock-in",
+   "meaning": "Depending on one supplier so much that leaving becomes costly.",
+   "example": "We avoid vendor lock-in by using open standards.",
+   "prompt": "Say what 'vendor lock-in' means to a colleague in one sentence. Use 'vendor lock-in'.",
+   "aliases": [
+    "lock-in"
+   ]
+  },
+  {
+   "id": "api-versioning",
+   "level": "expert",
+   "kind": "phrase",
+   "text": "API versioning",
+   "meaning": "Managing breaking changes across different versions of an API.",
+   "example": "API versioning lets old mobile apps keep working.",
+   "prompt": "Say what 'API versioning' means to a colleague in one sentence. Use 'API versioning'.",
+   "aliases": [
+    "versioning"
+   ]
+  }
+ ]
+}

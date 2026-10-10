@@ -1,0 +1,163 @@
+{
+ "_note": "Canonical skill -> alternative spellings. Used to match job-description keywords against resumes. Add carefully; matching is case-insensitive on word boundaries.",
+ "javascript": [
+  "js",
+  "ecmascript",
+  "es6"
+ ],
+ "typescript": [
+  "ts"
+ ],
+ "python": [
+  "py"
+ ],
+ "java": [],
+ "c++": [
+  "cpp"
+ ],
+ "c#": [
+  "csharp",
+  "c sharp"
+ ],
+ "golang": [
+  "go lang"
+ ],
+ "node.js": [
+  "nodejs",
+  "node js",
+  "node"
+ ],
+ "react": [
+  "react.js",
+  "reactjs"
+ ],
+ "angular": [
+  "angularjs",
+  "angular.js"
+ ],
+ "vue": [
+  "vue.js",
+  "vuejs"
+ ],
+ "spring boot": [
+  "springboot",
+  "spring-boot"
+ ],
+ "django": [],
+ "flask": [],
+ "fastapi": [
+  "fast api"
+ ],
+ "sql": [
+  "structured query language"
+ ],
+ "postgresql": [
+  "postgres",
+  "psql"
+ ],
+ "mysql": [],
+ "mongodb": [
+  "mongo db",
+  "mongo"
+ ],
+ "redis": [],
+ "elasticsearch": [
+  "elastic search",
+  "elk"
+ ],
+ "kafka": [
+  "apache kafka"
+ ],
+ "rabbitmq": [
+  "rabbit mq"
+ ],
+ "docker": [
+  "containers",
+  "containerisation",
+  "containerization"
+ ],
+ "kubernetes": [
+  "k8s",
+  "kube"
+ ],
+ "aws": [
+  "amazon web services"
+ ],
+ "azure": [
+  "microsoft azure"
+ ],
+ "gcp": [
+  "google cloud",
+  "google cloud platform"
+ ],
+ "terraform": [],
+ "ansible": [],
+ "jenkins": [],
+ "ci/cd": [
+  "cicd",
+  "ci cd",
+  "continuous integration",
+  "continuous delivery",
+  "continuous deployment"
+ ],
+ "git": [
+  "github",
+  "gitlab"
+ ],
+ "rest api": [
+  "rest apis",
+  "restful",
+  "restful api",
+  "restful apis"
+ ],
+ "graphql": [],
+ "microservices": [
+  "micro services",
+  "microservice"
+ ],
+ "linux": [
+  "unix"
+ ],
+ "machine learning": [
+  "ml"
+ ],
+ "deep learning": [],
+ "nlp": [
+  "natural language processing"
+ ],
+ "pandas": [],
+ "numpy": [],
+ "tensorflow": [],
+ "pytorch": [],
+ "html": [
+  "html5"
+ ],
+ "css": [
+  "css3"
+ ],
+ "tailwind": [
+  "tailwind css",
+  "tailwindcss"
+ ],
+ "agile": [
+  "scrum"
+ ],
+ "jira": [],
+ "selenium": [],
+ "junit": [],
+ "pytest": [],
+ "hadoop": [],
+ "spark": [
+  "apache spark",
+  "pyspark"
+ ],
+ "airflow": [
+  "apache airflow"
+ ],
+ "snowflake": [],
+ "tableau": [],
+ "power bi": [
+  "powerbi"
+ ],
+ "excel": []
+}

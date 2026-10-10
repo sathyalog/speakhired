@@ -1,0 +1,946 @@
+{
+ "_note": "term -> how a voice should say it ('say', empty means automatic) and misheard spellings ('heard') that speech recognition tends to produce. Add carefully.",
+ "terms": [
+  {
+   "term": "ChatGPT",
+   "say": "Chat G P T",
+   "heard": [
+    "chat gpt",
+    "chat g p t",
+    "chat gee pee tee",
+    "chat jpt",
+    "chat gbt",
+    "chat gpd",
+    "chat gt",
+    "chat jeepy tea",
+    "chatty pt"
+   ]
+  },
+  {
+   "term": "GPT-4",
+   "say": "G P T four",
+   "heard": [
+    "gpt 4",
+    "gpt four",
+    "g p t 4",
+    "g p t four",
+    "gbt 4"
+   ]
+  },
+  {
+   "term": "GPT-4o",
+   "say": "G P T four oh",
+   "heard": [
+    "gpt 4o",
+    "gpt four o",
+    "gpt 4 o"
+   ]
+  },
+  {
+   "term": "GPT",
+   "heard": [
+    "g p t",
+    "gee pee tee"
+   ]
+  },
+  {
+   "term": "OpenAI",
+   "say": "Open A I",
+   "heard": [
+    "open ai",
+    "open a i"
+   ]
+  },
+  {
+   "term": "Anthropic",
+   "heard": [
+    "anthropick",
+    "and ropic",
+    "anthropik"
+   ]
+  },
+  {
+   "term": "Claude",
+   "say": "Clawd",
+   "heard": [
+    "claud",
+    "clawed",
+    "claude ai"
+   ]
+  },
+  {
+   "term": "Gemini",
+   "heard": []
+  },
+  {
+   "term": "Llama",
+   "say": "Lah-ma",
+   "heard": [
+    "lama",
+    "llama 2",
+    "llama 3"
+   ]
+  },
+  {
+   "term": "Mistral",
+   "heard": []
+  },
+  {
+   "term": "Grok",
+   "heard": []
+  },
+  {
+   "term": "Groq",
+   "say": "Grok",
+   "heard": []
+  },
+  {
+   "term": "Ollama",
+   "say": "Oh-lah-ma",
+   "heard": [
+    "olama",
+    "o llama",
+    "oh llama"
+   ]
+  },
+  {
+   "term": "LLM",
+   "heard": [
+    "l l m",
+    "el el em"
+   ]
+  },
+  {
+   "term": "LLMs",
+   "say": "L L Ms",
+   "heard": [
+    "l l ms"
+   ]
+  },
+  {
+   "term": "RAG",
+   "say": "rag",
+   "heard": [
+    "r a g"
+   ]
+  },
+  {
+   "term": "LangChain",
+   "say": "Lang Chain",
+   "heard": [
+    "lang chain",
+    "long chain"
+   ]
+  },
+  {
+   "term": "LlamaIndex",
+   "say": "Llama Index",
+   "heard": [
+    "llama index"
+   ]
+  },
+  {
+   "term": "Hugging Face",
+   "heard": [
+    "huggingface"
+   ]
+  },
+  {
+   "term": "PyTorch",
+   "say": "Pie Torch",
+   "heard": [
+    "pi torch",
+    "pie torch",
+    "py torch"
+   ]
+  },
+  {
+   "term": "TensorFlow",
+   "say": "Tensor Flow",
+   "heard": [
+    "tensor flow"
+   ]
+  },
+  {
+   "term": "scikit-learn",
+   "say": "Sigh-kit learn",
+   "heard": [
+    "scikit learn",
+    "sci kit learn",
+    "psychic learn"
+   ]
+  },
+  {
+   "term": "NumPy",
+   "say": "Num Pie",
+   "heard": [
+    "num py",
+    "numb pie"
+   ]
+  },
+  {
+   "term": "pandas",
+   "heard": []
+  },
+  {
+   "term": "Jupyter",
+   "say": "Jupiter",
+   "heard": [
+    "jupiter notebook"
+   ]
+  },
+  {
+   "term": "MLOps",
+   "say": "M L Ops",
+   "heard": [
+    "ml ops",
+    "m l ops"
+   ]
+  },
+  {
+   "term": "fine-tuning",
+   "heard": [
+    "fine tuning"
+   ]
+  },
+  {
+   "term": "embeddings",
+   "heard": [
+    "embedding"
+   ]
+  },
+  {
+   "term": "vector database",
+   "heard": [
+    "vector db",
+    "vector data base"
+   ]
+  },
+  {
+   "term": "Pinecone",
+   "heard": []
+  },
+  {
+   "term": "Qdrant",
+   "say": "Quadrant",
+   "heard": []
+  },
+  {
+   "term": "Kubernetes",
+   "say": "Koo-ber-net-eez",
+   "heard": [
+    "cooper netties",
+    "kuber netties",
+    "cuber netes",
+    "kubernetties",
+    "coo ber net ease",
+    "k8s",
+    "kate s"
+   ]
+  },
+  {
+   "term": "kubectl",
+   "say": "cube control",
+   "heard": [
+    "cube control",
+    "cube cuddle",
+    "kube ctl",
+    "kube c t l"
+   ]
+  },
+  {
+   "term": "Docker",
+   "heard": [
+    "dock her",
+    "dock er"
+   ]
+  },
+  {
+   "term": "Terraform",
+   "heard": [
+    "terra form"
+   ]
+  },
+  {
+   "term": "Ansible",
+   "heard": []
+  },
+  {
+   "term": "Jenkins",
+   "heard": []
+  },
+  {
+   "term": "GitHub Actions",
+   "heard": [
+    "git hub actions"
+   ]
+  },
+  {
+   "term": "GitHub",
+   "say": "Git Hub",
+   "heard": [
+    "git hub"
+   ]
+  },
+  {
+   "term": "GitLab",
+   "say": "Git Lab",
+   "heard": [
+    "git lab"
+   ]
+  },
+  {
+   "term": "ArgoCD",
+   "say": "Argo C D",
+   "heard": [
+    "argo cd",
+    "argo c d"
+   ]
+  },
+  {
+   "term": "Helm",
+   "heard": []
+  },
+  {
+   "term": "Prometheus",
+   "heard": []
+  },
+  {
+   "term": "Grafana",
+   "say": "Gruh-fah-na",
+   "heard": [
+    "graffana"
+   ]
+  },
+  {
+   "term": "nginx",
+   "say": "engine X",
+   "heard": [
+    "engine x",
+    "engine ex",
+    "n ginx"
+   ]
+  },
+  {
+   "term": "AWS",
+   "heard": [
+    "a w s",
+    "amazon web services"
+   ]
+  },
+  {
+   "term": "EC2",
+   "say": "E C two",
+   "heard": [
+    "e c 2",
+    "ec two"
+   ]
+  },
+  {
+   "term": "S3",
+   "say": "S three",
+   "heard": [
+    "s 3",
+    "s three"
+   ]
+  },
+  {
+   "term": "Lambda",
+   "heard": []
+  },
+  {
+   "term": "EKS",
+   "say": "E K S",
+   "heard": []
+  },
+  {
+   "term": "RDS",
+   "heard": []
+  },
+  {
+   "term": "DynamoDB",
+   "say": "Dynamo D B",
+   "heard": [
+    "dynamo db"
+   ]
+  },
+  {
+   "term": "Azure",
+   "heard": []
+  },
+  {
+   "term": "GCP",
+   "heard": [
+    "g c p",
+    "google cloud platform"
+   ]
+  },
+  {
+   "term": "CI/CD",
+   "say": "C I C D",
+   "heard": [
+    "ci cd",
+    "c i c d",
+    "ci slash cd",
+    "cicd"
+   ]
+  },
+  {
+   "term": "IaC",
+   "say": "I a C",
+   "heard": [
+    "infrastructure as code"
+   ]
+  },
+  {
+   "term": "SRE",
+   "heard": [
+    "s r e"
+   ]
+  },
+  {
+   "term": "Spring Boot",
+   "heard": [
+    "spring book"
+   ]
+  },
+  {
+   "term": "Hibernate",
+   "heard": []
+  },
+  {
+   "term": "JPA",
+   "heard": [
+    "j p a"
+   ]
+  },
+  {
+   "term": "Kafka",
+   "heard": [
+    "cafka",
+    "kafka's"
+   ]
+  },
+  {
+   "term": "RabbitMQ",
+   "say": "Rabbit M Q",
+   "heard": [
+    "rabbit mq",
+    "rabbit m q"
+   ]
+  },
+  {
+   "term": "Redis",
+   "say": "Reddis",
+   "heard": [
+    "red is"
+   ]
+  },
+  {
+   "term": "PostgreSQL",
+   "say": "Postgres Q L",
+   "heard": [
+    "postgres sql",
+    "post gress",
+    "postgress",
+    "postgres q l",
+    "post gres"
+   ]
+  },
+  {
+   "term": "MySQL",
+   "say": "My S Q L",
+   "heard": [
+    "my sequel",
+    "my s q l",
+    "my sql"
+   ]
+  },
+  {
+   "term": "SQL",
+   "say": "S Q L",
+   "heard": [
+    "sequel",
+    "s q l"
+   ]
+  },
+  {
+   "term": "NoSQL",
+   "say": "No S Q L",
+   "heard": [
+    "no sequel",
+    "no sql",
+    "no s q l"
+   ]
+  },
+  {
+   "term": "MongoDB",
+   "say": "Mongo D B",
+   "heard": [
+    "mongo db"
+   ]
+  },
+  {
+   "term": "Elasticsearch",
+   "say": "Elastic search",
+   "heard": [
+    "elastic search"
+   ]
+  },
+  {
+   "term": "GraphQL",
+   "say": "Graph Q L",
+   "heard": [
+    "graph ql",
+    "graph q l"
+   ]
+  },
+  {
+   "term": "gRPC",
+   "say": "G R P C",
+   "heard": [
+    "g rpc",
+    "g r p c"
+   ]
+  },
+  {
+   "term": "REST",
+   "say": "rest",
+   "heard": []
+  },
+  {
+   "term": "REST API",
+   "say": "rest A P I",
+   "heard": [
+    "restful api",
+    "restful"
+   ]
+  },
+  {
+   "term": "OAuth",
+   "say": "Oh Auth",
+   "heard": [
+    "o auth",
+    "oh auth"
+   ]
+  },
+  {
+   "term": "JWT",
+   "say": "J W T",
+   "heard": [
+    "j w t",
+    "jot token"
+   ]
+  },
+  {
+   "term": "SAML",
+   "say": "Sam-ull",
+   "heard": []
+  },
+  {
+   "term": "OIDC",
+   "say": "O I D C",
+   "heard": []
+  },
+  {
+   "term": "Node.js",
+   "say": "Node J S",
+   "heard": [
+    "node js",
+    "nodejs",
+    "node dot js"
+   ]
+  },
+  {
+   "term": "Next.js",
+   "say": "Next J S",
+   "heard": [
+    "next js",
+    "nextjs"
+   ]
+  },
+  {
+   "term": "Express",
+   "heard": []
+  },
+  {
+   "term": "FastAPI",
+   "say": "Fast A P I",
+   "heard": [
+    "fast api",
+    "fast a p i"
+   ]
+  },
+  {
+   "term": "Django",
+   "say": "Jango",
+   "heard": [
+    "jango"
+   ]
+  },
+  {
+   "term": "Flask",
+   "heard": []
+  },
+  {
+   "term": ".NET",
+   "say": "dot net",
+   "heard": [
+    "dot net",
+    "dotnet"
+   ]
+  },
+  {
+   "term": "C#",
+   "say": "C sharp",
+   "heard": [
+    "c sharp",
+    "see sharp"
+   ]
+  },
+  {
+   "term": "C++",
+   "say": "C plus plus",
+   "heard": [
+    "c plus plus",
+    "see plus plus"
+   ]
+  },
+  {
+   "term": "TypeScript",
+   "say": "Type Script",
+   "heard": [
+    "type script"
+   ]
+  },
+  {
+   "term": "JavaScript",
+   "say": "Java Script",
+   "heard": [
+    "java script"
+   ]
+  },
+  {
+   "term": "React",
+   "heard": [
+    "react js",
+    "reactjs"
+   ]
+  },
+  {
+   "term": "Angular",
+   "heard": []
+  },
+  {
+   "term": "Vue",
+   "say": "view",
+   "heard": [
+    "view js",
+    "vue js"
+   ]
+  },
+  {
+   "term": "Redux",
+   "heard": []
+  },
+  {
+   "term": "Webpack",
+   "say": "Web pack",
+   "heard": []
+  },
+  {
+   "term": "Vite",
+   "say": "veet",
+   "heard": []
+  },
+  {
+   "term": "Tailwind",
+   "heard": []
+  },
+  {
+   "term": "WebSocket",
+   "say": "Web Socket",
+   "heard": [
+    "web socket",
+    "websockets"
+   ]
+  },
+  {
+   "term": "WebAssembly",
+   "say": "Web Assembly",
+   "heard": [
+    "web assembly"
+   ]
+  },
+  {
+   "term": "microservices",
+   "say": "micro services",
+   "heard": [
+    "micro services",
+    "microservice"
+   ]
+  },
+  {
+   "term": "CQRS",
+   "say": "C Q R S",
+   "heard": []
+  },
+  {
+   "term": "DDD",
+   "say": "D D D",
+   "heard": []
+  },
+  {
+   "term": "SOLID",
+   "heard": []
+  },
+  {
+   "term": "ACID",
+   "heard": []
+  },
+  {
+   "term": "CAP theorem",
+   "heard": []
+  },
+  {
+   "term": "idempotent",
+   "say": "eye-dem-poh-tent",
+   "heard": [
+    "item potent",
+    "idem potent",
+    "idempotence"
+   ]
+  },
+  {
+   "term": "YAML",
+   "say": "yam-ull",
+   "heard": [
+    "y a m l",
+    "yammel"
+   ]
+  },
+  {
+   "term": "JSON",
+   "say": "Jay-son",
+   "heard": [
+    "jason",
+    "j son",
+    "j s o n"
+   ]
+  },
+  {
+   "term": "XML",
+   "say": "X M L",
+   "heard": []
+  },
+  {
+   "term": "ORM",
+   "say": "O R M",
+   "heard": []
+  },
+  {
+   "term": "API",
+   "heard": [
+    "a p i"
+   ]
+  },
+  {
+   "term": "SDK",
+   "heard": []
+  },
+  {
+   "term": "Snowflake",
+   "heard": []
+  },
+  {
+   "term": "Databricks",
+   "say": "Data bricks",
+   "heard": [
+    "data bricks"
+   ]
+  },
+  {
+   "term": "Spark",
+   "heard": []
+  },
+  {
+   "term": "Airflow",
+   "say": "Air flow",
+   "heard": [
+    "air flow"
+   ]
+  },
+  {
+   "term": "Hadoop",
+   "heard": []
+  },
+  {
+   "term": "Tableau",
+   "heard": []
+  },
+  {
+   "term": "Power BI",
+   "say": "Power B I",
+   "heard": []
+  },
+  {
+   "term": "SaaS",
+   "say": "sass",
+   "heard": [
+    "sass",
+    "s a a s"
+   ]
+  },
+  {
+   "term": "PaaS",
+   "say": "pass",
+   "heard": []
+  },
+  {
+   "term": "IaaS",
+   "say": "eye-az",
+   "heard": []
+  },
+  {
+   "term": "TCP/IP",
+   "say": "T C P I P",
+   "heard": [
+    "tcp ip",
+    "tcp slash ip"
+   ]
+  },
+  {
+   "term": "HTTP",
+   "heard": [
+    "h t t p"
+   ]
+  },
+  {
+   "term": "HTTPS",
+   "heard": []
+  },
+  {
+   "term": "TLS",
+   "heard": []
+  },
+  {
+   "term": "SSL",
+   "heard": []
+  },
+  {
+   "term": "SSH",
+   "heard": []
+  },
+  {
+   "term": "DNS",
+   "heard": []
+  },
+  {
+   "term": "CDN",
+   "heard": []
+  },
+  {
+   "term": "VPN",
+   "heard": []
+  },
+  {
+   "term": "ETL",
+   "heard": []
+  },
+  {
+   "term": "OLTP",
+   "heard": []
+  },
+  {
+   "term": "OLAP",
+   "heard": []
+  },
+  {
+   "term": "Jira",
+   "say": "Jeera",
+   "heard": [
+    "jeera"
+   ]
+  },
+  {
+   "term": "Confluence",
+   "heard": []
+  },
+  {
+   "term": "Agile",
+   "heard": []
+  },
+  {
+   "term": "Scrum",
+   "heard": []
+  },
+  {
+   "term": "Kanban",
+   "heard": []
+  },
+  {
+   "term": "SLA",
+   "heard": []
+  },
+  {
+   "term": "SLO",
+   "heard": []
+  },
+  {
+   "term": "RCA",
+   "heard": []
+  },
+  {
+   "term": "UAT",
+   "heard": []
+  },
+  {
+   "term": "PR",
+   "heard": []
+  },
+  {
+   "term": "async",
+   "say": "a-sync",
+   "heard": [
+    "a sync"
+   ]
+  },
+  {
+   "term": "regex",
+   "say": "reg-ex",
+   "heard": [
+    "reg ex",
+    "regular expression"
+   ]
+  },
+  {
+   "term": "sudo",
+   "say": "sue-doo",
+   "heard": [
+    "sue do",
+    "pseudo"
+   ]
+  },
+  {
+   "term": "Linux",
+   "heard": []
+  },
+  {
+   "term": "Git",
+   "heard": []
+  }
+ ],
+ "say_as_word": [
+  "REST",
+  "SOLID",
+  "ACID",
+  "SAML",
+  "RAG",
+  "RDS",
+  "SaaS",
+  "PaaS",
+  "IaaS",
+  "ASCII",
+  "NASA"
+ ]
+}
