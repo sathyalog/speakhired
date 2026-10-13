@@ -20,7 +20,7 @@ from .engines.language import build_report
 from .engines.egress import EgressBlocked, EgressGateway, ExternalQuery, WebCheckQuery
 from .ingest.documents import extract_text, inspect_resume, split_questions
 from .ingest.jd import fetch_jd_text
-from .llm import GrokLLM, LLMUnavailable, ModeStore, OllamaLLM, RoutingLLM, llm_errors
+from .llm import CooldownStore, LLMUnavailable, ModeStore, OllamaLLM, ProviderPool, RoutingLLM, build_online_providers, llm_errors, llm_switches
 from .privacy import Redactor, describe
 from .reasoning.lev import LevClient
 from .schemas import CandidateProfile, DeliveryMetrics, Evaluation, JobProfile, LangAudio, Question, WebCheck
@@ -28,12 +28,12 @@ from .store.db import SessionStore
 
 app = FastAPI(title="SpeakHired")
 app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
-                   allow_methods=["*"], allow_headers=["*"], expose_headers=["X-LLM-Error", "X-LLM-Error-Message"])
+                   allow_methods=["*"], allow_headers=["*"], expose_headers=["X-LLM-Error", "X-LLM-Error-Message", "X-LLM-Switch"])
 
 ollama = OllamaLLM()
-grok = GrokLLM()
+grok = ProviderPool(build_online_providers(get_settings()), store=CooldownStore())  # Groq, Mistral, Google AI Studio, Grok, or a custom service; moves on when one runs out
 mode_store = ModeStore()
-llm = RoutingLLM(mode_store, ollama, grok)  # picks Ollama or Grok by mode and strips personal details from every prompt
+llm = RoutingLLM(mode_store, ollama, grok)  # picks Ollama or the online providers by mode and strips personal details from every prompt
 lev = LevClient()
 store = SessionStore()
 progress = ProgressStore()
@@ -54,14 +54,19 @@ def _ascii(text: str) -> str:
 async def tell_browser_about_ai_problems(request, call_next):
     """If any AI step failed during a request (even one the app recovered from), say so in a header so the UI can show a notice."""
     bucket: list = []
+    switches: list = []
     token = llm_errors.set(bucket)
+    switch_token = llm_switches.set(switches)
     try:
         response = await call_next(request)
     finally:
         llm_errors.reset(token)
+        llm_switches.reset(switch_token)
     if bucket:
         response.headers["X-LLM-Error"] = bucket[0][0]
         response.headers["X-LLM-Error-Message"] = _ascii(bucket[0][1])
+    if switches:
+        response.headers["X-LLM-Switch"] = _ascii(switches[-1])
     return response
 
 
@@ -82,7 +87,7 @@ def _setup() -> str:
 
 
 def _mode_info() -> dict:
-    return {"mode": mode_store.mode, "setup": _setup(), "grok": {"configured": grok.configured, "model": grok.s.external_model, "provider": grok.provider},
+    return {"mode": mode_store.mode, "setup": _setup(), "grok": {"configured": grok.configured, "model": grok.s.external_model, "provider": grok.provider, "providers": grok.status()},
             "lev": {"mode": lev.s.lev_mode, "remote": lev.is_remote if lev.enabled else False, "location": lev.location},
             "redaction": {"names": "header, labels, honorifics and people-words"}}
 

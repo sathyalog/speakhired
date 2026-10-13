@@ -13,7 +13,7 @@
 
 ## Features
 - **Interview practice:** paste a job description (or link) and upload your resume. A UK-accented interviewer asks questions aloud over four rounds, from screening to system design. Each answer comes back corrected, with the points you missed and the answer to give the interviewer.
-- **Hot Seat:** rehearse one to three real questions you were asked. An optional web check (needs a key) sends only the question, unless you tick "Include my answer".
+- **Hot Seat:** rehearse one to three real questions you were asked. An optional web check (needs `EXTERNAL_API_KEY` in `.env`, separate from the free keys below) sends only the question, unless you tick "Include my answer".
 - **Clean Copy:** a grammar and spelling checker, in your browser, for cover letters and recruiter emails, with optional AI rewrites.
 - **Resume Radar:** an ATS-readiness score for your resume, with prioritised fixes.
 - **GitHub proof points (Online mode):** if one of your public repos already does what an interview question asks, a "Proof point" card appears under the answer.
@@ -25,9 +25,9 @@ Switch with the toggle at the top right of any page. The Home page shows which s
 
 | | **Offline** (default) | **Online** |
 |---|---|---|
-| Who writes the AI answers | Ollama on your computer (`qwen3:4b`) | Groq or Grok, with your own key |
+| Who writes the AI answers | Ollama on your computer (`qwen3:4b`) | Groq, Mistral or Google AI Studio, with your own free keys |
 | Needs | Ollama and about 3 GB of disk; 16 GB of memory to feel quick | A key and internet access |
-| Best for | Privacy, no internet, no usage limits | Computers with 8 GB of memory: answers in seconds |
+| Best for | Privacy, no internet, no usage limits | Computers with 8 GB of memory: answers in seconds. If one free service runs out, the app switches to the next key you added |
 | Install with | `./scripts/setup.sh` | `./scripts/setup.sh --online` |
 
 Not sure which to use? Run `uv run python -m speakhired.doctor` after installing. It checks your computer and suggests a mode.
@@ -39,7 +39,7 @@ Scoring (LEV) can run in three places. Together with the mode, that gives three 
 |---|---|---|---|
 | **Fully offline** | Offline | Inside the app, on `lev serve` on this computer, or off | Nothing |
 | **Offline + your scoring server** | Offline | On your Modal app, or another computer on your network | Your answers, with personal details removed, to your own server |
-| **Online** | Online | Anywhere, as above | Text with personal details removed, to the cloud AI (and to LEV if it is remote) |
+| **Online** | Online | Anywhere, as above | Text with personal details removed, to the cloud AI that answers (Groq, Mistral or Google AI Studio, whichever has a key and is not paused), and to LEV if it is remote |
 
 **Personal details are removed before any AI sees your text, in every setup.** Your name, emails, phone numbers, links, addresses, birth date, Aadhaar, PAN, passport, bank and card numbers, and personal fields such as marital status are replaced with placeholders such as `[NAME_1]`. You see the real text in the answer. Employers, colleges, cities and technologies are kept, because a review needs them.
 
@@ -52,7 +52,7 @@ uv run python -m speakhired.redact_preview path/to/your-resume.pdf
 | Job | Model | Runs on |
 |---|---|---|
 | Questions and feedback, Offline | `qwen3:4b` via Ollama (`OLLAMA_MODEL`) | Your computer |
-| Questions and feedback, Online | `openai/gpt-oss-120b` on Groq, or `grok-4.7` on xAI (`EXTERNAL_MODEL`) | The service's cloud |
+| Questions and feedback, Online | `openai/gpt-oss-120b` on Groq (`GROQ_MODEL`), `ministral-8b-2512` on Mistral (`MISTRAL_MODEL`), `gemini-3.5-flash` on Google AI Studio (`GEMINI_MODEL`) | The service's cloud |
 | Scoring and decisions | LEV (based on Qwen3.5-4B) | Where you run LEV (see below) |
 | Listening | Whisper `small` (`WHISPER_MODEL`) | Your computer |
 | Speaking (interviewer voice) | Kokoro, British voices | Your computer |
@@ -81,12 +81,27 @@ The Ollama desktop app and the Windows installer start the server for you. With 
 ```
 This also downloads the model (about 2.5 GB, once). "Address already in use" from `ollama serve` means Ollama is already running.
 
-### 3B. Online setup (Groq or Grok, no Ollama needed)
-1. Get a key: **Groq** ([console.groq.com](https://console.groq.com), has a free tier, key starts `gsk_`) or **Grok from xAI** ([console.x.ai](https://console.x.ai), key starts `xai-`).
+### 3B. Online setup (free keys, no Ollama needed)
+1. Get one or more free keys. The steps are in [Free API keys](#free-api-keys) below. Groq, Mistral and Google AI Studio are recommended.
 2. Run `./scripts/setup.sh --online` (Windows: `.\scripts\setup.ps1 -Online`).
-3. In `.env`, set `EXTERNAL_API_KEY=your-key`. `.env.example` already holds the Groq address and model. For Grok, use the Grok lines in the comments there.
+3. In `.env`, paste each key into its own line, for example `GROQ_API_KEY=your-key`. Leave the lines for services you did not sign up for empty.
 
-The key and address must come from the same company. The app tells you if they don't match. Without a key the app still starts, and choosing Online shows a "key is not configured" notice for 10 seconds.
+You do not need all three. The app uses the keys in the order set by `LLM_PROVIDER_ORDER` (default: Groq, Mistral, then Google AI Studio). When one service reaches its limit, the app switches to the next one and shows a short notice. The interview carries on without a restart. A service that ran out for the day is skipped until its reset time (midnight UTC), even after a restart.
+
+Without any key the app still starts, and choosing Online shows a "key is not configured" notice for 10 seconds.
+
+### Free API keys
+
+Each service has its own limits, and free limits change. Check the limits page on each dashboard. Keys are secret: never paste them into a chat, a commit or a screenshot.
+
+| Service | Key goes in `.env` as | Steps to get it | Free limits (at the time of writing) | Your prompts |
+|---|---|---|---|---|
+| **Groq** | `GROQ_API_KEY` | 1. Open [console.groq.com](https://console.groq.com) and sign up. 2. Open **API Keys**, choose **Create API Key**, and copy it (starts `gsk_`). | Free tier, no card needed. Per-minute and per-day caps. | Groq's terms apply. |
+| **Mistral AI** | `MISTRAL_API_KEY` | 1. Open [console.mistral.ai](https://console.mistral.ai) and sign up. 2. Choose the **Experiment** plan (free, no card). 3. Open **API Keys**, create a key, and copy it. | About 1 request per second and a monthly token cap. Lower priority at busy times. | Check Mistral's data settings in the console. |
+| **Google AI Studio** | `GEMINI_API_KEY` | 1. Open [aistudio.google.com](https://aistudio.google.com) and sign in with a Google account. 2. Choose **Get API key**, then **Create API key**, and copy it. | Free tier with a daily request cap per model. | **Google may use prompts sent on the free tier to improve its products.** Only use this key if you are happy with that. Your name and contact details are removed first either way. |
+| Cerebras (optional) | not used by the app | Not included. Cerebras no longer has a free tier: it gives a one-time $5 credit that expires after 30 days, and needs a payment method. | — | — |
+
+Your name, email, phone, address and ID numbers are removed from every prompt before it leaves your computer, whichever service answers. The job description and your answers are still sent, so use the free keys only for practice.
 
 ### 4. Choose how LEV runs
 LEV is optional but recommended. Set one option in `.env`:
@@ -152,8 +167,10 @@ To check it works, open http://127.0.0.1:8100/api/health. You want `ollama.ok`, 
 | Interviewer uses a robotic browser voice | Kokoro isn't installed. Install the voice extras (above). |
 | Couldn't access the microphone | Allow it for the page in your browser, or type your answer. |
 | `lev.ok: false` | Check `LEV_URL`, `MODAL_KEY`, `MODAL_SECRET` and `LEV_ALLOW_REMOTE`. Wait a minute if Modal is waking up, or set `LEV_MODE=off`. |
-| "Key is not configured" tile | You are in Online mode without a key. Add `EXTERNAL_API_KEY` to `.env` and restart, or switch to Offline. |
-| "Your key starts with gsk_…" or "did not accept the key" | The key and `EXTERNAL_API_BASE` are from different services. Use the matching pair from step 3B. |
+| "Key is not configured" tile | You are in Online mode without a key. Add a key such as `GROQ_API_KEY` to `.env` and restart, or switch to Offline. |
+| "Every online AI service has reached its usage limit" | Each key you added has run out for now. Wait until the time shown, add another key, or switch to Offline. |
+| "did not accept the key" | That service's key is wrong or was revoked. Copy it again into its own line in `.env`. |
+| "Your key starts with gsk_…" | A Groq key is on another service's line. Move it to `GROQ_API_KEY`. |
 | Port 5173 or 8100 already in use | Stop the old run with Ctrl+C, or `pkill -f uvicorn` and `pkill -f vite`. |
 | Changed `.env` but nothing changed | Stop and restart `./scripts/run.sh`. |
 
@@ -187,7 +204,7 @@ Tested with stand-ins, so please report problems: LEV inside the app (A1) on a 1
 ```bash
 uv run pytest
 ```
-About 190 automated tests cover privacy redaction, the AI provider routing, the interview flow, the LEV contract, speech and term correction, ATS scoring, Daily English, and the GitHub lookup. They need no Ollama, Groq, LEV or microphone.
+About 200 automated tests cover privacy redaction, the AI provider routing, the interview flow, the LEV contract, speech and term correction, ATS scoring, Daily English, and the GitHub lookup. They need no Ollama, Groq, LEV or microphone.
 
 ## Licence
 SpeakHired is licensed under the [Apache License 2.0](LICENSE). You can use, modify and share it, including commercially, as long as you keep the licence and notices. It comes with no warranty.

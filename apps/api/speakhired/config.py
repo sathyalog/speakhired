@@ -24,6 +24,17 @@ class Settings:
     external_api_base: str = field(default_factory=lambda: _env("EXTERNAL_API_BASE", "https://api.x.ai/v1"))
     external_api_key: str = field(default_factory=lambda: _env("EXTERNAL_API_KEY", "") or _env("GROK_API_KEY", "") or _env("XAI_API_KEY", ""))
     external_model: str = field(default_factory=lambda: _env("EXTERNAL_MODEL", "grok-4.7"))
+    # Online providers, tried in this order. Each one is used only when its key is set; when one runs out of its limit
+    # the app moves to the next. EXTERNAL_API_* is a custom slot for any other OpenAI-compatible service.
+    llm_provider_order: str = field(default_factory=lambda: _env("LLM_PROVIDER_ORDER", "groq,mistral,gemini,xai,custom"))
+    groq_api_key: str = field(default_factory=lambda: _env("GROQ_API_KEY", ""))
+    groq_model: str = field(default_factory=lambda: _env("GROQ_MODEL", "openai/gpt-oss-120b"))
+    mistral_api_key: str = field(default_factory=lambda: _env("MISTRAL_API_KEY", ""))
+    mistral_model: str = field(default_factory=lambda: _env("MISTRAL_MODEL", "ministral-8b-2512"))
+    gemini_api_key: str = field(default_factory=lambda: _env("GEMINI_API_KEY", ""))
+    gemini_model: str = field(default_factory=lambda: _env("GEMINI_MODEL", "gemini-3.5-flash"))
+    xai_api_key: str = field(default_factory=lambda: _env("XAI_API_KEY", "") or _env("GROK_API_KEY", ""))
+    xai_model: str = field(default_factory=lambda: _env("XAI_MODEL", "grok-4.7"))
     whisper_model: str = field(default_factory=lambda: _env("WHISPER_MODEL", "small"))
     default_voice: str = field(default_factory=lambda: _env("DEFAULT_VOICE", "bm_george"))
     data_dir: Path = field(default_factory=lambda: Path(_env("DATA_DIR", "./data")))

@@ -30,148 +30,125 @@ Requires-Dist: pytest-asyncio>=0.23; extra == "dev"
 Requires-Dist: reportlab>=4; extra == "dev"
 Dynamic: license-file
 
-# SpeakHired — Speak well. Get hired.
+<p align="center">
+  <img src="assets/banner.svg" alt="SpeakHired banner: Speak well. Get hired." width="100%">
+</p>
 
-Free, open-source voice coach for IT professionals who want to speak confident English and pass interviews. It runs on your own computer in one of two modes: **Offline** (AI on your machine) or **Online** (a fast cloud AI with your own key). In both, your voice and grammar checks stay on your computer, and your name, contact details and IDs are removed before any AI sees your text.
+<h1 align="center">SpeakHired</h1>
+<p align="center">
+  <img alt="Status: Beta" src="https://img.shields.io/badge/status-beta-f59e0b">
+  <a href="LICENSE"><img alt="License: Apache 2.0" src="https://img.shields.io/badge/license-Apache%202.0-2563eb"></a>
+  <img alt="Offline and Online" src="https://img.shields.io/badge/mode-offline%20%7C%20online-16a34a">
+</p>
 
-- **Interview practice**: paste a job description (or link) and upload your resume. A UK-accented interviewer asks questions out loud, round by round (1 screening to 4 system design), then corrects your answer and shows a better way to say it.
-- **Hot Seat**: rehearse one to three real questions you were asked, with a web-checked model answer.
-- **Clean Copy**: a Grammarly-style checker for cover letters and recruiter emails.
-- **Resume Radar**: an ATS-readiness score for your resume, with fixes.
-- **Daily English for IT**: terms, jargon and professional phrases (coming next).
+**Beta.** A free, open-source voice coach for IT professionals who want to speak confident English and pass interviews. It runs on your computer in **Offline** mode, or with a cloud AI in **Online** mode. Your name, contact details and IDs are removed before any AI sees your text.
 
-## How it works
-An AI model writes questions and feedback: **Ollama** on your computer (Offline) or **Groq/Grok** with your key (Online). [LEV](https://huggingface.co/interfaze-ai/lev) makes the scoring decisions (on your computer, your network or your own Modal server). faster-whisper listens, Kokoro speaks. See "Offline and Online mode" below for the details and the privacy rules.
+## Features
+- **Interview practice:** paste a job description (or link) and upload your resume. A UK-accented interviewer asks questions aloud over four rounds, from screening to system design. Each answer comes back corrected, with the points you missed and the answer to give the interviewer.
+- **Hot Seat:** rehearse one to three real questions you were asked. An optional web check (needs a key) sends only the question, unless you tick "Include my answer".
+- **Clean Copy:** a grammar and spelling checker, in your browser, for cover letters and recruiter emails, with optional AI rewrites.
+- **Resume Radar:** an ATS-readiness score for your resume, with prioritised fixes.
+- **GitHub proof points (Online mode):** if one of your public repos already does what an interview question asks, a "Proof point" card appears under the answer.
+- **Daily English for IT:** 15 IT terms, abbreviations and workplace phrases a day, at three levels (Foundation, Professional, Expert). Hear each one, say it back, then use it in a sentence. Works offline.
+- **Built-in helpers:** technical words are spoken and heard correctly (ChatGPT, kubectl, PostgreSQL). Other languages are flagged, with an English alternative suggested.
 
-## Which models it uses
-| Job | Model | Where it runs |
+## Choose a mode
+Switch with the toggle at the top right of any page. The Home page shows which setup you are in.
+
+| | **Offline** (default) | **Online** |
 |---|---|---|
-| Offline mode (questions, feedback) | `qwen3:4b` through Ollama (`OLLAMA_MODEL` in `.env`) | Your computer |
-| Online mode (the same jobs) | `openai/gpt-oss-120b` on Groq, or `grok-4.7` on xAI (`EXTERNAL_MODEL` in `.env`) | The service's cloud |
-| Scoring and decisions | LEV (based on Qwen3.5-4B) | Your Modal server, or your own computer or network |
-| Listening to you | Whisper `small` (`WHISPER_MODEL` in `.env`) | Your computer |
-| Interviewer voice | Kokoro (British voices) | Your computer |
-| Grammar check in Clean Copy | Harper | Your browser |
-
-In Online mode only the AI step moves to the cloud, and your name, contact details and IDs are removed first. Listening, speaking and the grammar check always stay on your computer.
-
-## Run it
-
-### Step 0: choose a mode
-| | **Offline** | **Online** |
-|---|---|---|
-| AI answers come from | Ollama on your computer | Groq or Grok, with your own free key |
-| Needs | Ollama, about 3 GB of disk for the model, 16 GB RAM to feel quick | A key and an internet connection |
-| Best for | Privacy, no internet, no usage limits | Small computers (8 GB): answers in seconds, not minutes |
+| Who writes the AI answers | Ollama on your computer (`qwen3:4b`) | Groq or Grok, with your own key |
+| Needs | Ollama and about 3 GB of disk; 16 GB of memory to feel quick | A key and internet access |
+| Best for | Privacy, no internet, no usage limits | Computers with 8 GB of memory: answers in seconds |
 | Install with | `./scripts/setup.sh` | `./scripts/setup.sh --online` |
 
-You can switch any time with the toggle at the top right of the app, so it is fine to set up both. Not sure? Run `uv run python -m speakhired.doctor` after installing: it checks your computer and suggests a mode.
+Not sure which to use? Run `uv run python -m speakhired.doctor` after installing. It checks your computer and suggests a mode.
 
-### Step 1: install the tools (once)
+## Where your data goes
+Scoring (LEV) can run in three places. Together with the mode, that gives three setups, and the Home page names the one you are in:
+
+| Setup | Mode | LEV runs | What leaves your computer |
+|---|---|---|---|
+| **Fully offline** | Offline | Inside the app, on `lev serve` on this computer, or off | Nothing |
+| **Offline + your scoring server** | Offline | On your Modal app, or another computer on your network | Your answers, with personal details removed, to your own server |
+| **Online** | Online | Anywhere, as above | Text with personal details removed, to the cloud AI (and to LEV if it is remote) |
+
+**Personal details are removed before any AI sees your text, in every setup.** Your name, emails, phone numbers, links, addresses, birth date, Aadhaar, PAN, passport, bank and card numbers, and personal fields such as marital status are replaced with placeholders such as `[NAME_1]`. You see the real text in the answer. Employers, colleges, cities and technologies are kept, because a review needs them.
+
+Names are found from the first line of a resume, "Name:" fields, titles such as Mr or Dr, and phrases like "worked with Ravi Kumar". A name in the middle of a sentence with none of these signs can slip through. To see exactly what an AI would receive from your file, run this; it works entirely on your computer:
+```bash
+uv run python -m speakhired.redact_preview path/to/your-resume.pdf
+```
+
+## Models
+| Job | Model | Runs on |
+|---|---|---|
+| Questions and feedback, Offline | `qwen3:4b` via Ollama (`OLLAMA_MODEL`) | Your computer |
+| Questions and feedback, Online | `openai/gpt-oss-120b` on Groq, or `grok-4.7` on xAI (`EXTERNAL_MODEL`) | The service's cloud |
+| Scoring and decisions | LEV (based on Qwen3.5-4B) | Where you run LEV (see below) |
+| Listening | Whisper `small` (`WHISPER_MODEL`) | Your computer |
+| Speaking (interviewer voice) | Kokoro, British voices | Your computer |
+| Grammar check (Clean Copy) | Harper | Your browser |
+
+## Setup
+
+### 1. Install the tools (once)
 | Tool | macOS | Windows | Linux | Needed for |
 |---|---|---|---|---|
-| [uv](https://docs.astral.sh/uv/) (Python manager) | `brew install uv` | `winget install astral-sh.uv` | `curl -LsSf https://astral.sh/uv/install.sh \| sh` | Both |
+| [uv](https://docs.astral.sh/uv/) (Python) | `brew install uv` | `winget install astral-sh.uv` | `curl -LsSf https://astral.sh/uv/install.sh \| sh` | Both |
 | [Node.js 20+](https://nodejs.org) | `brew install node` | `winget install OpenJS.NodeJS.LTS` | your package manager | Both |
-| espeak-ng (for the Kokoro voice) | `brew install espeak-ng` | [installer](https://github.com/espeak-ng/espeak-ng/releases) | `sudo apt install espeak-ng` | Both |
-| [Ollama](https://ollama.com/download) | `brew install ollama` or the app | installer from ollama.com | `curl -fsSL https://ollama.com/install.sh \| sh` | **Offline only** |
+| espeak-ng (Kokoro voice) | `brew install espeak-ng` | [installer](https://github.com/espeak-ng/espeak-ng/releases) | `sudo apt install espeak-ng` | Both |
+| [Ollama](https://ollama.com/download) | `brew install ollama` or the app | installer from ollama.com | `curl -fsSL https://ollama.com/install.sh \| sh` | Offline only |
 
-### Step 2: get the code and your settings file
+### 2. Get the code and settings
 ```bash
 git clone <this repo> && cd speakhired
 cp .env.example .env
 ```
 
-### Step 3A: Offline setup (Ollama)
-The Ollama desktop app and the Windows installer start the server for you. With the Homebrew or Linux install, start it yourself and leave that terminal open:
-```bash
-ollama serve
-```
-Then install the project; this also downloads the model (about 2.5 GB, once):
+### 3A. Offline setup (Ollama)
+The Ollama desktop app and the Windows installer start the server for you. With the Homebrew or Linux install, run `ollama serve` in a terminal and leave it open. Then:
 ```bash
 ./scripts/setup.sh          # Windows: .\scripts\setup.ps1
 ```
-If `ollama serve` says "address already in use", Ollama is already running. That is fine.
+This also downloads the model (about 2.5 GB, once). "Address already in use" from `ollama serve` means Ollama is already running.
 
-### Step 3B: Online setup (Groq or Grok, no Ollama needed)
-1. Get a key. **Groq** (free tier, recommended): sign in at [console.groq.com](https://console.groq.com), open **API Keys**, create one. **Grok from xAI**: [console.x.ai](https://console.x.ai).
-2. Install the project:
-   ```bash
-   ./scripts/setup.sh --online          # Windows: .\scripts\setup.ps1 -Online
-   ```
-3. Open `.env` and paste the key:
-   ```
-   EXTERNAL_API_KEY=your-key-here
-   ```
-   `.env.example` already holds the matching address and model for Groq. For Grok instead, use the Grok lines shown in the comments of that file. The key and the address must come from the same company (Groq keys start `gsk_`, xAI keys start `xai-`).
+### 3B. Online setup (Groq or Grok, no Ollama needed)
+1. Get a key: **Groq** ([console.groq.com](https://console.groq.com), has a free tier, key starts `gsk_`) or **Grok from xAI** ([console.x.ai](https://console.x.ai), key starts `xai-`).
+2. Run `./scripts/setup.sh --online` (Windows: `.\scripts\setup.ps1 -Online`).
+3. In `.env`, set `EXTERNAL_API_KEY=your-key`. `.env.example` already holds the Groq address and model. For Grok, use the Grok lines in the comments there.
 
-Without a key the app still starts; choosing Online then shows a "key is not configured" notice for 10 seconds and tells you what to fix.
+The key and address must come from the same company. The app tells you if they don't match. Without a key the app still starts, and choosing Online shows a "key is not configured" notice for 10 seconds.
 
-### Step 4: LEV (the scoring model), optional but recommended
-LEV works in both modes. See "LEV: the scoring model" below for running it on your computer or on Modal. Without it, the AI model scores answers itself.
+### 4. Choose how LEV runs
+LEV is optional but recommended. Set one option in `.env`:
 
-### Step 5: start it
-```bash
-./scripts/run.sh            # Windows: .\scripts\run.ps1
-```
-Open **http://127.0.0.1:5173**. The app remembers your last mode; switch with the toggle at the top right, or from the "How it runs" cards on the Home page.
+| Option | Setup | Memory | How |
+|---|---|---|---|
+| **A1. Inside the app** | Fully offline | About 16 GB recommended; the app refuses to load it below 12 GB | `uv sync --extra voice --extra dev --extra lev`, then `LEV_MODE=local` |
+| **A2. Separate server on this computer** | Fully offline | About 16 GB recommended | Run `lev serve` (below), then `LEV_MODE=http` and `LEV_URL=http://127.0.0.1:8000` |
+| **A2 on another computer** (home or college network) | Offline + your scoring server | Depends on that computer | Run `lev serve --host 0.0.0.0` there, then `LEV_URL=http://<its-ip>:8000` |
+| **B. Your Modal app** | Offline + your scoring server | Runs in the cloud | See [Modal](#modal-setup) below |
+| **C. No LEV** | Fully offline | None | `LEV_MODE=off`; the AI model scores answers itself, which is less consistent |
 
-### Using it
-- Press **Space** or the mic button to start answering, and again to finish. Check the transcript, fix anything misheard, then press **Get feedback**.
-- First-time waits: the first spoken answer downloads the Whisper model (about 500 MB), preparing an interview takes about a minute, and the first LEV score on Modal can take about a minute while it wakes up.
-- Stop the app with Ctrl+C in the terminal.
+The app labels the setup from the address: `127.0.0.1` or `LEV_MODE=local` is **Fully offline**. Another computer on your network or a Modal address is **Offline + your scoring server**.
 
-### Check that it works
-Open http://127.0.0.1:8100/api/health. You want `ollama.ok: true`, `model_ready: true` and `lev.ok: true`. You can also run `uv run python -m speakhired.doctor`.
-
-### Quick try without speech models
-Install with `uv sync --extra dev` instead of `./scripts/setup.sh`. Questions are then spoken by your browser's UK voice and you type your answers.
-
-### Troubleshooting
-| Problem | Fix |
-|---|---|
-| `zsh: no such file or directory: ./scripts/setup.sh` | You are not in the project folder. `cd` into `speakhired` first (put quotes around paths that contain spaces). |
-| `could not connect to ollama server` | The server is not running. Start it with `ollama serve` (or open the Ollama app) and try again. |
-| `ollama serve`: `address already in use` | Ollama is already running. Nothing to fix. |
-| `ollama: command not found` | Install Ollama (step 1), then open a new terminal. |
-| Health shows `ollama.ok: false` | Start Ollama, and check `OLLAMA_URL` in `.env` (default `http://localhost:11434`). |
-| Health shows `model_ready: false` | Run `ollama pull qwen3:4b`, or set `OLLAMA_MODEL` in `.env` to a model shown by `ollama list`. |
-| Questions take very long, or the Mac freezes | Close other apps. Try `WHISPER_MODEL=base` in `.env`. On 8 GB, keep LEV on Modal rather than local. |
-| `No module named 'faster_whisper'` / `'kokoro'` / `'soundfile'` (voice not installed) | Run `uv sync --extra voice --extra dev` from the project folder, then restart. The app shows "Install voice extras" in the browser until you do. |
-| Kokoro install or voice fails (macOS or Linux) | Install `espeak-ng` (step 1) and run `uv sync --extra voice --extra dev` again. |
-| Interviewer uses a robotic browser voice | The Kokoro voice is not installed. Use the fix on the line above. |
-| `Couldn't access the microphone` | Allow the microphone for the page in your browser settings, or type your answer. |
-| `TypeError: open() got an unexpected keyword argument 'metadata_errors'` when you speak | Your `av` package is too new. Run `uv sync --extra voice --extra dev` (it pins `av` below 19) and restart. |
-| Transcription is slow the first time | It is downloading the Whisper model once. Wait, or use `WHISPER_MODEL=base`. |
-| Health shows `lev.ok: false` | Check `LEV_URL`, `MODAL_KEY`, `MODAL_SECRET` and `LEV_ALLOW_REMOTE=true` in `.env`, wait a minute if Modal is waking up, or set `LEV_MODE=off`. |
-| `remote LEV hosts need LEV_ALLOW_REMOTE=true and https` | Add `LEV_ALLOW_REMOTE=true` to `.env` (only if you trust that LEV server), or use a local LEV. |
-| Port already in use (5173 or 8100) | Stop the old run with Ctrl+C, or `pkill -f uvicorn` and `pkill -f vite`. |
-| Changed `.env` but nothing changed | Stop and start `./scripts/run.sh` again. |
-
-## LEV: the scoring model
-LEV decides how well you answered (relevance, correctness, depth, structure, examples) and what the interviewer does next. It is a classifier by [InterfazeAI](https://github.com/InterfazeAI/lev) (Apache-2.0), about 8 GB, and runs as a small server that SpeakHired calls over HTTP (`lev-http`). Choose one option.
-
-Setup first: `cp .env.example .env`, then edit `.env`.
-
-### Option A: run LEV offline on your computer (private, recommended if you have 16 GB+ RAM)
+**A2 setup, once:**
 ```bash
 uv tool install "lev[serve] @ git+https://github.com/InterfazeAI/lev#subdirectory=packages/lev"
 lev serve --checkpoint interfaze-ai/lev --host 127.0.0.1 --port 8000
 ```
-The first start downloads about 8 GB of weights from Hugging Face; after that it works with no internet (`HF_HUB_OFFLINE=1`). Keep this running in its own terminal. In `.env`:
-```
-LEV_MODE=http
-LEV_URL=http://127.0.0.1:8000
-LEV_ALLOW_REMOTE=false
-```
-Tip: you can run this on another computer you own on your home or college network (use `--host 0.0.0.0` and set `LEV_URL=http://<its-ip>:8000`).
+Keep this running in its own terminal. The first start downloads about 8 GB of weights; `HF_HUB_OFFLINE=1` makes later starts work without internet.
 
-### Option B: run LEV on Modal (for computers with less than 16 GB)
-Modal has a free monthly credit; check its current pricing. You deploy LEV once under your own account:
+**A1 details:** LEV loads in the background when the app starts, so the first answer doesn't wait for it. `/api/health` shows `loading`, then `ok`. `LEV_CACHE_DIR` changes where the weights are kept. On a computer with less than 12 GB the app won't load LEV, to avoid freezing it, and says why. Set `LEV_LOCAL_FORCE=true` only to try anyway. A1 was not tested on a 16 GB machine by the developer; it is covered by tests with a stand-in LEV.
+
+<a id="modal-setup"></a>
+**B details:** deploy LEV once under your own Modal account, then create a Proxy Auth Token in the Modal dashboard:
 ```bash
 pip install modal && modal setup
 modal deploy deploy/modal_lev.py
 ```
-Then in the Modal dashboard create a **Proxy Auth Token** and fill `.env`:
+In `.env`:
 ```
 LEV_MODE=http
 LEV_URL=https://<your-workspace>--lev-server-serve.modal.run
@@ -179,87 +156,70 @@ MODAL_KEY=wk-...
 MODAL_SECRET=ws-...
 LEV_ALLOW_REMOTE=true
 ```
-Like Online mode, this sends data off your computer: the interview question, its key points and your **redacted** answer (emails, phone numbers and links removed; no resume content) go to your own Modal app. The first request after idle can take a minute while the server wakes up. Never commit `.env` or share your keys.
+Your redacted answers go to your Modal app. The first request after idle can take about a minute while it wakes up. Check Modal's current pricing before you deploy. Never commit `.env`.
 
-### Option C: no LEV
-Set `LEV_MODE=off`. Ollama scores answers instead, which works but is less consistent.
-
-Check which one is active: open `http://127.0.0.1:8100/api/health`.
-
-## Hot Seat: rehearse one or two real questions
-Paste 1 to 3 questions from a real interview or the internet (optionally add your rough idea for each). The interviewer asks them aloud, you answer by voice, and you get a score, grammar fixes, **"Instead of this, say this"** swaps, and a model answer in four parts (answer first, example, trade-off, close).
-
-**Web check (optional, off by default).** Add a free key for any OpenAI-compatible service (xAI Grok, Groq, OpenRouter...) to `.env` as `EXTERNAL_API_KEY` (and `EXTERNAL_API_BASE` / `EXTERNAL_MODEL` if not using Grok), then switch on "Check my answer on the web" in Hot Seat. It looks up what a strong answer should cover and flags wrong claims. What is sent:
-- **The question** (emails, phone numbers and links removed, 400 characters at most).
-- **Your answer and idea only if you also switch on "Include my answer in the web check"** (same clean-up, 1,500 characters at most).
-- Never your resume, job description or audio. A "What will be sent" panel shows the exact text, and every call is logged on your computer in `data/egress_audit.jsonl`.
-
-Without a key, Hot Seat still works fully offline; the result just isn't web-checked. Source links come from the AI search tool, so open them with care.
-
-## Offline and Online mode
-Use the switch at the top right of the app.
-
-| | Offline (default) | Online |
-|---|---|---|
-| Who writes the AI answers | Ollama on this computer | Groq or Grok, using your own key |
-| Reasoning and scoring | LEV (local, your LAN, or your Modal server) | LEV on your Modal server, plus Groq or Grok |
-| Good for | Privacy, no internet, no cost | Small computers: it is much faster and uses almost no memory |
-
-The key, address and model for Online mode (set in `.env`, then restart):
-- **Groq** ([console.groq.com](https://console.groq.com), free tier, key starts `gsk_`): `EXTERNAL_API_BASE=https://api.groq.com/openai/v1` and `EXTERNAL_MODEL=openai/gpt-oss-120b`
-- **Grok from xAI** ([console.x.ai](https://console.x.ai), key starts `xai-`): `EXTERNAL_API_BASE=https://api.x.ai/v1` and `EXTERNAL_MODEL=grok-4.7`
-
-Groq and Grok are different companies. The key and the address must match, and the app tells you if they don't. If the key is missing or the service can't be reached, a notice tile appears for 10 seconds and the app tells you what to fix. It never silently falls back to the other mode. Your choice is remembered.
-
-**What stays where.** The Home page tells you which of these you are in:
-
-| Setup | Writing the answers | Scoring (LEV) | Leaves your computer |
-|---|---|---|---|
-| **Fully local**: Offline mode, `lev serve` on this computer (`LEV_URL=http://127.0.0.1:8000`), or LEV off | Ollama, on this computer | This computer | Nothing |
-| Offline mode, LEV on another computer in your home or college network | Ollama, on this computer | Your network | Your answers, personal details removed, to that computer |
-| Offline mode, LEV on your Modal server | Ollama, on this computer | The internet (your Modal app) | Your answers, personal details removed, to your Modal app |
-| Online mode | Groq or Grok | Wherever LEV runs, as above | Text with personal details removed, to the cloud AI (and to LEV if it is remote) |
-
-The app works out where LEV runs from `LEV_URL`: `localhost` or `127.0.0.1` means this computer, a home or office network address (such as `192.168.x.x`) means your network, and anything else means the internet.
-
-**Personal details never reach any AI, in either mode.** Before any text goes to Ollama, Groq, Grok or LEV, the app replaces your name, email, phone number, links and social handles, addresses, birth date, Aadhaar, PAN, passport and other ID numbers, bank and card numbers, and personal fields such as marital status with placeholders like `[NAME_1]`. The answer you see has the real text put back. Employers, colleges, cities and technologies are kept because a review needs them. The resume report and interview setup list what was removed (counts only, never the values).
-
-Names are found from the first line of a resume, "Name:" fields, titles such as Mr, Ms and Dr, and phrases like "worked with Ravi Kumar". A name tucked into the middle of a sentence with none of those signs can slip through. To see exactly what the AI would receive from your own file, run this (it works entirely on your computer):
+### 5. Start the app
 ```bash
-uv run python -m speakhired.redact_preview path/to/your-resume.pdf
+./scripts/run.sh            # Windows: .\scripts\run.ps1
 ```
+Open **http://127.0.0.1:5173**. The app remembers your last mode.
+
+## Using it
+- Press **Space** or the mic to start answering, and again to finish. Check the transcript, fix anything misheard, then press **Get feedback**.
+- Waits you may see the first time: the Whisper model downloads once (about 500 MB), preparing an interview takes about a minute, and the first LEV score on Modal can take a minute while it wakes.
+- Stop the app with Ctrl+C.
+- **Quick try without speech models:** run `uv sync --extra dev` instead of the setup script. Questions use your browser's UK voice, and you type your answers.
+
+To check it works, open http://127.0.0.1:8100/api/health. You want `ollama.ok`, `model_ready` and `lev.ok` to be `true`. The `setup` field shows which setup is active.
+
+## Troubleshooting
+| Problem | Fix |
+|---|---|
+| `no such file or directory: ./scripts/setup.sh` | Run `cd` into the `speakhired` folder first. Quote paths that contain spaces. |
+| `could not connect to ollama server` | Run `ollama serve`, or open the Ollama app. |
+| `ollama: command not found` | Install Ollama, then open a new terminal. |
+| `ollama.ok: false` or `model_ready: false` | Start Ollama and check `OLLAMA_URL`. Run `ollama pull qwen3:4b`, or set `OLLAMA_MODEL` to a model from `ollama list`. |
+| `No module named 'faster_whisper'`, `'kokoro'` or `'soundfile'` | Run `uv sync --extra voice --extra dev`, then restart. |
+| `metadata_errors` error when you speak | Your `av` package is too new. The voice install pins it below 19; run the sync command again. |
+| Interviewer uses a robotic browser voice | Kokoro isn't installed. Install the voice extras (above). |
+| Couldn't access the microphone | Allow it for the page in your browser, or type your answer. |
+| `lev.ok: false` | Check `LEV_URL`, `MODAL_KEY`, `MODAL_SECRET` and `LEV_ALLOW_REMOTE`. Wait a minute if Modal is waking up, or set `LEV_MODE=off`. |
+| "Key is not configured" tile | You are in Online mode without a key. Add `EXTERNAL_API_KEY` to `.env` and restart, or switch to Offline. |
+| "Your key starts with gsk_…" or "did not accept the key" | The key and `EXTERNAL_API_BASE` are from different services. Use the matching pair from step 3B. |
+| Port 5173 or 8100 already in use | Stop the old run with Ctrl+C, or `pkill -f uvicorn` and `pkill -f vite`. |
+| Changed `.env` but nothing changed | Stop and restart `./scripts/run.sh`. |
 
 ## If Offline mode feels slow
-Offline speed depends on your computer's memory far more than its processor. On an 8 GB machine that is also running a browser and an editor, the model gets squeezed into slow "swap" memory and everything crawls. In order of effect:
-1. **Close other apps and browser tabs**, then check with `uv run python -m speakhired.doctor --bench` (about 30 seconds). It reports the speed, how much slow swap memory is in use, and the waits to expect.
-2. **Use a smaller model.** `ollama pull qwen3:1.7b`, then set `OLLAMA_MODEL=qwen3:1.7b` in `.env` and restart. It is roughly twice as fast; its answers are simpler. Run the benchmark again to compare: `uv run python -m speakhired.doctor --bench qwen3:1.7b`.
-3. **Switch to Online mode** (toggle at the top right) when you want answers in seconds.
-4. In **Resume Radar**, untick "Use AI to review the content" for an instant score from clear rules.
+Offline speed depends mostly on memory. On an 8 GB machine, a browser and an editor can push the model into slow swap memory.
+1. Close other apps and browser tabs. Then run `uv run python -m speakhired.doctor --bench` (about 30 seconds) to see your speed.
+2. Try a smaller model: `ollama pull qwen3:1.7b`, set `OLLAMA_MODEL=qwen3:1.7b`, and restart. It is roughly twice as fast, with simpler answers.
+3. Switch to Online mode for answers in seconds.
+4. In Resume Radar, untick "Use AI to review the content" for an instant score.
 
-What the app already does for you: it turns off the model's hidden "thinking" (this alone cut one feedback from about 76 s to about 31 s in testing), keeps the model loaded for 30 minutes (`OLLAMA_KEEP_ALIVE`), caps runaway answers (`OLLAMA_MAX_TOKENS`), and splits the feedback in two so the corrected answer and the points to add appear first while "the answer to give the interviewer" is still being written.
+The app already turns off the model's hidden "thinking", keeps the model loaded for 30 minutes (`OLLAMA_KEEP_ALIVE`), caps runaway answers (`OLLAMA_MAX_TOKENS`), and shows the corrected answer before the answer to give.
 
-## Technical words, spoken and heard
-Interviews are full of words that voices and recognisers get wrong (ChatGPT, Claude, kubectl, nginx, PostgreSQL, OAuth, GPT-4). The app keeps one dictionary of about 150 of them in `apps/api/speakhired/data/termbank.json` and uses it two ways:
-- **When the interviewer speaks**, "ChatGPT" is said as "Chat G P T", "kubectl" as "cube control", and symbols and special dashes that confuse voices are cleaned up. The voice also pauses between sentences and runs slightly slower than normal. Change the pace with the **Voice** menu on the interview screen. If the main voice is unavailable, the browser's British voice reads the same wording.
-- **When you speak**, the recogniser is told which technical words to expect (the question, the job's tech stack, a list of popular terms), and anything still misheard ("chat gpt", "post gress", "cooper netties") is corrected to the standard spelling. A note under the answer box shows what was fixed.
+## Daily English for IT
+- **Levels:** *Foundation* (everyday workplace words), *Professional* (working with a team and clients; the usual interview level) and *Expert* (10+ years: architecture, reliability and leadership). Pick one at the top of the page. Each level has its own 15-item daily set and progress.
+- **Each item:** hear it, say it back (spelling and spacing don't matter), then use it in a sentence. You get a grade and a stronger way to say it.
+- **Spaced repetition:** items you miss come back the next day; items you know come back after longer gaps.
+- **Content:** `apps/api/speakhired/data/daily.json` (181 items: 60 Foundation, 60 Professional, 61 Expert). The set comes from this file, so nothing is generated each day. To add an item, use the same fields, including `level`. `uv run pytest` checks each example uses its term.
 
-To add a word, add an entry to `termbank.json`: the correct spelling, how it should be said (`say`), and spellings recognisers tend to produce (`heard`). `uv run pytest` checks that ordinary sentences are never changed.
-
-## English-only practice
-This app is for practising English, so it tells you when you slip into another language. It checks three things: the language Whisper hears in your audio, whether the text contains Indian-language scripts (Devanagari, Telugu, Tamil and others), and a word list of Indian-language words written in English letters ("mujhe", "kya", "ledu", "enna").
-- A few stray words: you get a note, the words are highlighted, and the English alternative is shown ("matlab" becomes "I mean").
-- A mostly non-English answer: you are asked to re-record in English before getting feedback.
-
-The word list is `apps/api/speakhired/data/indic_words.json` (Hindi, Telugu, Tamil and Kannada so far). Contributions are welcome: add only words that are not also English words, and run `uv run pytest` to check that ordinary English sentences are never flagged.
-
-## The interface
-A clean white-and-blue design with a dark mode (sun/moon button, top right). It is built with [Tailwind CSS](https://tailwindcss.com) and [daisyUI](https://daisyui.com) (both MIT), with the Fraunces and Plus Jakarta Sans fonts (SIL Open Font License) bundled into the app, so nothing is loaded from the internet.
+## Technical words and English-only checks
+- **Technical words** are kept in `apps/api/speakhired/data/termbank.json`. When the interviewer speaks, terms are said properly ("ChatGPT" as "Chat G P T"). When you speak, the recogniser is told which words to expect, and mishearings ("chat gpt", "post gress") are corrected. Add a word with its correct spelling, how it is said (`say`), and common mishearings (`heard`).
+- **English-only:** the app checks the language Whisper hears, Indian scripts in your text, and a list of Indian-language words written in English letters (`apps/api/speakhired/data/indic_words.json`). A few stray words get a note with the English alternative. A mostly non-English answer must be re-recorded. Only add words that are not also English.
 
 ## Status
-Interview flow, scoring, coaching, privacy gateway and UI are in place. Not yet built: Daily English module, automatic end-of-speech detection (you press Space to finish), pronunciation scoring, LEV `local` in-process mode.
+**Beta.** Features and settings may change between versions.
+
+Not yet built: automatic end-of-speech detection (you press Space to finish), sound-level pronunciation scoring (currently word-level), and an installer (setup uses the scripts).
+
+Tested with stand-ins, so please report problems: LEV inside the app (A1) on a 16 GB machine, and the Daily English microphone and voice steps on a real Mac.
 
 ## Tests
 ```bash
 uv run pytest
 ```
-Licence: Apache-2.0.
+About 190 automated tests cover privacy redaction, the AI provider routing, the interview flow, the LEV contract, speech and term correction, ATS scoring, Daily English, and the GitHub lookup. They need no Ollama, Groq, LEV or microphone.
+
+## Licence
+SpeakHired is licensed under the [Apache License 2.0](LICENSE). You can use, modify and share it, including commercially, as long as you keep the licence and notices. It comes with no warranty.

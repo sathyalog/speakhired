@@ -1,5 +1,5 @@
 # One-command setup.   .\scripts\setup.ps1            Offline mode: Ollama on this computer (default)
-#                      .\scripts\setup.ps1 -Online    Online mode: Groq or Grok with your own key, no Ollama needed
+#                      .\scripts\setup.ps1 -Online    Online mode: free keys (Groq, Mistral, Google AI Studio), no Ollama needed
 param([switch]$Online)
 $ErrorActionPreference = "Stop"
 Set-Location (Join-Path $PSScriptRoot "..")
@@ -12,10 +12,11 @@ New-Item -ItemType Directory -Force -Path data | Out-Null
 if ($Online) {
   '{"mode": "online"}' | Set-Content data/mode.json
   uv run python -m speakhired.doctor
-  if (-not (Select-String -Path .env -Pattern '^EXTERNAL_API_KEY=.+' -Quiet)) {
-    Write-Host "`nOne more step for Online mode: add your key to .env"
-    Write-Host "  1. Get a free key at https://console.groq.com (Groq), or https://console.x.ai (Grok)"
-    Write-Host "  2. Open .env and set EXTERNAL_API_KEY=your-key"
+  if (-not (Select-String -Path .env -Pattern '^(GROQ|MISTRAL|GEMINI|XAI)_API_KEY=.+|^EXTERNAL_API_KEY=.+' -Quiet)) {
+    Write-Host "`nOne more step for Online mode: add at least one free key to .env"
+    Write-Host "  1. Get a free key: Groq (https://console.groq.com), Mistral (https://console.mistral.ai)"
+    Write-Host "     or Google AI Studio (https://aistudio.google.com). The README has the steps."
+    Write-Host "  2. Open .env and set GROQ_API_KEY=your-key (or MISTRAL_API_KEY / GEMINI_API_KEY)"
   }
   Write-Host "Done (Online mode). Start with: .\scripts\run.ps1"
 } else {

@@ -44,11 +44,12 @@ def main() -> None:
         args = [a for a in sys.argv[1:] if not a.startswith("--")]
         return bench(args[0] if args else (os.environ.get("OLLAMA_MODEL") or _env_file_value("OLLAMA_MODEL") or "qwen3:4b"))
     ram = ram_gb()
-    key = bool(os.environ.get("EXTERNAL_API_KEY") or _env_file_value("EXTERNAL_API_KEY"))
+    keys = [k for k in ("GROQ_API_KEY", "MISTRAL_API_KEY", "GEMINI_API_KEY", "XAI_API_KEY", "EXTERNAL_API_KEY")
+            if os.environ.get(k) or _env_file_value(k)]
     print(f"RAM: {ram:.0f} GB   OS: {platform.system()} {platform.machine()}")
     print("Node:", "found" if shutil.which("node") else "MISSING (needed for the web UI)")
     print("Ollama (Offline mode):", "found" if shutil.which("ollama") else "not installed (only needed for Offline mode: https://ollama.com)")
-    print("Online key (EXTERNAL_API_KEY):", "set" if key else "not set (only needed for Online mode: free key at https://console.groq.com)")
+    print("Online keys:", ", ".join(keys) if keys else "none set (only needed for Online mode: free keys, see the README, \"Free API keys\")")
     print()
     if ram and ram < 12:
         print("Suggestion: your computer has little memory. Online mode is much faster here (AI runs in the cloud, personal details removed first).")

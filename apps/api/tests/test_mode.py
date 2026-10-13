@@ -19,6 +19,8 @@ SCHEMA = {"type": "object", "properties": {"summary": {"type": "string"}}, "requ
 
 
 class RecordingProvider:
+    configured, provider, s = True, "Grok", Settings()  # the parts of a provider that the router reads
+
     def __init__(self, reply=None):
         self.seen, self.reply = [], reply or {"summary": "[NAME_1] built Kafka services; contact [EMAIL_1]"}
 

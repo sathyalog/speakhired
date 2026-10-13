@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # One-command setup.   ./scripts/setup.sh            Offline mode: Ollama on this computer (default)
-#                      ./scripts/setup.sh --online   Online mode: Groq or Grok with your own key, no Ollama needed
+#                      ./scripts/setup.sh --online   Online mode: free keys (Groq, Mistral, Google AI Studio), no Ollama needed
 set -euo pipefail
 cd "$(dirname "$0")/.."
 MODE=offline
@@ -16,7 +16,7 @@ done
 command -v uv >/dev/null || { echo "Install uv first: https://docs.astral.sh/uv/"; exit 1; }
 command -v node >/dev/null || { echo "Install Node 20+ first: https://nodejs.org"; exit 1; }
 if [ "$MODE" = offline ]; then
-  command -v ollama >/dev/null || { echo "Offline mode needs Ollama: https://ollama.com  (or run ./scripts/setup.sh --online to use Groq or Grok instead)"; exit 1; }
+  command -v ollama >/dev/null || { echo "Offline mode needs Ollama: https://ollama.com  (or run ./scripts/setup.sh --online to use a free online key instead)"; exit 1; }
 fi
 
 [ -f .env ] || cp .env.example .env
@@ -33,12 +33,12 @@ if [ "$MODE" = offline ]; then
 else
   echo '{"mode": "online"}' > data/mode.json
   uv run python -m speakhired.doctor
-  if ! grep -Eq '^EXTERNAL_API_KEY=.+' .env; then
+  if ! grep -Eq '^(GROQ|MISTRAL|GEMINI|XAI)_API_KEY=.+|^EXTERNAL_API_KEY=.+' .env; then
     echo
-    echo "One more step for Online mode: add your key to .env"
-    echo "  1. Get a free key at https://console.groq.com (Groq), or https://console.x.ai (Grok)"
-    echo "  2. Open .env and set EXTERNAL_API_KEY=your-key"
-    echo "     (Groq is already the default address and model; for Grok, see the comments in .env)"
+    echo "One more step for Online mode: add at least one free key to .env"
+    echo "  1. Get a free key: Groq (https://console.groq.com), Mistral (https://console.mistral.ai)"
+    echo "     or Google AI Studio (https://aistudio.google.com). The README has the steps."
+    echo "  2. Open .env and set GROQ_API_KEY=your-key (or MISTRAL_API_KEY / GEMINI_API_KEY)"
   fi
   echo "Done (Online mode). Start with: ./scripts/run.sh"
 fi

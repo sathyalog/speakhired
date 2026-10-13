@@ -21,6 +21,9 @@ async function j<T>(r: Response): Promise<T> {
   // The server flags any AI step that failed (even one it recovered from) so a notice can be shown.
   const aiProblem = r.headers.get("X-LLM-Error");
   if (aiProblem) reportLlmProblem(aiProblem, r.headers.get("X-LLM-Error-Message") ?? "");
+  // The answer came from another online provider after the first one reached its limit.
+  const switched = r.headers.get("X-LLM-Switch");
+  if (switched) notify({ tone: "info", title: "Switched AI provider", body: switched, ttl: 8000 });
   if (!r.ok) {
     let msg = r.statusText;
     try { msg = (await r.json()).detail ?? msg; } catch { /* ignore */ }
@@ -30,7 +33,8 @@ async function j<T>(r: Response): Promise<T> {
 }
 
 export type Setup = "fully_offline" | "offline_hosted_scoring" | "online";
-export type ModeInfo = { mode: "offline" | "online"; setup: Setup; grok: { configured: boolean; model: string; provider: string }; lev: { mode: string; remote: boolean; location: "off" | "this_computer" | "network" | "internet" }; redaction: { names: string } };
+export type ProviderStatus = { provider: string; model: string; configured: boolean; paused_until: string | null };
+export type ModeInfo = { mode: "offline" | "online"; setup: Setup; grok: { configured: boolean; model: string; provider: string; providers?: ProviderStatus[] }; lev: { mode: string; remote: boolean; location: "off" | "this_computer" | "network" | "internet" }; redaction: { names: string } };
 
 export const api = {
   mode: () => fetch("/api/mode").then(j<ModeInfo>),

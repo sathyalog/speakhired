@@ -159,7 +159,7 @@ const SCORING: Record<string, string> = {
 function HowItRuns() {
   const { info, choose, busy } = useMode();
   const online = info?.mode === "online";
-  const provider = info?.grok.provider ?? "Groq or Grok";
+  const provider = info?.grok.provider ?? "A free online AI service";
   const card = (active: boolean) => `card border bg-base-100 ${active ? "border-primary ring-1 ring-primary/30" : "border-base-300"}`;
   return (
     <section className="mt-10" aria-labelledby="how-it-runs">
@@ -179,9 +179,9 @@ function HowItRuns() {
         <div className={card(online)}>
           <div className="card-body gap-2">
             <div className="flex items-center gap-2"><span className="text-primary"><CloudIcon /></span><h3 className="card-title text-lg">Online</h3>{online && <span className="badge badge-primary badge-soft badge-sm">Current</span>}</div>
-            <p className="text-sm text-base-content/70">{provider} writes the answers (in seconds), with LEV on your own server for scoring. Best for small computers, and nothing heavy runs locally.</p>
+            <p className="text-sm text-base-content/70">{provider} writes the answers (in seconds), with LEV on your own server for scoring. If one service reaches its free limit, the app switches to the next one you have a key for. Best for small computers, and nothing heavy runs locally.</p>
             <p className="text-xs text-base-content/60">{SCORING[info?.lev.location ?? "off"]}</p>
-            <p className="text-xs text-base-content/60"><b>Set up:</b> get a free key and add it to <code>.env</code> as <code>EXTERNAL_API_KEY</code>, then restart.{info && !info.grok.configured ? " No key found yet." : ""}</p>
+            <p className="text-xs text-base-content/60"><b>Set up:</b> get one or more free keys (Groq, Mistral or Google AI Studio), add them to <code>.env</code>, then restart. The README has the steps.{info && !info.grok.configured ? " No key found yet." : ""}</p>
             {!online && <div className="card-actions"><button className="btn btn-outline btn-sm rounded-full" disabled={busy} onClick={() => choose("online")}>Use Online</button></div>}
           </div>
         </div>

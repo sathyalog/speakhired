@@ -25,7 +25,7 @@ export function ModeProvider({ children }: { children: ReactNode }) {
       setProvider(next.grok.provider);
       setInfo(next);
       if (m === "online" && !next.grok.configured) {
-        notify({ tone: "warning", title: `${next.grok.provider} key is not configured`, body: "Online mode needs your key. Add EXTERNAL_API_KEY to the .env file and restart the app, or switch back to Offline mode." });
+        notify({ tone: "warning", title: "No online key is set", body: "Online mode needs at least one free key (GROQ_API_KEY, MISTRAL_API_KEY or GEMINI_API_KEY) in the .env file. Restart the app after adding it, or switch back to Offline mode." });
       }
     } catch { notify({ tone: "error", title: "Couldn't switch mode", body: "Is the app's server running?" }); }
     finally { setBusy(false); }
