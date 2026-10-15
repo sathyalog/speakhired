@@ -74,17 +74,18 @@ uv run python -m speakhired.redact_preview path/to/your-resume.pdf
 git clone <this repo> && cd speakhired
 cp .env.example .env
 ```
+Windows (Command Prompt or PowerShell): `copy .env.example .env`
 
 ### 3A. Offline setup (Ollama)
 The Ollama desktop app and the Windows installer start the server for you. With the Homebrew or Linux install, run `ollama serve` in a terminal and leave it open. Then:
 ```bash
-./scripts/setup.sh          # Windows: .\scripts\setup.ps1
+./scripts/setup.sh          # Windows: scripts\setup.cmd
 ```
 This also downloads the model (about 2.5 GB, once). "Address already in use" from `ollama serve` means Ollama is already running.
 
 ### 3B. Online setup (free keys, no Ollama needed)
 1. Get one or more free keys. The steps are in [Free API keys](#free-api-keys) below. Groq, Mistral and Google AI Studio are recommended.
-2. Run `./scripts/setup.sh --online` (Windows: `.\scripts\setup.ps1 -Online`).
+2. Run `./scripts/setup.sh --online` (Windows: `scripts\setup.cmd -Online`).
 3. In `.env`, paste each key into its own line, for example `GROQ_API_KEY=your-key`. Leave the lines for services you did not sign up for empty.
 
 You do not need all three. The app uses the keys in the order set by `LLM_PROVIDER_ORDER` (default: Groq, Mistral, then Google AI Studio). When one service reaches its limit, the app switches to the next one and shows a short notice. The interview carries on without a restart. A service that ran out for the day is skipped until its reset time (midnight UTC), even after a restart.
@@ -144,8 +145,9 @@ Your redacted answers go to your Modal app. The first request after idle can tak
 
 ### 5. Start the app
 ```bash
-./scripts/run.sh            # Windows: .\scripts\run.ps1
+./scripts/run.sh            # Windows: scripts\run.cmd
 ```
+On Windows, use `scripts\run.cmd` from Command Prompt or PowerShell, or double-click `scripts\run.cmd` in File Explorer. Press Ctrl+C in that window to stop the app.
 Open **http://127.0.0.1:5173**. The app remembers your last mode.
 
 ## Using it
@@ -173,6 +175,10 @@ To check it works, open http://127.0.0.1:8100/api/health. You want `ollama.ok`, 
 | Problem | Fix |
 |---|---|
 | `no such file or directory: ./scripts/setup.sh` | Run `cd` into the `speakhired` folder first. Quote paths that contain spaces. |
+| Windows: `cp` is not recognized, or `.env.example` is not copied | Use `copy .env.example .env` in Command Prompt or PowerShell. `cp` only works on macOS and Linux. |
+| Windows: `setup.sh` or `setup.ps1` opens in Notepad, or "running scripts is disabled" | Do not run `.sh` on Windows. Use `scripts\setup.cmd` and `scripts\run.cmd`. They bypass the PowerShell script block for that run only. |
+| Windows: `'uv' is not recognized` or `'npm' is not recognized` | Install uv and Node.js (see the table above), then close and reopen the terminal so PATH updates. |
+| Windows: port 8100 or 5173 "already in use" | An earlier run did not stop. Close the old `scripts\run.cmd` window, or run `netstat -ano \| findstr :8100` and stop that process in Task Manager. |
 | `could not connect to ollama server` | Run `ollama serve`, or open the Ollama app. |
 | `ollama: command not found` | Install Ollama, then open a new terminal. |
 | `ollama.ok: false` or `model_ready: false` | Start Ollama and check `OLLAMA_URL`. Run `ollama pull qwen3:4b`, or set `OLLAMA_MODEL` to a model from `ollama list`. |
@@ -186,7 +192,7 @@ To check it works, open http://127.0.0.1:8100/api/health. You want `ollama.ok`, 
 | "did not accept the key" | That service's key is wrong or was revoked. Copy it again into its own line in `.env`. |
 | "Your key starts with gsk_…" | A Groq key is on another service's line. Move it to `GROQ_API_KEY`. |
 | Port 5173 or 8100 already in use | Stop the old run with Ctrl+C, or `pkill -f uvicorn` and `pkill -f vite`. |
-| Changed `.env` but nothing changed | Stop and restart `./scripts/run.sh`. |
+| Changed `.env` but nothing changed | Stop and restart `./scripts/run.sh` (Windows: `scripts\run.cmd`). |
 
 ## If Offline mode feels slow
 Offline speed depends mostly on memory. On an 8 GB machine, a browser and an editor can push the model into slow swap memory.

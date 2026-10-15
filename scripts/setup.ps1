@@ -1,27 +1,49 @@
-# One-command setup.   .\scripts\setup.ps1            Offline mode: Ollama on this computer (default)
-#                      .\scripts\setup.ps1 -Online    Online mode: free keys (Groq, Mistral, Google AI Studio), no Ollama needed
+# One-command setup.   .\scripts\setup.cmd            Offline mode: Ollama on this computer (default)
+#                      .\scripts\setup.cmd -Online    Online mode: free keys (Groq, Mistral, Google AI Studio), no Ollama needed
+# setup.cmd runs this file with the execution policy bypassed for that one run, so Windows does not block it.
 param([switch]$Online)
 $ErrorActionPreference = "Stop"
 Set-Location (Join-Path $PSScriptRoot "..")
+
+# Native commands (uv, npm, ollama) do not stop the script on failure, so check their exit code.
+function Invoke-Checked {
+  param([string]$Description, [scriptblock]$Command)
+  Write-Host "-> $Description"
+  & $Command
+  if ($LASTEXITCODE -ne 0) { throw "$Description failed (exit code $LASTEXITCODE)" }
+}
+
+# Write JSON as UTF-8 without a byte order mark, which Python's json module reads reliably.
+function Write-Utf8NoBom {
+  param([string]$Path, [string]$Text)
+  [System.IO.File]::WriteAllText((Join-Path (Get-Location) $Path), $Text, (New-Object System.Text.UTF8Encoding $false))
+}
+
 $tools = @("uv", "node"); if (-not $Online) { $tools += "ollama" }
-foreach ($c in $tools) { if (-not (Get-Command $c -ErrorAction SilentlyContinue)) { Write-Error "Install $c first (Offline mode needs Ollama; or run setup.ps1 -Online)"; exit 1 } }
-if (-not (Test-Path .env)) { Copy-Item .env.example .env }
-uv sync --extra voice --extra dev
-Push-Location apps/web; npm install; Pop-Location
+foreach ($c in $tools) {
+  if (-not (Get-Command $c -ErrorAction SilentlyContinue)) {
+    throw "Install $c first (Offline mode needs Ollama; or run setup.cmd -Online). Open a new PowerShell window after installing so PATH is refreshed."
+  }
+}
+
+if (-not (Test-Path .env)) { Copy-Item .env.example .env; Write-Host "Created .env from .env.example" }
+Invoke-Checked "Installing Python packages (uv sync)" { uv sync --extra voice --extra dev }
+Invoke-Checked "Installing web packages (npm install)" { Push-Location apps/web; try { npm install } finally { Pop-Location } }
 New-Item -ItemType Directory -Force -Path data | Out-Null
+
 if ($Online) {
-  '{"mode": "online"}' | Set-Content data/mode.json
-  uv run python -m speakhired.doctor
+  Write-Utf8NoBom "data/mode.json" '{"mode": "online"}'
+  Invoke-Checked "Checking the setup (doctor)" { uv run python -m speakhired.doctor }
   if (-not (Select-String -Path .env -Pattern '^(GROQ|MISTRAL|GEMINI|XAI)_API_KEY=.+|^EXTERNAL_API_KEY=.+' -Quiet)) {
     Write-Host "`nOne more step for Online mode: add at least one free key to .env"
     Write-Host "  1. Get a free key: Groq (https://console.groq.com), Mistral (https://console.mistral.ai)"
     Write-Host "     or Google AI Studio (https://aistudio.google.com). The README has the steps."
-    Write-Host "  2. Open .env and set GROQ_API_KEY=your-key (or MISTRAL_API_KEY / GEMINI_API_KEY)"
+    Write-Host "  2. Open .env (Notepad is fine) and set GROQ_API_KEY=your-key (or MISTRAL_API_KEY / GEMINI_API_KEY)"
   }
-  Write-Host "Done (Online mode). Start with: .\scripts\run.ps1"
+  Write-Host "Done (Online mode). Start with: .\scripts\run.cmd"
 } else {
-  '{"mode": "offline"}' | Set-Content data/mode.json
-  uv run python -m speakhired.doctor
-  ollama pull qwen3:4b
-  Write-Host "Done (Offline mode). Start with: .\scripts\run.ps1"
+  Write-Utf8NoBom "data/mode.json" '{"mode": "offline"}'
+  Invoke-Checked "Checking the setup (doctor)" { uv run python -m speakhired.doctor }
+  Invoke-Checked "Downloading the Ollama model (qwen3:4b, about 2.5 GB, once)" { ollama pull qwen3:4b }
+  Write-Host "Done (Offline mode). Start with: .\scripts\run.cmd"
 }
