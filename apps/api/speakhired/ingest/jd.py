@@ -18,10 +18,19 @@ def _assert_public(url: str) -> None:
 
 
 async def fetch_jd_text(url: str) -> str:
-    _assert_public(url)
     async with httpx.AsyncClient(timeout=20, follow_redirects=False, headers={"User-Agent": "SpeakHired/0.1"}) as client:
-        r = await client.get(url)
-        r.raise_for_status()
+        # Redirects are followed by hand so every hop is checked, and a redirect cannot lead to a private address.
+        try:
+            for _ in range(5):
+                _assert_public(url)
+                r = await client.get(url)
+                if not (r.is_redirect and r.headers.get("location")):
+                    break
+                url = str(r.url.join(r.headers["location"]))
+        except httpx.HTTPError:
+            raise ValueError("couldn't open that job link. Check it, or paste the job description text instead.")
+    if r.status_code >= 400:
+        raise ValueError(f"the job page could not be opened (error {r.status_code}). Paste the job description text instead.")
     text = trafilatura.extract(r.text) or ""
     if len(text) < 200:
         raise ValueError("couldn't read the job description from that page. Paste the text instead.")
