@@ -69,6 +69,8 @@ uv run python -m speakhired.redact_preview path/to/your-resume.pdf
 | espeak-ng (Kokoro voice) | `brew install espeak-ng` | [installer](https://github.com/espeak-ng/espeak-ng/releases) | `sudo apt install espeak-ng` | Both |
 | [Ollama](https://ollama.com/download) | `brew install ollama` or the app | installer from ollama.com | `curl -fsSL https://ollama.com/install.sh \| sh` | Offline only |
 
+On Windows, `scripts\setup.cmd` tries to install missing uv, Node.js and Ollama for you with `winget` (built into Windows 11). It does not install espeak-ng, so install that yourself. If a tool still cannot be found afterwards (for example, winget is missing or blocked by your organisation), install it by hand from the table, then open a **new** PowerShell window and run setup again. A window that was open during the install keeps its old PATH.
+
 ### 2. Get the code and settings
 ```bash
 git clone <this repo> && cd speakhired
@@ -177,7 +179,10 @@ To check it works, open http://127.0.0.1:8100/api/health. You want `ollama.ok`, 
 | `no such file or directory: ./scripts/setup.sh` | Run `cd` into the `speakhired` folder first. Quote paths that contain spaces. |
 | Windows: `cp` is not recognized, or `.env.example` is not copied | Use `copy .env.example .env` in Command Prompt or PowerShell. `cp` only works on macOS and Linux. |
 | Windows: `setup.sh` or `setup.ps1` opens in Notepad, or "running scripts is disabled" | Do not run `.sh` on Windows. Use `scripts\setup.cmd` and `scripts\run.cmd`. They bypass the PowerShell script block for that run only. |
-| Windows: `'uv' is not recognized` or `'npm' is not recognized` | Install uv and Node.js (see the table above), then close and reopen the terminal so PATH updates. |
+| Windows: `'uv' is not recognized`, `'npm' is not recognized`, or setup says "Could not find or install uv" | Run `winget install astral-sh.uv` and `winget install OpenJS.NodeJS.LTS` (or install them from the table above), then close the terminal, open a new PowerShell window and run `scripts\setup.cmd` again. If `uv` is still not found, add `%USERPROFILE%\.local\bin` to your PATH. |
+| `uv sync` fails with "doesn't have a source distribution or wheel for the current platform" (`ctranslate2`, CPython 3.15) | uv picked a Python that is too new for the voice packages. The repo pins Python 3.13 in `.python-version`. Keep that file, then run setup again. |
+| Windows: Ollama install says "You cancelled the installation" | The Ollama installer opens a window that must be accepted. Run it again and click through, or install from ollama.com/download. Online mode does not need Ollama. |
+| Windows: setup says `.env.example` is missing | Run `git checkout -- .env.example`, or create an empty `.env` file. |
 | Windows: port 8100 or 5173 "already in use" | An earlier run did not stop. Close the old `scripts\run.cmd` window, or run `netstat -ano \| findstr :8100` and stop that process in Task Manager. |
 | `could not connect to ollama server` | Run `ollama serve`, or open the Ollama app. |
 | `ollama: command not found` | Install Ollama, then open a new terminal. |

@@ -1,2 +1,0 @@
-speakhired
-tests

@@ -19,10 +19,27 @@ function Write-Utf8NoBom {
   [System.IO.File]::WriteAllText((Join-Path (Get-Location) $Path), $Text, (New-Object System.Text.UTF8Encoding $false))
 }
 
+# Reload PATH from Windows, so tools installed after this window opened are found.
+function Update-SessionPath {
+  $machine = [Environment]::GetEnvironmentVariable("Path", "Machine")
+  $user = [Environment]::GetEnvironmentVariable("Path", "User")
+  $env:Path = (@($machine, $user, "$env:USERPROFILE\.local\bin") | Where-Object { $_ }) -join ";"
+}
+
+# winget package ids for the tools this script needs.
+$wingetIds = @{ uv = "astral-sh.uv"; node = "OpenJS.NodeJS.LTS"; ollama = "Ollama.Ollama" }
+
 $tools = @("uv", "node"); if (-not $Online) { $tools += "ollama" }
+Update-SessionPath
 foreach ($c in $tools) {
+  if (Get-Command $c -ErrorAction SilentlyContinue) { continue }
+  if (Get-Command winget -ErrorAction SilentlyContinue) {
+    Write-Host "-> $c not found. Installing it with winget..."
+    winget install --id $wingetIds[$c] -e --accept-package-agreements --accept-source-agreements
+    Update-SessionPath
+  }
   if (-not (Get-Command $c -ErrorAction SilentlyContinue)) {
-    throw "Install $c first (Offline mode needs Ollama; or run setup.cmd -Online). Open a new PowerShell window after installing so PATH is refreshed."
+    throw "Could not find or install $c. Install it by hand (README, step 1), then open a new PowerShell window so PATH is refreshed and run setup again. Offline mode needs Ollama; or run setup.cmd -Online."
   }
 }
 
