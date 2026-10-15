@@ -176,6 +176,7 @@ async def create_session(
     round_no: int = Form(...), voice: str = Form("bm_george"),
     jd_text: str = Form(""), jd_url: str = Form(""), external_consent: bool = Form(False),
     resume: UploadFile = File(...), questions_file: UploadFile | None = File(None), github_url: str = Form(""),
+    interview_pattern: str = Form(""),
 ):
     if round_no not in (1, 2, 3, 4):
         raise HTTPException(400, "round_no must be 1-4")
@@ -207,16 +208,18 @@ async def create_session(
             brief = await egress.lookup(ExternalQuery(company_name=job.company, role_title=job.role, tech_tags=job.tech_stack[:10]), True)
         except (EgressBlocked, ValueError, Exception):  # noqa: BLE001 - external info is optional
             brief = None
-    questions = await core.generate_questions(llm, job, cand, round_no, custom=custom)
+    pattern = interview_pattern.strip()[: core.MAX_PATTERN_CHARS]  # optional: what the recruiter says the interview is
+    questions = await core.generate_questions(llm, job, cand, round_no, custom=custom, pattern=pattern)
     questions = [await core.rubric_for_custom(llm, q) if q.kind == "custom" else q for q in questions]
     red = Redactor()
     red.clean(resume_text)
     data = {"job": job.model_dump(), "candidate": cand.model_dump(), "round": round_no, "voice": voice,
             "brief": brief, "questions": [q.model_dump() for q in questions], "index": 0, "results": [],
-            "pii_terms": [], "resume_text_chars": len(resume_text), "repos": [r.__dict__ for r in repos]}
+            "pii_terms": [], "resume_text_chars": len(resume_text), "repos": [r.__dict__ for r in repos], "pattern": pattern}
     sid = store.create(data)
     return {"id": sid, "job": job, "brief": brief, "total": len(questions), "question": questions[0], "redactions": red.summary(),
-            "repos": [{"name": r.name, "url": r.url, "description": r.description, "language": r.language} for r in repos], "github_note": github_note}
+            "repos": [{"name": r.name, "url": r.url, "description": r.description, "language": r.language} for r in repos], "github_note": github_note,
+            "pattern_used": bool(pattern)}
 
 
 def _ledger(data: dict) -> str:

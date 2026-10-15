@@ -12,7 +12,7 @@
 **Beta.** A free, open-source voice coach for IT professionals who want to speak confident English and pass interviews. It runs on your computer in **Offline** mode, or with a cloud AI in **Online** mode. Your name, contact details and IDs are removed before any AI sees your text.
 
 ## Features
-- **Interview practice:** paste a job description (or link) and upload your resume. A UK-accented interviewer asks questions aloud over four rounds, from screening to system design. Each answer comes back corrected, with the points you missed and the answer to give the interviewer.
+- **Interview practice:** paste a job description (or link) and upload your resume. Optionally, add the **interview pattern**: what the recruiter told you about the interview (its type, rounds and expectations). A UK-accented interviewer asks questions aloud over four rounds, from screening to system design. Each answer comes back corrected, with the points you missed and the answer to give the interviewer.
 - **Hot Seat:** rehearse one to three real questions you were asked. An optional web check (needs `EXTERNAL_API_KEY` in `.env`, separate from the free keys below) sends only the question, unless you tick "Include my answer".
 - **Clean Copy:** a grammar and spelling checker, in your browser, for cover letters and recruiter emails, with optional AI rewrites.
 - **Resume Radar:** an ATS-readiness score for your resume, with prioritised fixes.
@@ -33,6 +33,7 @@ Switch with the toggle at the top right of any page. The Home page shows which s
 Not sure which to use? Run `uv run python -m speakhired.doctor` after installing. It checks your computer and suggests a mode.
 
 ## Where your data goes
+The job description, the interview pattern and your resume are all treated the same way: personal details are removed before any AI reads them (see below).
 Scoring (LEV) can run in three places. Together with the mode, that gives three setups, and the Home page names the one you are in:
 
 | Setup | Mode | LEV runs | What leaves your computer |
@@ -153,6 +154,19 @@ Open **http://127.0.0.1:5173**. The app remembers your last mode.
 - Stop the app with Ctrl+C.
 - **Quick try without speech models:** run `uv sync --extra dev` instead of the setup script. Questions use your browser's UK voice, and you type your answers.
 
+### Setting up the interview
+
+On the setup page, the **Job** card asks for four things:
+
+1. **Job description**, as a link or pasted text. Required.
+2. **Interview pattern** (optional, under the job description). Write what the recruiter told you, for example: "Two parts: a 45-minute Python coding test, then a system design of a rate limiter. The interviewer is a staff engineer and expects trade-offs and numbers." The text is limited to 1,500 characters. The question generator reads it as a description of the interview, not as instructions, and personal details are removed before the AI sees it.
+3. **Your resume.** Required.
+4. **Your own interview questions** and the GitHub profile (both optional).
+
+What the pattern changes: the question writer uses the interview types it names and the expectations it lists, and it names the topic in each question. It does not change how many questions there are. A round always has the same number of questions (round 1 has 9, round 2 has 8, and so on), so the pattern steers which questions are asked, not how many.
+
+How we checked it: one job description, a resume and round 2, with two runs each way, using the Groq model. Without the pattern the seven technical questions were all about Kafka, PostgreSQL and FastAPI. With the pattern, the questions included a Python coding task and a rate-limiter design (coding keyword hits went from 1 to 3 per run). This is a small check, not a measured improvement. The next step is the evaluation below.
+
 To check it works, open http://127.0.0.1:8100/api/health. You want `ollama.ok`, `model_ready` and `lev.ok` to be `true`. The `setup` field shows which setup is active.
 
 ## Troubleshooting
@@ -187,14 +201,14 @@ The app already turns off the model's hidden "thinking", keeps the model loaded 
 - **Levels:** *Foundation* (everyday workplace words), *Professional* (working with a team and clients; the usual interview level) and *Expert* (10+ years: architecture, reliability and leadership). Pick one at the top of the page. Each level has its own 15-item daily set and progress.
 - **Each item:** hear it, say it back (spelling and spacing don't matter), then use it in a sentence. You get a grade and a stronger way to say it.
 - **Spaced repetition:** items you miss come back the next day; items you know come back after longer gaps.
-- **Content:** `apps/api/speakhired/data/daily.json` (181 items: 60 Foundation, 60 Professional, 61 Expert). The set comes from this file, so nothing is generated each day. To add an item, use the same fields, including `level`. `uv run pytest` checks each example uses its term.
+- **Content:** `apps/api/speakhired/data/daily.json` (181 items: 60 Foundation, 60 Professional, 61 Expert). The set comes from this file, so nothing is generated each day. To add an item, use the same fields, including `level`. `uv run --extra voice --extra dev pytest` checks each example uses its term.
 
 ## Technical words and English-only checks
 - **Technical words** are kept in `apps/api/speakhired/data/termbank.json`. When the interviewer speaks, terms are said properly ("ChatGPT" as "Chat G P T"). When you speak, the recogniser is told which words to expect, and mishearings ("chat gpt", "post gress") are corrected. Add a word with its correct spelling, how it is said (`say`), and common mishearings (`heard`).
 - **English-only:** the app checks the language Whisper hears, Indian scripts in your text, and a list of Indian-language words written in English letters (`apps/api/speakhired/data/indic_words.json`). A few stray words get a note with the English alternative. A mostly non-English answer must be re-recorded. Only add words that are not also English.
 
 ## Status
-**Beta.** Features and settings may change between versions.
+**Beta.** The interview pattern field is new in this version; it has tests and one small check with a real model (see *Setting up the interview*). Features and settings may change between versions.
 
 Not yet built: automatic end-of-speech detection (you press Space to finish), sound-level pronunciation scoring (currently word-level), and an installer (setup uses the scripts).
 
@@ -202,9 +216,32 @@ Tested with stand-ins, so please report problems: LEV inside the app (A1) on a 1
 
 ## Tests
 ```bash
-uv run pytest
+uv run --extra voice --extra dev pytest
 ```
-About 200 automated tests cover privacy redaction, the AI provider routing, the interview flow, the LEV contract, speech and term correction, ATS scoring, Daily English, and the GitHub lookup. They need no Ollama, Groq, LEV or microphone.
+The `voice` extra is needed because one test file imports the speech packages. Without it, pytest stops at that file. The suite has 207 tests across 15 files. They cover privacy redaction, the AI provider routing and failover, the interview flow and the interview pattern, the LEV contract, speech and term correction, ATS scoring, Daily English, and the GitHub lookup. They need no Ollama, Groq, LEV or microphone.
+
+## Evaluation: how to add an eval harness
+SpeakHired has tests, but no measure of quality yet. The tests use fake models, so they cannot say whether a question is good, whether feedback helps, or whether the pattern changes the questions in the intended way. This is how to add that, in the order I would build it. **Nothing in this section is built yet** except the tests and the grounding check.
+
+1. **Pick what to measure.** Four measures cover the product:
+   - *Pattern adherence:* when a pattern is given, do the questions use the types and topics it names? This can be checked by rule for coding and design keywords, then by a judge for topic.
+   - *Question relevance:* is each question about the job description and the candidate's resume, and at the right difficulty for the round?
+   - *Feedback correctness and usefulness:* does the feedback name the points the answer really missed, and is the stronger answer correct? This needs a human rubric.
+   - *Privacy:* does a sample resume or pattern with known names come out with none of them in any prompt? Recall on a labelled set.
+2. **Write the dataset** as JSON Lines in `eval/dataset.jsonl`, one case per line:
+   ```json
+   {"id": "pat-001", "round": 2, "jd": "...", "resume": "...", "pattern": "...",
+    "expect": {"types": ["coding", "design"], "must_mention": ["rate limit"]}}
+   ```
+   Start with 20 to 30 cases: some with a pattern, some without, and at least one per round. Write the expected types and topics by hand, not from the model's output.
+3. **Write the graders** in `eval/graders.py`. The first two are rules and cost nothing: a keyword or regex check for the pattern's types, and a check that the expected topics appear in the questions. The third is a judge model with a written rubric for relevance and feedback quality. Calibrate the judge against a few human labels, and report how often they agree.
+4. **Write the runner** in `eval/run_eval.py`. It calls `core.intake` and `core.generate_questions` the same way the route does, so the eval tests the real code path, and it writes `eval/report.json` with the score for each measure and each case.
+5. **Set a gate.** For example, fail the check if pattern adherence drops below a threshold you chose from the first run. Pin the model name in the report, because hosted models change.
+6. **Run the rule-based part in CI** with the fake models, so every change is checked. Run the judge-based part by hand, with a real provider, before a release, because it costs money.
+
+Command names and file names above are the plan. Use them as the starting point, and change them when you build it.
+
+## Tests
 
 ## Licence
 SpeakHired is licensed under the [Apache License 2.0](LICENSE). You can use, modify and share it, including commercially, as long as you keep the licence and notices. It comes with no warranty.

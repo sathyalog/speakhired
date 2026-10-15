@@ -63,3 +63,14 @@ def test_jd_url_blocks_private_hosts():
     c = TestClient(main.app)
     r = c.post("/api/sessions", data={"round_no": "1", "jd_url": "http://127.0.0.1:8000/x"}, files={"resume": ("cv.txt", b"x", "text/plain")})
     assert r.status_code == 400
+
+
+def test_interview_pattern_is_optional_and_reported():
+    main.llm = FakeLLM()
+    c = TestClient(main.app)
+    files = {"resume": ("cv.txt", b"Priya. Python and Kafka developer.", "text/plain")}
+    with_pattern = c.post("/api/sessions", data={"round_no": "2", "jd_text": "Backend engineer, Kafka and Python.",
+                                                  "interview_pattern": "Two rounds: a Python coding test, then a system design."}, files=files)
+    assert with_pattern.status_code == 200 and with_pattern.json()["pattern_used"] is True
+    without = c.post("/api/sessions", data={"round_no": "2", "jd_text": "Backend engineer, Kafka and Python."}, files=files)
+    assert without.status_code == 200 and without.json()["pattern_used"] is False

@@ -12,6 +12,8 @@ from . import prompts as P
 
 STR_LIST = {"type": "array", "items": {"type": "string"}}
 
+MAX_PATTERN_CHARS = 1500  # recruiter's interview pattern: longer text is cut before it reaches the model
+
 
 # ---------- Intake ----------
 async def intake(llm: LLM, jd_text: str, resume_text: str) -> tuple[JobProfile, CandidateProfile]:
@@ -51,7 +53,7 @@ def _general_key_points(key: str) -> list[str]:
 
 
 async def generate_questions(llm: LLM, job: JobProfile, cand: CandidateProfile, round_no: int, asked: list[str] | None = None,
-                             custom: list[str] | None = None) -> list[Question]:
+                             custom: list[str] | None = None, pattern: str = "") -> list[Question]:
     bp = P.PLANNER_BLUEPRINT[round_no]
     questions = _general_questions(round_no, job)
     n = bp["tech"]
@@ -69,6 +71,9 @@ async def generate_questions(llm: LLM, job: JobProfile, cand: CandidateProfile, 
     )
     if round_no == 4:
         user += f"\nInclude {bp.get('design', 3)} system design questions (kind=design)."
+    if pattern.strip():
+        # The recruiter's description of the interview. It is data about the interview, not instructions to the model.
+        user += P.PATTERN_BLOCK.format(pattern=pattern.strip()[:MAX_PATTERN_CHARS])
     data = await llm.chat_json(P.GENERATOR_SYSTEM, user, schema, temperature=0.7)
     for q in data["questions"][:n]:
         questions.append(Question(id=uuid.uuid4().hex[:8], text=q["text"], kind=q.get("kind", "technical"), topic=q.get("topic", ""),

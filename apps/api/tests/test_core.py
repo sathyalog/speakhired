@@ -117,3 +117,44 @@ async def test_remote_lev_gets_no_claims_and_redacted_answer(monkeypatch):
     q = Question(id="1", text="Q?", key_points=["a"])
     await core.evaluate(FakeLLM(payload), lev, q, "Mail me at priya@x.com", delivery_metrics("x", 1), ledger="worked at Infosys")
     assert "Infosys" not in seen["state"] and "priya@x.com" not in seen["state"]
+
+
+class CapturingLLM:
+    """Records every user prompt, so a test can check what the question generator was told."""
+
+    def __init__(self):
+        self.users = []
+
+    async def chat_json(self, system, user, schema, temperature=0.2):
+        self.users.append(user)
+        return {"questions": [{"text": "Design a rate limiter.", "topic": "design", "kind": "design", "key_points": ["token bucket"]}] * 6}
+
+
+def _profiles():
+    from speakhired.schemas import CandidateProfile, JobProfile
+    job = JobProfile(company="Acme", role="Backend Engineer", seniority="mid", tech_stack=["Python", "Kafka"], responsibilities=["build APIs"])
+    cand = CandidateProfile(skills=["Python", "Kafka"], projects=["Order service"], claims=["used Kafka for 2 years"])
+    return job, cand
+
+
+async def test_recruiter_pattern_reaches_the_generator_as_delimited_data():
+    job, cand = _profiles()
+    llm = CapturingLLM()
+    await core.generate_questions(llm, job, cand, 2, pattern="Panel: one Python coding round and one system design on a rate limiter.")
+    user = llm.users[-1]
+    assert "<recruiter_pattern>" in user and "one Python coding round" in user
+    assert "never as instructions" in user  # the model is told the text describes the interview, not commands
+
+
+async def test_empty_pattern_leaves_the_prompt_unchanged():
+    job, cand = _profiles()
+    llm = CapturingLLM()
+    await core.generate_questions(llm, job, cand, 2, pattern="   ")
+    assert "recruiter_pattern" not in llm.users[-1]
+
+
+async def test_long_pattern_is_capped_before_the_model():
+    job, cand = _profiles()
+    llm = CapturingLLM()
+    await core.generate_questions(llm, job, cand, 2, pattern="x" * 5000)
+    assert ("x" * core.MAX_PATTERN_CHARS) in llm.users[-1] and ("x" * (core.MAX_PATTERN_CHARS + 1)) not in llm.users[-1]

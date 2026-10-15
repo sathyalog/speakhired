@@ -19,6 +19,7 @@ export function Setup({ onStart }: { onStart: (a: Active) => void }) {
   const [voice, setVoice] = useState("bf_emma");
   const [jdText, setJdText] = useState("");
   const [jdUrl, setJdUrl] = useState("");
+  const [pattern, setPattern] = useState("");
   const [resume, setResume] = useState<File | null>(null);
   const [qFile, setQFile] = useState<File | null>(null);
   const [githubUrl, setGithubUrl] = useState("");
@@ -38,6 +39,7 @@ export function Setup({ onStart }: { onStart: (a: Active) => void }) {
     const fd = new FormData();
     fd.append("round_no", String(round)); fd.append("voice", voice);
     fd.append("jd_text", jdText); fd.append("jd_url", jdUrl); fd.append("external_consent", String(consent));
+    fd.append("interview_pattern", pattern);
     fd.append("resume", resume); if (qFile) fd.append("questions_file", qFile); if (online) fd.append("github_url", githubUrl);
     setBusy(true);
     try {
@@ -67,6 +69,12 @@ export function Setup({ onStart }: { onStart: (a: Active) => void }) {
             <fieldset className="fieldset min-w-0">
               <legend className="fieldset-legend">Or paste the text</legend>
               <textarea className="textarea h-36 w-full" placeholder="Paste the full job description" value={jdText} onChange={(e) => setJdText(e.target.value)} />
+            </fieldset>
+            <fieldset className="fieldset min-w-0">
+              <legend className="fieldset-legend">Interview pattern <span className="badge badge-ghost badge-sm">optional</span></legend>
+              <textarea className="textarea h-28 w-full" maxLength={1500} value={pattern} onChange={(e) => setPattern(e.target.value)}
+                placeholder="e.g. Two rounds. First a 45-minute Python coding test, then a system design of a rate limiter. The interviewer is a staff engineer and expects trade-offs and numbers." />
+              <p className="label whitespace-normal">What the recruiter told you: the interview type, the rounds, and what they expect. It helps shape the questions. Personal details are removed before any AI reads it.</p>
             </fieldset>
             <fieldset className="fieldset min-w-0">
               <legend className="fieldset-legend">Your resume</legend>
