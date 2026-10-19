@@ -1,0 +1,340 @@
+[
+  {
+    "id": "multi-tenant-rag",
+    "track": "ai",
+    "level": 2,
+    "title": "Design a multi-tenant RAG system with data isolation",
+    "source": "Popular question on AgentSwarms' GenAI interview list (asked at Stripe, Intercom, Shopify) and the GitHub AI system design list (alexeygrigorev); rubric is original",
+    "prompt": "Design a RAG product that many companies use at once. Each company's documents must be searchable only by its own users, and no answer may mix data across companies.",
+    "functional": [
+      "Each tenant uploads documents that only its users can search",
+      "Answers cite the tenant's own documents",
+      "Tenants can delete their data, including their vectors"
+    ],
+    "non_functional": [
+      "A query from one tenant never returns another tenant's chunk",
+      "Answers start within 2 seconds",
+      "One large tenant does not slow down the others"
+    ],
+    "scale": [
+      "2,000 tenants, with the largest holding 50 million chunks",
+      "Peak of 500 queries per second across tenants",
+      "Documents change daily"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Tenant-scoped vector storage", "aliases": ["vector", "vector db", "vector database", "namespace", "partition", "index per tenant", "pinecone", "pgvector", "qdrant", "weaviate"], "why": "keeps each tenant's vectors separate so search cannot cross tenants"},
+        {"name": "Access check on every query", "aliases": ["tenant id", "tenant", "auth", "authorization", "access control", "filter", "acl", "permission"], "why": "the tenant filter is enforced on the server, not trusted from the client"},
+        {"name": "Ingestion and embedding pipeline", "aliases": ["ingestion", "ingest", "pipeline", "embedding", "embed", "indexing", "chunking"], "why": "turns uploaded documents into tenant-scoped chunks"},
+        {"name": "LLM answer generation", "aliases": ["llm", "language model", "model", "generation", "generator"], "why": "writes the answer from the retrieved chunks with citations"},
+        {"name": "Deletion and audit log", "aliases": ["delete", "deletion", "audit", "audit log", "logs", "retention"], "why": "supports deletion requests and proves isolation"}
+      ]
+    },
+    "pitfalls": [
+      "One shared index with the tenant filter applied in the client",
+      "Caching answers without the tenant in the cache key",
+      "Ignoring the noisy-neighbour problem for the largest tenant",
+      "Deleting documents but not their embeddings"
+    ]
+  },
+  {
+    "id": "content-moderation-pipeline",
+    "track": "ai",
+    "level": 2,
+    "title": "Design a content moderation pipeline for user posts",
+    "source": "Popular question on the GitHub AI system design list (content and policy violation detection); rubric is original",
+    "prompt": "Design a system that checks every new user post for policy violations (hate, violence, spam, personal data) before or just after it goes live, and sends uncertain cases to human reviewers.",
+    "functional": [
+      "Check text and images for policy violations",
+      "Hide or hold posts that violate policy",
+      "Send uncertain posts to a human review queue"
+    ],
+    "non_functional": [
+      "Most posts are checked within 2 seconds",
+      "Clear violations are blocked before they are visible",
+      "Reviewers' decisions improve the classifier over time"
+    ],
+    "scale": [
+      "50 million posts per day, peak 3 times the average",
+      "About 2% of posts go to human review",
+      "Appeals are reviewed within 24 hours"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Fast classifier layer", "aliases": ["classifier", "classification", "model", "text model", "image model", "filter", "rules", "keyword"], "why": "checks every post cheaply in real time"},
+        {"name": "Escalation to a stronger model", "aliases": ["llm", "language model", "second pass", "escalation", "stronger model", "review model"], "why": "handles borderline cases the fast layer cannot decide"},
+        {"name": "Human review queue", "aliases": ["human review", "review queue", "reviewer", "moderator", "queue", "review tool", "appeal"], "why": "keeps people in the loop for uncertain and disputed posts"},
+        {"name": "Decision and feedback store", "aliases": ["decision", "label", "labels", "feedback", "database", "db", "training data", "store"], "why": "records decisions and feeds them back to improve the model"}
+      ]
+    },
+    "pitfalls": [
+      "Waiting for a slow LLM on every post, which delays all posts",
+      "No way to appeal a removed post",
+      "Reviewers' labels never fed back into training",
+      "No audit trail of why a post was removed"
+    ]
+  },
+  {
+    "id": "fraud-detection",
+    "track": "ai",
+    "level": 2,
+    "title": "Design a real-time fraud detection system for payments",
+    "source": "Popular question on the GitHub AI system design list (alexeygrigorev/ai-engineering-field-guide) and AgentSwarms' interview list; rubric is original",
+    "prompt": "Design a system that scores each card payment for fraud before it is approved. Legitimate payments must rarely be blocked, and new fraud patterns must be caught quickly.",
+    "functional": [
+      "Score each payment before approval",
+      "Approve, challenge with a one-time code, or decline",
+      "Learn from confirmed fraud cases and chargebacks"
+    ],
+    "non_functional": [
+      "Decision within 100 ms, end to end",
+      "Less than 0.1% of good payments blocked",
+      "The system keeps working if the model service is slow (fallback rules)"
+    ],
+    "scale": [
+      "10,000 payments per second at peak",
+      "Features for each card from the last 90 days",
+      "Models retrained each day"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Real-time feature store", "aliases": ["feature store", "features", "feature", "redis", "cache", "online store", "velocity"], "why": "gives the model recent behaviour for this card and merchant within milliseconds"},
+        {"name": "Scoring model service", "aliases": ["model", "scoring", "scorer", "classifier", "ml", "inference", "gradient boosting"], "why": "gives each payment a fraud score"},
+        {"name": "Rules and fallback", "aliases": ["rules", "rule engine", "fallback", "threshold", "policy", "guardrail"], "why": "blocks known patterns and keeps decisions flowing if the model is slow"},
+        {"name": "Event stream and training pipeline", "aliases": ["kafka", "stream", "event", "pipeline", "training", "retrain", "batch", "label"], "why": "feeds outcomes back so the model learns each day"},
+        {"name": "Decision and case store", "aliases": ["database", "db", "store", "case", "audit", "decision log"], "why": "keeps every decision for disputes and audits"}
+      ]
+    },
+    "pitfalls": [
+      "Calling a batch feature job during each payment, which misses recent activity",
+      "No fallback when the model times out, so payments fail",
+      "Training on labels without accounting for chargebacks that arrive weeks later",
+      "Measuring accuracy only, without the false-block rate on good payments"
+    ]
+  },
+  {
+    "id": "support-agent-human-in-loop",
+    "track": "ai",
+    "level": 2,
+    "title": "Design a customer support agent with human approval",
+    "source": "Popular question on the AgentSwarms list (human-in-the-loop support agents, asked at Intercom and Klarna); rubric is original",
+    "prompt": "Design an AI support agent that answers customers and can take actions such as refunds and address changes. Actions above a set amount or risk need a human to approve them.",
+    "functional": [
+      "Answer customer questions using the help center and order data",
+      "Call tools: look up orders, issue refunds, change addresses",
+      "Pause for a human to approve risky actions, then continue"
+    ],
+    "non_functional": [
+      "A customer's first reply starts within 3 seconds",
+      "No refund is paid without the required approval",
+      "Every action is logged with who or what approved it"
+    ],
+    "scale": [
+      "200,000 conversations per month",
+      "Average conversation has 6 turns and 3 tool calls",
+      "Peak of 500 human approvals per hour"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Agent orchestrator", "aliases": ["agent", "orchestrator", "orchestration", "controller", "workflow", "state machine", "loop"], "why": "runs the model, calls tools, and tracks the conversation state"},
+        {"name": "Tool layer with permissions", "aliases": ["tool", "tools", "function calling", "api", "permission", "policy", "guardrail", "allowlist"], "why": "limits what the agent can do and checks each action against policy"},
+        {"name": "Human approval queue", "aliases": ["approval", "human", "human review", "review queue", "handoff", "escalation", "operator"], "why": "pauses risky actions until a person approves"},
+        {"name": "Conversation and action log", "aliases": ["log", "logs", "audit", "audit log", "database", "db", "store", "history", "memory"], "why": "keeps a record for disputes and for resuming after a pause"}
+      ]
+    },
+    "pitfalls": [
+      "Letting the model call refund tools without a policy check",
+      "Approval waits with no timeout or handoff to a person",
+      "Losing the conversation state when the approval takes an hour",
+      "No way to stop the agent once it starts a loop of tool calls"
+    ]
+  },
+  {
+    "id": "agentic-workflow-multi-step",
+    "track": "ai",
+    "level": 3,
+    "title": "Design a multi-step agentic workflow for scheduling and code review",
+    "source": "Popular question on the GitHub AI system design list (multi-step agentic workflow such as meeting scheduling, code review, email campaigns); rubric is original",
+    "prompt": "Design an agent system that completes multi-step jobs, such as scheduling a meeting across several calendars or reviewing a code change and filing comments. Each job may take minutes and call many tools.",
+    "functional": [
+      "Break a goal into steps and run each step with tools",
+      "Resume a job after a crash or a tool failure",
+      "Stop safely when the job is off track or over budget"
+    ],
+    "non_functional": [
+      "A job never runs past its time and cost budget",
+      "No step runs twice after a retry",
+      "Users can see the progress of each job"
+    ],
+    "scale": [
+      "50,000 jobs per day",
+      "Average job runs 12 steps and 40 model calls",
+      "Peak of 2,000 jobs running at once"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Planner and step executor", "aliases": ["planner", "plan", "executor", "agent", "orchestrator", "step", "workflow engine"], "why": "turns the goal into steps and runs them in order"},
+        {"name": "Durable job state", "aliases": ["state", "checkpoint", "durable", "database", "db", "workflow", "temporal", "queue", "store"], "why": "saves progress so a crash resumes instead of restarting"},
+        {"name": "Tool gateway", "aliases": ["tool", "tools", "gateway", "api", "connector", "integration", "mcp"], "why": "one place to call calendars, repos, and email safely"},
+        {"name": "Budget and loop guard", "aliases": ["budget", "limit", "guard", "guardrail", "loop", "timeout", "circuit breaker", "max steps"], "why": "stops runaway jobs"},
+        {"name": "Observability and traces", "aliases": ["trace", "tracing", "observability", "logs", "monitoring", "metrics", "langfuse", "opentelemetry"], "why": "shows what each step did and why"}
+      ]
+    },
+    "pitfalls": [
+      "No checkpoints, so a crash restarts the whole job and repeats emails",
+      "No cost or step limit, so a loop burns budget",
+      "Tools called directly from the model with no permission layer",
+      "Only the final answer logged, not the steps"
+    ]
+  },
+  {
+    "id": "llm-evaluation-platform",
+    "track": "ai",
+    "level": 3,
+    "title": "Design an evaluation platform for 50 agent workflows",
+    "source": "Popular question on the AgentSwarms list (eval platform, asked at Capital One, Stripe, Anthropic); rubric is original",
+    "prompt": "Design a platform where a company's 50 AI agent workflows are tested before each release. It should catch regressions, compare model versions, and show results to product owners.",
+    "functional": [
+      "Store test datasets for each workflow",
+      "Run evaluations on each new prompt, model, or code change",
+      "Compare results between versions and block a release on regression"
+    ],
+    "non_functional": [
+      "A full run finishes within 1 hour",
+      "Evaluations are reproducible",
+      "Test data containing customer information is kept inside the company"
+    ],
+    "scale": [
+      "50 workflows with about 2,000 test cases each",
+      "Up to 200 evaluation runs per day",
+      "Each test case calls the model about 5 times with LLM-judged scoring"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Dataset and test case store", "aliases": ["dataset", "test case", "test cases", "database", "db", "store", "versioned", "versioning"], "why": "keeps versioned test data so runs can be repeated"},
+        {"name": "Parallel evaluation runners", "aliases": ["runner", "workers", "worker", "queue", "parallel", "batch", "job"], "why": "run 100,000 model calls within an hour"},
+        {"name": "Scorers including LLM judges", "aliases": ["judge", "scorer", "scoring", "grader", "llm judge", "metric", "metrics", "rubric"], "why": "measures quality, including subjective answers"},
+        {"name": "Results comparison and release gate", "aliases": ["compare", "comparison", "regression", "gate", "release", "dashboard", "report"], "why": "blocks a release on a regression and shows the difference"}
+      ]
+    },
+    "pitfalls": [
+      "Judging with the same model version being tested, which biases the score",
+      "Non-reproducible runs because test data or model versions are not pinned",
+      "Running all 100,000 model calls sequentially",
+      "Test data with customer information sent to an outside judge model"
+    ]
+  },
+  {
+    "id": "voice-assistant-call-center",
+    "track": "ai",
+    "level": 3,
+    "title": "Design a voice assistant for a hospital or call center",
+    "source": "Popular question on the GitHub AI system design list (hospital voice assistant); rubric is original",
+    "prompt": "Design a voice assistant that talks to callers in real time, answers common questions, books appointments, and hands off to a human when needed. Speech is noisy, and conversations contain private health or personal data.",
+    "functional": [
+      "Listen to a caller and reply aloud in real time",
+      "Book, change or cancel an appointment through a system",
+      "Hand off to a human with a summary of the call"
+    ],
+    "non_functional": [
+      "Time from the caller stopping speaking to the reply starting is under 1 second",
+      "Personal data is encrypted and not used to train outside models",
+      "The assistant stays up during peak calls"
+    ],
+    "scale": [
+      "10,000 concurrent calls at peak",
+      "Average call is 4 minutes",
+      "Medical vocabulary across 50 specialties"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Streaming speech-to-text", "aliases": ["speech to text", "speech-to-text", "stt", "asr", "transcription", "whisper", "streaming"], "why": "turns speech into text while the caller is still talking"},
+        {"name": "Language model with tools", "aliases": ["llm", "language model", "model", "agent", "tool", "tools", "function calling"], "why": "decides the reply and calls the booking system"},
+        {"name": "Streaming text-to-speech", "aliases": ["text to speech", "text-to-speech", "tts", "voice", "speech synthesis"], "why": "speaks the reply without waiting for the full answer"},
+        {"name": "Human handoff and call summary", "aliases": ["handoff", "hand off", "human", "agent handoff", "transfer", "summary", "escalation"], "why": "passes hard calls to a person with context"},
+        {"name": "Privacy controls", "aliases": ["privacy", "encryption", "redaction", "pii", "consent", "compliance", "hipaa"], "why": "protects health data and removes it from logs"}
+      ]
+    },
+    "pitfalls": [
+      "Waiting for the caller to finish and then transcribing the whole call, which adds seconds of silence",
+      "Logging full transcripts with personal and health data",
+      "No handoff when the caller asks for a person",
+      "Ignoring noise and medical vocabulary in the speech model"
+    ]
+  },
+  {
+    "id": "chat-memory-across-conversations",
+    "track": "ai",
+    "level": 3,
+    "title": "Design cross-conversation memory for a chat assistant",
+    "source": "Popular question on the IGotAnOffer and GitHub AI system design lists (ChatGPT cross-conversation memory); rubric is original",
+    "prompt": "Design the memory feature of a chat assistant. It should remember useful facts about a user across conversations, let the user see and delete them, and keep prompts within the model's context limit.",
+    "functional": [
+      "Save facts the user shares or confirms",
+      "Recall relevant memories when a new conversation starts",
+      "Let users view, edit, and delete memories"
+    ],
+    "non_functional": [
+      "Memory recall adds under 150 ms",
+      "Deleted memories are removed from all stores within 24 hours",
+      "A wrong memory can be corrected by the user"
+    ],
+    "scale": [
+      "100 million users, about 30 memories each on average",
+      "Peak of 20,000 new chats per second",
+      "Each prompt has room for about 2,000 tokens of memory"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Memory extraction", "aliases": ["extract", "extraction", "summarize", "summary", "memory writer", "classifier", "llm"], "why": "decides which facts are worth remembering"},
+        {"name": "Memory store with per-user access", "aliases": ["memory store", "database", "db", "store", "user id", "per user", "isolation", "partition"], "why": "keeps each user's memories private and deletable"},
+        {"name": "Retrieval and ranking", "aliases": ["retrieval", "retrieve", "vector", "embedding", "search", "rank", "ranking", "recall"], "why": "picks the few memories that matter for the current chat"},
+        {"name": "Prompt budget", "aliases": ["token budget", "context", "context window", "token limit", "budget", "truncation"], "why": "fits memories into the context window without crowding out the conversation"}
+      ]
+    },
+    "pitfalls": [
+      "Injecting all memories into every prompt, which exceeds the context limit",
+      "Deleting memories from the UI but not from backups or indexes",
+      "Saving sensitive data such as passwords or health information without consent",
+      "No way for a user to correct a wrong memory"
+    ]
+  },
+  {
+    "id": "ai-search-engine-citations",
+    "track": "ai",
+    "level": 3,
+    "title": "Design an AI answer engine with live web search and citations",
+    "source": "Popular question on the GitHub AI system design list (Perplexity-style real-time LLM search); rubric is original",
+    "prompt": "Design a search product that answers a question in a few paragraphs, using fresh web results, and cites each claim with its source. It should answer follow-up questions quickly.",
+    "functional": [
+      "Search the web for a question and read the top results",
+      "Write an answer where each claim links to a source",
+      "Answer follow-up questions in the same session quickly"
+    ],
+    "non_functional": [
+      "First words of the answer appear within 2 seconds",
+      "Sources are never invented; claims without a source are removed",
+      "Results are no more than 1 hour old for news queries"
+    ],
+    "scale": [
+      "200 million queries per day",
+      "Each query reads about 10 pages",
+      "Peak of 10,000 queries per second"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Query understanding and search", "aliases": ["search", "web search", "query", "query rewrite", "retrieval", "index", "crawl", "search api"], "why": "finds fresh and relevant pages for the question"},
+        {"name": "Page fetch and extraction cache", "aliases": ["cache", "redis", "fetch", "crawler", "extraction", "parser", "content store"], "why": "avoids fetching and parsing the same page repeatedly"},
+        {"name": "Answer generation with citations", "aliases": ["llm", "language model", "model", "generation", "generator", "citation", "citations", "grounding"], "why": "writes the answer from the sources with links"},
+        {"name": "Citation check", "aliases": ["verify", "verification", "citation check", "grounding check", "fact check", "validator", "source check"], "why": "removes claims the sources do not support"},
+        {"name": "Streaming response", "aliases": ["stream", "streaming", "sse", "server-sent", "websocket", "token stream"], "why": "shows the answer as it is written"}
+      ]
+    },
+    "pitfalls": [
+      "Generating the answer before the search results are fetched",
+      "Citing a source that does not contain the claim",
+      "No freshness rule, so old news is answered as current",
+      "Fetching the same popular pages for every query with no cache"
+    ]
+  }
+]

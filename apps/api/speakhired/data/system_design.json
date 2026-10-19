@@ -1,0 +1,246 @@
+[
+  {
+    "id": "url-shortener",
+    "track": "regular",
+    "level": 1,
+    "title": "Design a URL shortener",
+    "source": "Original, inspired by the URL shortener chapter of donnemartin/system-design-primer (GitHub)",
+    "prompt": "Design a service like bit.ly. Users submit a long URL and get a short one. Visiting the short URL redirects to the original.",
+    "functional": [
+      "Create a short URL for a long URL",
+      "Redirect a short URL to the original long URL",
+      "Users can optionally pick a custom alias"
+    ],
+    "non_functional": [
+      "Redirects must be fast (under 100 ms at the server)",
+      "The service must stay available even if one server fails",
+      "Short links should not be easy to guess"
+    ],
+    "scale": [
+      "100 million new URLs per month",
+      "Read to write ratio about 100 to 1",
+      "Links are kept for 5 years",
+      "Average record size about 500 bytes"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Load balancer or API gateway", "aliases": ["load balancer", "lb", "api gateway", "gateway", "nginx", "elb"], "why": "spreads traffic over many app servers and gives one entry point"},
+        {"name": "Application servers", "aliases": ["app server", "application server", "web server", "api server", "backend", "service"], "why": "handle create and redirect requests"},
+        {"name": "Database for URL mappings", "aliases": ["database", "db", "postgres", "mysql", "dynamodb", "cassandra", "datastore", "table"], "why": "stores short code to long URL mappings for 5 years"},
+        {"name": "Cache for hot links", "aliases": ["cache", "redis", "memcached"], "why": "reads outnumber writes 100 to 1, so popular links should be served from memory"},
+        {"name": "Short code generator", "aliases": ["key generator", "id generator", "base62", "base 62", "snowflake", "counter", "hash", "code generator"], "why": "creates unique short codes without collisions"}
+      ]
+    },
+    "pitfalls": [
+      "Hashing the long URL without handling collisions",
+      "Using a single database server with no replication for a service that must stay available",
+      "Ignoring the 100 to 1 read to write ratio, so no cache is drawn",
+      "Storage arithmetic that does not match the stated scale (100M per month for 5 years is about 6 billion records)",
+      "Redirects drawn to go through a slow path such as a full database scan for every request",
+      "Arrows drawn without a clear direction for who calls whom"
+    ]
+  },
+  {
+    "id": "rate-limiter",
+    "track": "regular",
+    "level": 2,
+    "title": "Design a rate limiter",
+    "source": "Original, inspired by the rate limiter discussions in ByteByteGo's system design videos (YouTube)",
+    "prompt": "Design a rate limiter that protects a public API. It limits how many requests each user or API key can make in a time window, and rejects the extra requests.",
+    "functional": [
+      "Limit requests per user or API key",
+      "Return HTTP 429 with a retry-after header when a limit is hit",
+      "Limits can be set per endpoint and changed without a deploy"
+    ],
+    "non_functional": [
+      "Adds under 5 ms to each request",
+      "Works the same across many app servers",
+      "If the limiter's store fails, legitimate traffic still gets through (fail open)"
+    ],
+    "scale": [
+      "50,000 requests per second across the platform",
+      "10 million API keys",
+      "Limit rules change a few times per day"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Rate limiter component", "aliases": ["rate limiter", "rate limit", "rate-limit", "throttler", "throttle"], "why": "the place where each request is counted and accepted or rejected"},
+        {"name": "Shared counter store", "aliases": ["redis", "memcached", "cache", "counter store", "counter"], "why": "counts must be shared across app servers, so they cannot live in each server's memory"},
+        {"name": "Rules or config service", "aliases": ["rules", "config", "configuration", "policy store", "policy"], "why": "limits per endpoint change without a deploy"},
+        {"name": "Load balancer or API gateway", "aliases": ["load balancer", "lb", "api gateway", "gateway"], "why": "the usual place to enforce limits before traffic reaches the servers"}
+      ]
+    },
+    "pitfalls": [
+      "Keeping counters in each app server's memory, so limits are not shared",
+      "Counting every request in a relational database, which is too slow at 50,000 requests per second",
+      "Non-atomic read then write on the counter, which lets bursts slip past the limit",
+      "Fixed windows with no mention of the burst at the edge of each window",
+      "No behaviour when the counter store is down (fail open or closed is not stated)"
+    ]
+  },
+  {
+    "id": "chat-app",
+    "track": "regular",
+    "level": 3,
+    "title": "Design a chat app like WhatsApp",
+    "source": "Original, inspired by the chat system design walkthroughs in ByteByteGo (YouTube) and donnemartin/system-design-primer (GitHub)",
+    "prompt": "Design a messaging app with one-to-one and group chats. Messages arrive in real time on every device, and a user can see their history on a new phone.",
+    "functional": [
+      "One-to-one and group chats (up to 500 people)",
+      "Messages delivered in real time when the receiver is online",
+      "Messages reach offline users when they come back, with a push notification",
+      "Message history is available on a new device"
+    ],
+    "non_functional": [
+      "Delivery under 200 ms on a good network",
+      "No message is lost, even if a server fails",
+      "Messages stay in order within a chat"
+    ],
+    "scale": [
+      "500 million users, 50 million daily active",
+      "About 40 messages per daily active user, so about 23,000 messages per second on average and three times that at peak",
+      "Group chats of up to 500 people"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Real-time connection gateway", "aliases": ["websocket", "web socket", "gateway", "connection server", "realtime server", "real-time server", "chat server"], "why": "keeps a persistent connection open for live messages instead of polling"},
+        {"name": "Message store", "aliases": ["database", "db", "cassandra", "dynamodb", "storage", "datastore", "postgres", "table"], "why": "keeps every message so history can be loaded on a new device"},
+        {"name": "Message queue or pub/sub", "aliases": ["kafka", "queue", "pub/sub", "pubsub", "message broker", "rabbitmq", "broker"], "why": "decouples sending from delivery and fans out to group members"},
+        {"name": "Push notification service", "aliases": ["push", "notification", "apns", "fcm"], "why": "reaches offline users"},
+        {"name": "Presence or recent message cache", "aliases": ["cache", "redis", "presence", "memcached"], "why": "shows who is online and serves recent messages quickly"}
+      ]
+    },
+    "pitfalls": [
+      "Polling the server for new messages instead of keeping a persistent connection",
+      "No acknowledgement or retry, so messages can be lost",
+      "Storing all messages in one database with no partitioning by chat",
+      "Group fan-out not considered: one message to a 500-person group is 500 deliveries",
+      "Offline users and push notifications not drawn at all",
+      "Ordering not addressed, so replies can appear before the message they answer"
+    ]
+  },
+  {
+    "id": "faq-rag-assistant",
+    "track": "ai",
+    "level": 1,
+    "title": "Design a company FAQ assistant (RAG)",
+    "source": "Original, inspired by retrieval-augmented generation tutorials that are common on Reddit (r/MachineLearning, r/LocalLLaMA) and YouTube",
+    "prompt": "Design an assistant that answers employee questions from the company's internal documents (HR policies, IT guides, product docs). Every answer must point to the document it came from.",
+    "functional": [
+      "Answer questions in plain language from internal documents",
+      "Show the source document and section for each answer",
+      "Say clearly when the documents do not contain the answer",
+      "Only use documents the asking employee is allowed to see"
+    ],
+    "non_functional": [
+      "First words of the answer appear within 2 seconds",
+      "Answers stay grounded in the documents, not the model's memory",
+      "New or changed documents appear in answers within a day"
+    ],
+    "scale": [
+      "20,000 documents, about 2 million chunks",
+      "500 employees, peak of 20 questions per minute",
+      "Documents updated about once a day"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Document ingestion pipeline", "aliases": ["ingestion", "ingest", "pipeline", "indexing job", "loader", "etl", "chunker", "chunking"], "why": "turns documents into searchable chunks and keeps them up to date"},
+        {"name": "Embedding model", "aliases": ["embedding", "embed", "encoder", "embedding model"], "why": "turns chunks and questions into vectors so they can be matched by meaning"},
+        {"name": "Vector database", "aliases": ["vector", "vector db", "vector database", "pgvector", "pinecone", "faiss", "index", "vector store"], "why": "finds the most relevant chunks for a question"},
+        {"name": "LLM for answer generation", "aliases": ["llm", "language model", "model", "generator", "generation"], "why": "writes the answer from the retrieved chunks"},
+        {"name": "Access control check", "aliases": ["access control", "permission", "permissions", "acl", "auth", "authorization", "rbac"], "why": "stops employees seeing documents they should not"}
+      ]
+    },
+    "pitfalls": [
+      "Asking the LLM without retrieval, so answers come from its memory",
+      "No source citations shown with the answer",
+      "Access control applied after retrieval, or not at all, so restricted content leaks into answers",
+      "No re-indexing when documents change, so answers go stale",
+      "Changing the embedding model without re-embedding the whole corpus",
+      "No behaviour for questions the documents cannot answer"
+    ]
+  },
+  {
+    "id": "ai-code-review-bot",
+    "track": "ai",
+    "level": 2,
+    "title": "Design an AI code review bot for pull requests",
+    "source": "Original, inspired by AI code review tools discussed on Reddit (r/programming, r/ExperiencedDevs) and in YouTube system design talks",
+    "prompt": "Design a bot that reviews every new pull request on the company's Git host and posts inline comments on the changed lines with suggested fixes.",
+    "functional": [
+      "Review each new pull request and each new push to it",
+      "Post inline comments on the changed lines only",
+      "Skip generated files and lockfiles",
+      "Let developers mark a comment as not useful"
+    ],
+    "non_functional": [
+      "Review posted within 5 minutes of the push",
+      "The same comment is never posted twice, even if a webhook is delivered twice",
+      "Code only goes to the company's approved model provider"
+    ],
+    "scale": [
+      "2,000 developers, about 300 pull requests per day",
+      "Average pull request changes 400 lines",
+      "Peak of 40 pull requests per hour"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Webhook receiver", "aliases": ["webhook", "event listener", "github app", "event receiver", "listener"], "why": "receives new pull request and push events from the Git host"},
+        {"name": "Job queue and workers", "aliases": ["queue", "kafka", "sqs", "job queue", "worker", "workers", "task queue"], "why": "keeps the webhook fast and lets slow model calls run in the background"},
+        {"name": "Diff fetcher", "aliases": ["diff", "git", "repository", "repo client", "fetch code", "code fetcher"], "why": "gets only the changed lines and surrounding context to send to the model"},
+        {"name": "LLM review service", "aliases": ["llm", "model", "reviewer", "review service", "language model"], "why": "produces the review comments"},
+        {"name": "Comment poster and store", "aliases": ["comment", "post comment", "database", "db", "store", "idempotency"], "why": "posts comments and records what was posted, so nothing is duplicated"}
+      ]
+    },
+    "pitfalls": [
+      "Sending the whole repository to the model instead of the changed files and their context",
+      "Running the model inside the webhook handler, so requests time out",
+      "No idempotency, so a redelivered webhook posts duplicate comments",
+      "No rate limit on the Git host's API when posting many comments",
+      "Private code sent to an external model with no approval or data policy drawn",
+      "Ignoring the 300 pull requests per day scale when sizing workers"
+    ]
+  },
+  {
+    "id": "llm-gateway",
+    "track": "ai",
+    "level": 3,
+    "title": "Design a multi-provider LLM gateway",
+    "source": "Original, inspired by the LLM gateway and routing discussions in engineering blogs shared on Reddit and YouTube",
+    "prompt": "Design an internal gateway that gives every product team one API to call many LLM providers. It handles routing, failover, caching, quotas by team, and usage reports.",
+    "functional": [
+      "One API for many model providers",
+      "Automatic failover to another provider when one fails or is rate limited",
+      "Per-team quotas and monthly budgets",
+      "Streaming responses token by token",
+      "Usage reports per team and per model"
+    ],
+    "non_functional": [
+      "The gateway adds under 50 ms of overhead",
+      "One provider outage causes no user-visible errors",
+      "Prompts with personal data are never written to logs in plain text"
+    ],
+    "scale": [
+      "2,000 requests per second at peak",
+      "Average request has 1,500 input tokens and 500 output tokens",
+      "10 model providers and 50 teams"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Routing and failover", "aliases": ["router", "routing", "failover", "fallback", "model router", "provider router"], "why": "chooses a provider and moves to another when one fails"},
+        {"name": "Response cache", "aliases": ["cache", "redis", "semantic cache", "memcached"], "why": "saves cost and latency for repeated requests"},
+        {"name": "Quota and budget service", "aliases": ["quota", "budget", "rate limit", "rate limiter", "token limit", "token limiter", "limits"], "why": "enforces per-team limits in tokens, not just request counts"},
+        {"name": "Provider adapters", "aliases": ["adapter", "adapters", "provider", "connector", "provider adapter"], "why": "translate one request format to each provider's API"},
+        {"name": "Usage metering and logs", "aliases": ["metering", "usage", "billing", "logs", "logging", "analytics", "observability", "telemetry"], "why": "records tokens and cost per team for reports and budgets"}
+      ]
+    },
+    "pitfalls": [
+      "Failover drawn with no health check, so requests keep going to a dead provider",
+      "Cache key missing the model and parameters, so answers leak across models",
+      "Quotas counted in requests instead of tokens, so cost is not controlled",
+      "Streaming buffered in full before returning, which defeats streaming",
+      "Full prompts with personal data stored in logs",
+      "A single gateway instance with no horizontal scaling for 2,000 requests per second"
+    ]
+  }
+]

@@ -36,8 +36,27 @@ export type Setup = "fully_offline" | "offline_hosted_scoring" | "online";
 export type ProviderStatus = { provider: string; model: string; configured: boolean; paused_until: string | null };
 export type ModeInfo = { mode: "offline" | "online"; setup: Setup; grok: { configured: boolean; model: string; provider: string; providers?: ProviderStatus[] }; lev: { mode: string; remote: boolean; location: "off" | "this_computer" | "network" | "internet" }; redaction: { names: string } };
 
+export type SystemDesignQuestion = { id: string; title: string; track: "regular" | "ai"; level: number; level_label: string; source: string; prompt: string; functional: string[]; non_functional: string[]; scale: string[] };
+export type SystemDesignReview = {
+  score: number;
+  dimensions: Record<string, number>;
+  weights: Record<string, number>;
+  judge: "lev" | "llm" | "none";
+  checked_components: string[];
+  component_checks: { name: string; drawn: boolean; connected: boolean; credited: boolean; note: string; labels: string[] }[];
+  missing_components: { name: string; why: string }[];
+  missing_requirements: { requirement: string; why: string }[];
+  misleading: { statement: string; why: string }[];
+  strengths: string[];
+  summary: string;
+  graph: { nodes: { ref: string; label: string; shape: string }[]; edges: { from: string; to: string; label: string; two_way: boolean }[]; dangling_arrows: number; unlabeled: string[]; isolated: string[] };
+};
+
 export const api = {
   mode: () => fetch("/api/mode").then(j<ModeInfo>),
+  systemDesignQuestions: (track: "regular" | "ai") => fetch(`/api/system-design/questions?track=${track}`).then(j<SystemDesignQuestion[]>),
+  reviewSystemDesign: (question_id: string, elements: readonly unknown[]) =>
+    fetch("/api/system-design/review", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question_id, elements }) }).then(j<SystemDesignReview>),
   setMode: (mode: "offline" | "online") => fetch("/api/mode", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ mode }) }).then(j<ModeInfo>),
   voices: () => fetch("/api/voices").then(j<Voice[]>),
   health: () => fetch("/api/health").then(j<any>),

@@ -1,0 +1,340 @@
+[
+  {
+    "id": "typeahead-search",
+    "track": "regular",
+    "level": 2,
+    "title": "Design a typeahead search box",
+    "source": "Popular question on the TryExponent list (tryexponent.com) and in DesignGurus' pattern-based reading list; rubric is original",
+    "prompt": "Design the search box that suggests completions as the user types, like a search engine's autocomplete. Suggestions must feel instant.",
+    "functional": [
+      "Return up to 10 suggestions for each prefix the user types",
+      "Rank suggestions by popularity of the query",
+      "Update suggestions as new popular queries appear"
+    ],
+    "non_functional": [
+      "Suggestions appear within 100 ms",
+      "The service stays up during traffic spikes",
+      "A few minutes of delay in new popular queries is acceptable"
+    ],
+    "scale": [
+      "5 billion searches per day",
+      "About 10 suggestion requests per search as the user types",
+      "Top 10 million distinct queries kept for suggestions"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Trie or prefix index", "aliases": ["trie", "prefix", "prefix tree", "index", "suffix"], "why": "finds all queries that start with the typed prefix quickly"},
+        {"name": "Ranking by query frequency", "aliases": ["rank", "ranking", "frequency", "popularity", "top k", "top-k", "count"], "why": "shows the most useful suggestions first"},
+        {"name": "Query log pipeline", "aliases": ["log", "logs", "pipeline", "kafka", "stream", "aggregation", "batch"], "why": "collects search data and builds new suggestion data"},
+        {"name": "Cache for popular prefixes", "aliases": ["cache", "redis", "memcached", "cdn"], "why": "short prefixes are requested most, so cache them"}
+      ]
+    },
+    "pitfalls": [
+      "Querying the full search database for every keystroke",
+      "Ranking by insertion order instead of popularity",
+      "No plan for updating the trie as trends change",
+      "Not sharding the prefix index across servers as the query set grows"
+    ]
+  },
+  {
+    "id": "web-crawler",
+    "track": "regular",
+    "level": 2,
+    "title": "Design a web crawler",
+    "source": "Popular question on the TryExponent list (tryexponent.com); rubric is original",
+    "prompt": "Design a crawler that downloads billions of web pages, extracts their links, and stores the content for a search index without fetching the same page twice.",
+    "functional": [
+      "Start from seed URLs and follow links",
+      "Skip pages already crawled or recently crawled",
+      "Respect each site's robots.txt and crawl rate"
+    ],
+    "non_functional": [
+      "The crawler survives a machine failure without losing its progress",
+      "Crawling is polite: no more than one request per second per host",
+      "Crawled content is stored for later indexing"
+    ],
+    "scale": [
+      "10 billion pages",
+      "Crawl about 1 billion pages per month",
+      "Average page is 500 KB"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "URL frontier or queue", "aliases": ["frontier", "queue", "url queue", "kafka", "priority queue", "scheduler"], "why": "holds URLs waiting to be fetched and orders them by priority and politeness"},
+        {"name": "Duplicate check store", "aliases": ["bloom filter", "bloom", "seen", "dedup", "deduplication", "hash", "checksum", "visited"], "why": "avoids fetching the same URL or content twice"},
+        {"name": "Fetcher workers", "aliases": ["fetcher", "worker", "workers", "downloader", "crawler"], "why": "download pages in parallel"},
+        {"name": "Content storage", "aliases": ["storage", "s3", "blob", "object store", "database", "db", "hdfs"], "why": "stores 5 PB of page content for the indexer"},
+        {"name": "robots.txt and politeness cache", "aliases": ["robots", "robots.txt", "politeness", "rate limit", "rate limiter", "cache"], "why": "keeps the crawler within each site's rules"}
+      ]
+    },
+    "pitfalls": [
+      "Visited set kept in one machine's memory, which does not scale to 10 billion URLs",
+      "No politeness rules, so one site gets overloaded",
+      "Infinite crawler traps (calendar pages, session IDs) not handled",
+      "Storage estimate ignores 500 KB pages at 1 billion per month"
+    ]
+  },
+  {
+    "id": "news-feed",
+    "track": "regular",
+    "level": 3,
+    "title": "Design a social media news feed",
+    "source": "Popular question on the TryExponent list (Instagram and news feed) and on LinkedIn lists of common interview questions; rubric is original",
+    "prompt": "Design the home feed of a photo-sharing social network. Each user sees recent posts from the people they follow, ranked and loaded quickly.",
+    "functional": [
+      "Users post photos with captions",
+      "Home feed shows posts from followed accounts",
+      "Feed is ranked and loads 20 posts at a time with infinite scroll"
+    ],
+    "non_functional": [
+      "Feed loads within 300 ms",
+      "New posts appear in followers' feeds within a few seconds",
+      "The service stays available during celebrity posts"
+    ],
+    "scale": [
+      "500 million daily active users",
+      "100 million photos uploaded per day",
+      "Average user follows 200 accounts; some accounts have 100 million followers"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Post service", "aliases": ["post service", "post", "upload service", "posts", "write service"], "why": "accepts and stores new posts"},
+        {"name": "Feed generation or fan-out", "aliases": ["fan-out", "fanout", "fan out", "feed service", "feed generation", "timeline", "news feed"], "why": "builds each user's feed; the fan-out choice for celebrities is the key trade-off"},
+        {"name": "Object storage for photos", "aliases": ["s3", "blob", "object storage", "object store", "cdn", "media storage"], "why": "stores photos and serves them through a CDN"},
+        {"name": "Feed cache", "aliases": ["cache", "redis", "memcached"], "why": "keeps precomputed feeds ready for fast loads"},
+        {"name": "Follow graph store", "aliases": ["follow", "graph", "followers", "social graph", "relationship"], "why": "knows who follows whom"}
+      ]
+    },
+    "pitfalls": [
+      "Computing the feed on every load by querying all followed accounts",
+      "Pushing celebrity posts to 100 million feeds at once with no alternative",
+      "Storing photos in the database instead of object storage",
+      "No ranking, so the feed is only in time order without any mention of it"
+    ]
+  },
+  {
+    "id": "video-streaming",
+    "track": "regular",
+    "level": 3,
+    "title": "Design a video streaming platform like YouTube",
+    "source": "Popular question on the TryExponent list (YouTube, TikTok, Prime Video) and in the Reddit r/leetcode system design breakdowns; rubric is original",
+    "prompt": "Design a platform where users upload videos and millions of viewers stream them smoothly on phones and TVs at different quality levels.",
+    "functional": [
+      "Upload a video and process it into several resolutions",
+      "Stream videos with adaptive quality",
+      "Search and view counts"
+    ],
+    "non_functional": [
+      "Playback starts within 2 seconds",
+      "Uploads are never lost",
+      "The platform stays up during a major live event"
+    ],
+    "scale": [
+      "500 hours of video uploaded per minute",
+      "1 billion hours of video watched per day",
+      "Average video is 10 minutes, stored in 5 resolutions"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Upload and object storage", "aliases": ["upload", "object storage", "s3", "blob", "storage", "original video"], "why": "stores the raw uploads durably"},
+        {"name": "Transcoding pipeline", "aliases": ["transcod", "encoding", "encoder", "processing", "pipeline", "workers", "queue"], "why": "turns each upload into several resolutions in the background"},
+        {"name": "CDN", "aliases": ["cdn", "edge", "content delivery", "edge cache"], "why": "serves most video bytes close to the viewer"},
+        {"name": "Metadata database", "aliases": ["metadata", "database", "db", "postgres", "cassandra", "dynamodb"], "why": "stores titles, owners, and view counts"},
+        {"name": "Adaptive streaming protocol", "aliases": ["hls", "dash", "adaptive", "bitrate", "abr"], "why": "switches quality as bandwidth changes"}
+      ]
+    },
+    "pitfalls": [
+      "Serving video from the origin server with no CDN",
+      "Transcoding synchronously inside the upload request",
+      "Using one resolution for all devices",
+      "Counting views with a synchronous database write on every play"
+    ]
+  },
+  {
+    "id": "ride-hailing-nearby-drivers",
+    "track": "regular",
+    "level": 3,
+    "title": "Design a ride-hailing app like Uber",
+    "source": "Popular question on the TryExponent list (Design Uber) and in IGotAnOffer's list of common questions; rubric is original",
+    "prompt": "Design the part of a ride-hailing app that finds nearby drivers for a rider, matches one, and tracks the trip as the driver moves.",
+    "functional": [
+      "Show nearby available drivers to a rider",
+      "Match a rider with one driver and handle timeouts",
+      "Track driver location every few seconds during a trip"
+    ],
+    "non_functional": [
+      "Matching completes within 10 seconds",
+      "Driver location is at most a few seconds old",
+      "A trip is never assigned to two drivers"
+    ],
+    "scale": [
+      "5 million drivers sending location every 4 seconds",
+      "20 million trips per day",
+      "Peak of 3 times the average in busy cities"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Location index", "aliases": ["geohash", "quadtree", "s2", "h3", "spatial index", "location index", "geospatial", "nearby"], "why": "finds drivers near a point without scanning all drivers"},
+        {"name": "Location update ingestion", "aliases": ["location", "gps", "stream", "kafka", "ingest", "websocket"], "why": "takes 1.25 million location updates per second"},
+        {"name": "Matching service", "aliases": ["matching", "match", "dispatch", "assignment"], "why": "picks a driver and prevents double assignment"},
+        {"name": "Trip store", "aliases": ["trip", "database", "db", "ledger", "dynamodb", "postgres", "cassandra"], "why": "keeps the trip state and history"}
+      ]
+    },
+    "pitfalls": [
+      "Querying the database for drivers within a radius on every request with no spatial index",
+      "Storing every location update in the main trip database",
+      "No lock or state change when assigning a driver, so two riders get the same driver",
+      "Ignoring the peak load in busy cities"
+    ]
+  },
+  {
+    "id": "parking-garage-reservation",
+    "track": "regular",
+    "level": 2,
+    "title": "Design a parking garage reservation and payment system",
+    "source": "Popular question on the TryExponent list (parking garage reservation and payment); rubric is original",
+    "prompt": "Design a system that lets drivers reserve a parking spot in a garage, pay for it, and get in and out with a code. Two drivers must never get the same spot for the same time.",
+    "functional": [
+      "Reserve a spot for a time window",
+      "Pay by card and get a receipt",
+      "Open the gate with a code and check the exit"
+    ],
+    "non_functional": [
+      "No double booking of a spot",
+      "Payment is charged exactly once even if the request is retried",
+      "Gate entry works when the internet is down (cached codes)"
+    ],
+    "scale": [
+      "200 garages with 500 spots each",
+      "100,000 reservations per day",
+      "Peak of 5,000 entries in the morning hour"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Reservation service with locking", "aliases": ["reservation", "booking", "lock", "locking", "transaction", "reserve"], "why": "prevents two drivers booking the same spot for the same time"},
+        {"name": "Payment service with idempotency", "aliases": ["payment", "idempotency", "idempotent", "stripe", "charge", "payment gateway"], "why": "charges once, even on retries"},
+        {"name": "Spot availability store", "aliases": ["database", "db", "postgres", "availability", "inventory", "cache", "redis"], "why": "holds which spots are free for which times"},
+        {"name": "Gate controller and offline codes", "aliases": ["gate", "gate controller", "edge", "offline", "access code", "barrier"], "why": "lets the gate open without a live connection"}
+      ]
+    },
+    "pitfalls": [
+      "Checking availability then booking in two steps with no lock, which allows double booking",
+      "Retrying a payment without an idempotency key, which charges twice",
+      "Gate depending on the cloud for every entry",
+      "No handling for a driver who never leaves or overstays"
+    ]
+  },
+  {
+    "id": "live-comments-stream",
+    "track": "regular",
+    "level": 2,
+    "title": "Design live comments for a streaming chat like Twitch",
+    "source": "Popular question in DesignGurus' pattern-based reading list (live comment streaming like Twitch chat); rubric is original",
+    "prompt": "Design the live chat beside a stream. A million viewers can read, and a few thousand can post. New messages should appear within about a second.",
+    "functional": [
+      "Viewers see new comments as they arrive",
+      "Viewers can post comments with rate limits",
+      "Moderators can delete comments"
+    ],
+    "non_functional": [
+      "Comments appear within 1 second for most viewers",
+      "Chat survives a spike when a big event starts",
+      "Deleted comments disappear for everyone"
+    ],
+    "scale": [
+      "1 million concurrent viewers on one popular stream",
+      "5,000 active chatters, sending 20 messages each per minute at peak",
+      "Chat history kept for 24 hours"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Fan-out pub/sub or broadcast layer", "aliases": ["pub/sub", "pubsub", "fan-out", "fanout", "broadcast", "kafka", "redis pub", "message broker"], "why": "delivers each comment to a million viewers without one server doing all the work"},
+        {"name": "Real-time connection gateway", "aliases": ["websocket", "gateway", "connection", "sse", "server-sent", "realtime", "edge"], "why": "keeps viewers connected for live updates"},
+        {"name": "Rate limiter and moderation", "aliases": ["rate limit", "rate limiter", "moderation", "moderator", "filter", "spam"], "why": "stops spam and handles deletions"},
+        {"name": "Recent comment store", "aliases": ["cache", "redis", "store", "database", "db", "history"], "why": "lets a new viewer see recent chat"}
+      ]
+    },
+    "pitfalls": [
+      "One server sending each comment to a million connections directly",
+      "Polling for new comments every second from a million clients",
+      "No rate limit, so a few users flood the chat",
+      "Deletions not sent to viewers who already received the comment"
+    ]
+  },
+  {
+    "id": "notification-system",
+    "track": "regular",
+    "level": 2,
+    "title": "Design a distributed notification system",
+    "source": "Popular question on the LinkedIn list of common system design questions (distributed notification system); rubric is original",
+    "prompt": "Design a service that sends push, email and SMS notifications to users. Other teams call one API to send them, and no notification should be lost or sent twice.",
+    "functional": [
+      "Accept notification requests from other services",
+      "Send by push, email, or SMS, respecting each user's preferences",
+      "Retry failed sends and report delivery status"
+    ],
+    "non_functional": [
+      "Urgent notifications (such as OTP codes) go out within 5 seconds",
+      "No notification is lost",
+      "Duplicate requests from callers do not send twice"
+    ],
+    "scale": [
+      "100 million notifications per day, with peaks of 10 times the average",
+      "Three channels: push, email, SMS",
+      "Users can set quiet hours and opt out per channel"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Notification API and idempotency", "aliases": ["api", "gateway", "idempotency", "idempotent", "notification service", "request"], "why": "one entry point that drops duplicate requests"},
+        {"name": "Priority queues per channel", "aliases": ["queue", "kafka", "sqs", "rabbitmq", "priority", "topic"], "why": "keeps OTP messages from waiting behind marketing emails"},
+        {"name": "Channel workers with retries", "aliases": ["worker", "workers", "retry", "dead letter", "dlq", "provider", "apns", "fcm", "sendgrid", "twilio"], "why": "send through providers and retry failures"},
+        {"name": "Preference store", "aliases": ["preference", "preferences", "opt-out", "opt out", "settings", "database", "db"], "why": "checks opt-outs and quiet hours before sending"},
+        {"name": "Delivery status store", "aliases": ["status", "delivery", "log", "logs", "analytics", "store"], "why": "records what was sent and what failed"}
+      ]
+    },
+    "pitfalls": [
+      "One shared queue for OTP codes and marketing, so urgent messages wait",
+      "No idempotency key, so retries send duplicates",
+      "Sending SMS synchronously inside the caller's request",
+      "No dead-letter queue, so failed messages disappear"
+    ]
+  },
+  {
+    "id": "metrics-logging-service",
+    "track": "regular",
+    "level": 3,
+    "title": "Design a metrics and logging service",
+    "source": "Popular question on the TryExponent list (design a metrics and logging service) and in DesignGurus' reading list on observability; rubric is original",
+    "prompt": "Design a service that collects metrics and logs from thousands of servers, stores them, and lets engineers query dashboards and set alerts.",
+    "functional": [
+      "Collect metrics and logs from agents on each server",
+      "Query a time range and draw a dashboard",
+      "Fire an alert when a metric crosses a threshold"
+    ],
+    "non_functional": [
+      "Data is visible within 30 seconds of being sent",
+      "Alerts fire within 1 minute",
+      "No data loss during a network partition"
+    ],
+    "scale": [
+      "100,000 servers, each sending 1,000 metric points per minute",
+      "Logs of 2 TB per day",
+      "Metrics kept at full detail for 30 days and downsampled for a year"
+    ],
+    "rubric": {
+      "components": [
+        {"name": "Ingestion pipeline with buffering", "aliases": ["ingest", "ingestion", "kafka", "buffer", "queue", "pipeline", "collector", "agent"], "why": "absorbs 1.6 million points per second without losing data"},
+        {"name": "Time-series database", "aliases": ["time-series", "timeseries", "time series", "tsdb", "influx", "prometheus", "cassandra", "clickhouse", "database"], "why": "stores and queries metrics by time efficiently"},
+        {"name": "Log storage and search", "aliases": ["log", "logs", "elasticsearch", "opensearch", "search", "object storage", "s3"], "why": "stores logs cheaply and makes them searchable"},
+        {"name": "Alerting service", "aliases": ["alert", "alerting", "alerts", "rule", "threshold", "notification", "pager"], "why": "evaluates rules and notifies on-call"},
+        {"name": "Downsampling or retention job", "aliases": ["downsample", "downsampling", "rollup", "retention", "compaction", "aggregation"], "why": "keeps a year of history without full cost"}
+      ]
+    },
+    "pitfalls": [
+      "Writing every point synchronously to one database with no buffer",
+      "Storing logs and metrics in the same unindexed table",
+      "Keeping full resolution for a year, which costs far too much",
+      "Alerts computed from a dashboard query instead of a separate rule evaluator"
+    ]
+  }
+]

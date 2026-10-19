@@ -11,7 +11,7 @@ from pydantic import BaseModel
 from .agents import core, resume as resume_agent, writing
 from .config import get_settings
 from .engines import stt, tts, vocab
-from .engines import github, daily
+from .engines import github, daily, system_design
 from .engines.srs import Card, combined_grade, review
 from .store.progress import ProgressStore
 from .agents import proof
@@ -384,6 +384,29 @@ async def write_improve(body: ImproveIn):
     if not body.text.strip():
         raise HTTPException(400, "Paste some text first.")
     return await writing.improve(llm, body.text, body.kind, body.tone, body.rewrite)
+
+
+# ---------- System design whiteboard ----------
+class SystemDesignReviewIn(BaseModel):
+    question_id: str
+    elements: list[dict] = []  # the Excalidraw scene, as exported by the browser
+
+
+@app.get("/api/system-design/questions")
+def system_design_questions(track: str | None = None):
+    if track is not None and track not in system_design.TRACKS:
+        raise HTTPException(400, "Track must be 'regular' or 'ai'.")
+    return [system_design.public_question(q) for q in system_design.list_questions(track)]
+
+
+@app.post("/api/system-design/review")
+async def system_design_review(body: SystemDesignReviewIn):
+    question = system_design.get_question(body.question_id)
+    if not question:
+        raise HTTPException(404, "Question not found.")
+    if not system_design.has_components(body.elements):
+        raise HTTPException(400, "Draw at least one component first.")
+    return await system_design.review(llm, question, body.elements, lev)
 
 
 # ---------- Resume Radar (ATS readiness) ----------

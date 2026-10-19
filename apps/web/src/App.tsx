@@ -6,6 +6,7 @@ import { HotSeat } from "./HotSeat";
 import { CleanCopy } from "./CleanCopy";
 import { Daily } from "./Daily";
 import { ResumeRadar } from "./ResumeRadar";
+import { SystemDesign } from "./SystemDesign";
 import { ModeProvider } from "./mode";
 import { ModeSwitch } from "./ModeSwitch";
 import { Toasts } from "./Toasts";
@@ -14,7 +15,7 @@ import { SETUPS, useMode } from "./mode";
 import { stopSpeaking, type Question } from "./api";
 
 export type Active = { id: string; voice: string; total: number; first: Question; role: string; company: string };
-type View = "home" | "setup" | "hotseat" | "daily" | "cleancopy" | "radar" | "session" | "report";
+type View = "home" | "setup" | "hotseat" | "daily" | "cleancopy" | "radar" | "sysdesign" | "session" | "report";
 
 function initialTheme(): string {
   try {
@@ -73,6 +74,7 @@ function Shell() {
         {view === "daily" && <Daily />}
         {view === "cleancopy" && <CleanCopy />}
         {view === "radar" && <ResumeRadar />}
+        {view === "sysdesign" && <SystemDesign />}
         {view === "hotseat" && <HotSeat onStart={(a) => { setActive(a); setView("session"); }} />}
         {view === "setup" && <Setup onStart={(a) => { setActive(a); setView("session"); }} />}
         {(view === "session" || view === "report") && active && (
@@ -118,6 +120,11 @@ function Home({ go }: { go: (v: View) => void }) {
         <Tile title="Interview practice" body="Add a job description and your resume. Four rounds, from friendly screening to system design, each with its own interviewer voice." cta="Set up an interview" onClick={() => go("setup")} />
         <Tile title="Hot Seat" body="Got a tough question from a real interview? Paste one or two, answer out loud, and get a web-checked answer you can say to impress." cta="Take the seat" onClick={() => go("hotseat")} />
         <Tile title="Daily English for IT" body="Fifteen IT terms, abbreviations and workplace phrases a day. Hear each one, say it back, then use it in a sentence. Your streak and due reviews are kept on this computer." cta="Start today's set" onClick={() => go("daily")} />
+      </section>
+
+      <h2 className="mb-3 mt-10 text-sm font-medium uppercase tracking-wide text-base-content/50">Practise system design</h2>
+      <section className="grid gap-4 md:grid-cols-2">
+        <Tile title="System design whiteboard" body="Read a design question with clear requirements, draw your components and connections on a whiteboard, then submit. Get a score, missing components, missing requirements and anything misleading in your diagram." cta="Open the whiteboard" onClick={() => go("sysdesign")} />
       </section>
 
       <h2 className="mb-3 mt-10 text-sm font-medium uppercase tracking-wide text-base-content/50">Prepare your documents</h2>
